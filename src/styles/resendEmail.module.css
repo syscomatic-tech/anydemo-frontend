@@ -1,0 +1,118 @@
+.resendEmail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #1E1E1E;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.resendEmailContainer {
+  width: 1004px;
+  height: 559px;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.imgBox {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.imgBox img {
+  width: 100%;
+  height: 100%;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 46px;
+  color: #FFFFFD;
+  margin: 48px 0 64px 0;
+}
+
+.tag {
+  margin-bottom: 16px;
+}
+
+.action {
+  padding: 13.5px 32px;
+  width: 399px;
+  height: 48px;
+  background: linear-gradient(90deg, #23AFB7 1.46%, #169AA4 79.47%);
+  border-radius: 8px;
+  margin: 48px 0 32px 0;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21px;
+  text-align: center;
+  color: #FFF8F8;
+}
+
+.info {
+  margin-top: 48px;
+}
+
+.resendEmailContainer p span {
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 30px;
+  color: #FFFFFD;
+}
+
+.resendEmailContainer .haveIssue span {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.resendEmailContainer .note span {
+  color: #BBBBBB;
+}
+
+@media only screen and (max-width:424px) {
+  .resendEmailContainer {
+    width: 95%
+  }
+
+  .title {
+    font-size: 30px;
+    line-height: 36px;
+    margin: 28px 0 44px 0;
+  }
+
+  .resendEmailContainer p span {
+    font-size: 14px;
+    line-height: 21px;
+    width: 80%;
+    display: block;
+    text-align: center;
+    margin: auto;
+  }
+
+  .action {
+    width: 80%;
+    margin: 38px 0 22px 0;
+  }
+
+  .resendEmailContainer .haveIssue span {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .info {
+    margin-top: 28px;
+  }
+}

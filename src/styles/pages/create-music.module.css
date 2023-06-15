@@ -1,0 +1,134 @@
+.createMusic_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  gap: 48px;
+  width: 100%;
+  height: fit-content;
+}
+
+.createMusic_title>h1 {
+  width: 100%;
+  height: 46px;
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 46px;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+.createMusic_title>p {
+  width: 516px;
+  height: 35px;
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 27px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 24px;
+}
+
+.card_container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 80px;
+  margin-top: 60px;
+}
+
+.card_wrapper {
+  width: 339px;
+  height: 230px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.card {
+  width: 128px;
+  height: 128px;
+}
+
+.up_image {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  background-color: #0F0E19;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: -20px;
+  left: 110px;
+}
+
+.card_content {
+  position: absolute;
+  width: fit-content;
+  height: 32px;
+  left: 85px;
+  top: 135px;
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 32px;
+  color: #FFFFFF;
+}
+
+@media only screen and (max-width: 990px) {
+  .createMusic_title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    gap: 16px;
+    width: 342px;
+    height: fit-content;
+  }
+
+  .createMusic_title h1 {
+    width: 200px;
+    height: 37px;
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 37px;
+    color: #FFFFFF;
+  }
+
+  .createMusic_title p {
+    width: 300px;
+    height: 72px;
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 0;
+
+  }
+}
+
+@media only screen and (max-width: 424px) {
+  .card_container {
+    justify-content: center;
+    gap: 32px;
+    margin-top: 24px;
+  }
+
+  .createMusic_container {
+    gap: 0px;
+  }
+}

@@ -1,0 +1,723 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Ubuntu:wght@300;400;500;700&display=swap');
+
+:root {
+  --max-width: 1100px;
+  --border-radius: 12px;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  background: #0F0E19;
+  font-family: 'Ubuntu';
+  font-style: normal;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+}
+
+/* img {
+  max-width: 100%;
+  max-height: 100%;
+} */
+
+.container {
+  width: 1200px;
+  margin: auto;
+}
+
+.mainLayout,
+.dashboardLayout {
+  position: relative;
+}
+
+.bgEffect1 {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  left: -30px;
+  top: 22px;
+  background: #B843B7;
+  filter: blur(200px);
+  z-index: -1;
+}
+
+.bgEffect2 {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  right: 0px;
+  bottom: 400px;
+  background: #B843B7;
+  filter: blur(200px);
+  z-index: -1;
+}
+
+.modal {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.modal-content {
+  position: absolute;
+  width: 85%;
+  height: 85%;
+  left: 50%;
+  top: 50%;
+  background: linear-gradient(179.92deg, #3B343F 0.07%, #1D1F27 82.76%);
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content div {
+  width: 100%;
+}
+
+.progressTitle h1 {
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 46px;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+.progress .track {
+  position: relative;
+  margin: auto;
+  margin-top: 100px;
+  width: 70%;
+  height: 47px;
+  background: #2F4668;
+  border-radius: 20px;
+}
+
+.progress .percent {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: linear-gradient(47.36deg, #2DF1E6 12.24%, #3694B0 37.45%, #468DB3 39.38%, #6F79BA 44.93%, #8D6BBF 49.97%, #9F63C2 54.29%, #A660C3 57.37%);
+  border-radius: 20px;
+}
+
+.progress .percentTag {
+  position: absolute;
+  top: -25px;
+  font-weight: 500;
+  font-size: 24px;
+  color: #FFFFFF;
+  transform: translate(-100%, -50%);
+}
+
+.modal .crossBtn {
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  width: 37.5px;
+  height: 37.5px;
+  background: transparent;
+}
+
+.primaryBtn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0px;
+  gap: 40px;
+  width: 89px;
+  height: 40px;
+  color: #FFF8F8;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.fillBtn {
+  background: linear-gradient(90deg, #23AFB7 1.46%, #169AA4 79.47%);
+}
+
+.btnTransparent {
+  --full: linear-gradient(47.36deg, #2DF1E6 12.24%, #3694B0 37.45%, #468DB3 39.38%, #6F79BA 44.93%, #8D6BBF 49.97%, #9F63C2 54.29%, #A660C3 57.37%);
+  border: solid 1px transparent;
+  border-radius: 10px;
+  background: linear-gradient(to right bottom, #2DF1E6, #A660C3) border-box;
+
+  @supports (-webkit-mask-clip: text) {
+    /* -webkit-text-fill-color: transparent; */
+    -webkit-mask: var(--full) text, var(--full) padding-box, var(--full);
+    -webkit-mask-composite: xor;
+    transition: all 0.5s ease-in-out;
+  }
+}
+
+.btnTransparent:hover {
+  -webkit-mask: none;
+}
+
+.lg_d_none {
+  display: none;
+}
+
+.pageTitle {
+  text-align: center;
+  font-family: 'Ubuntu';
+  font-style: normal;
+}
+
+.pageTitle h1 {
+  font-weight: 500;
+  color: #FFF8F8;
+  font-size: 56px;
+  line-height: 64px;
+}
+
+
+.pageTitle h1 span {
+  background: linear-gradient(57.89deg, #2DF1E6 61.08%, #3694B0 67.87%, #468DB3 68.39%, #6F79BA 69.88%, #8D6BBF 71.24%, #9F63C2 72.4%, #A660C3 73.23%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.pageTitle p {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 27px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 24PX;
+}
+
+.formArea {
+  width: 500px;
+}
+
+.authContainer {
+  display: flex;
+  column-gap: 115px;
+  align-items: center;
+  justify-content: center;
+}
+
+.authContainer .imgBox {
+  position: relative;
+  width: 445px;
+  height: 485px;
+  border-radius: 5px;
+  object-fit: cover;
+  object-position: center;
+  z-index: 1;
+}
+
+.authContainer .bg {
+  position: absolute;
+  width: 450px;
+  height: 561px;
+  left: -38px;
+  top: -38px;
+  background: linear-gradient(47.36deg, #2DF1E6 12.24%, #3694B0 37.45%, #468DB3 39.38%, #6F79BA 44.93%, #8D6BBF 49.97%, #9F63C2 54.29%, #A660C3 57.37%);
+  border-radius: 5px;
+  z-index: -1;
+}
+
+.formArea h4 {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 32px;
+  color: #FFFFFD;
+  margin-bottom: 56px;
+}
+
+.form {
+  width: 100%;
+}
+
+.form textarea {
+  max-height: 150px;
+  min-height: 96px;
+}
+
+.formControl {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  margin-bottom: 26px;
+}
+
+.formControl label {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28px;
+  color: #FFFFFD;
+}
+
+.dashboardLayout .for label {
+  font-weight: 700;
+}
+
+.formControl input,
+.formControl textarea {
+  width: 100%;
+  max-width: 100%;
+  height: 48px;
+  background: #1D1C2D;
+  border-radius: 8px;
+  border: none;
+  padding: 15px;
+  color: #FFFFFD;
+}
+
+.formControl input::placeholder,
+.formControl textarea::placeholder {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+  color: rgba(255, 255, 253, 0.6);
+}
+
+.formArea .controlPassword {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.forgotPassword {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+  background: linear-gradient(0deg, #2DF1E6, #2DF1E6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  cursor: pointer;
+}
+
+.showPassword {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 16px;
+  flex-direction: row;
+  cursor: pointer;
+}
+
+.showPassword input {
+  width: 21px;
+  height: 21px;
+  background: #D9D9D9;
+  border-radius: 2px;
+}
+
+.showPassword label {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+  color: #FFFFFD;
+}
+
+.actionBtn {
+  padding: 13.5px 32px;
+  width: 100%;
+  height: 48px;
+  background: linear-gradient(90deg, #23AFB7 1.46%, #169AA4 79.47%);
+  border-radius: 8px;
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21px;
+  text-align: center;
+  color: #FFF8F8;
+  margin-top: 40px;
+}
+
+.s_btn {
+  padding: 8px 24px;
+  color: #FFFFFD;
+  background: linear-gradient(90deg, #23AFB7 1.46%, #169AA4 79.47%);
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 18px;
+}
+
+.s_btn_t {
+  background: transparent;
+  border: 1px solid #2DF1E6;
+}
+
+.actionBtn_secondary {
+  background: transparent;
+  border: 1px solid #2DF1E6;
+}
+
+.alternativeLigInOptions {
+  text-align: center;
+  margin-top: 32px;
+}
+
+.alternativeLigInOptions p {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21px;
+  color: #FFFFFD;
+}
+
+.alternativeLigInOptions .haveAccount p {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+}
+
+.alternativeLigInOptions .signUp,
+.alternativeLigInOptions .login {
+  font-weight: 700;
+  font-size: 16px;
+  background: linear-gradient(55.41deg, #2DF1E6 12.79%, #3694B0 54.92%, #468DB3 58.14%, #6F79BA 67.42%, #8D6BBF 75.85%, #9F63C2 83.06%, #A660C3 88.21%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  cursor: pointer;
+}
+
+.alternativeLigInOptions .authIcon {
+  padding: 24px 0 16px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  column-gap: 32px;
+  align-items: center;
+}
+
+.alternativeLigInOptions .authIcon img {
+  cursor: pointer;
+}
+
+.alternativeLigInOptions .haveAccount {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  column-gap: 8px;
+  align-items: center;
+}
+
+.subscribeForm {
+  width: 100%;
+  height: 48px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.subscribeForm button {
+  position: absolute;
+  top: 0px;
+  right: 0;
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 18px;
+  color: #FFFFFF;
+  width: 142px;
+  height: 100%;
+  background: #1FC2C7;
+  border-radius: 0px 8px 8px 0px;
+}
+
+.subscribeForm input {
+  position: relative;
+  padding: 0 12px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+  color: #FFFFFF;
+  transform: translateX(3px);
+  border: solid 2px transparent;
+  border-radius: 8px 0px 0px 8px;
+  width: calc(100% - 145px);
+  height: 42px;
+  background: #0F0E19;
+}
+
+.gradientBorder {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  background: linear-gradient(47.36deg, #2DF1E6 12.24%, #3694B0 37.45%, #468DB3 39.38%, #6F79BA 44.93%, #8D6BBF 49.97%, #9F63C2 54.29%, #A660C3 57.37%);
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.dashboard_children_title {
+  color: #FFFFFF;
+}
+
+.dashboard_children_title .title {
+  margin-bottom: 40px;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 32px;
+}
+
+.dashboard_children_title:not(:first-child) {
+  margin-top: 52px;
+}
+
+.subscriptionPlanCard {
+  width: 100%;
+  background: linear-gradient(90deg, #206983 24.29%, #2F5377 79.78%);
+  border-radius: 4px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.subscriptionPlanCard:not(:last-child) {
+  margin-bottom: 52px;
+}
+
+.subscriptionPlanCard_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.plan_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 131px;
+  height: 34px;
+  background: linear-gradient(179.92deg, #3B343F 0.07%, #1D1F27 82.76%);
+  border-radius: 6px;
+  font-size: 16px;
+  line-height: 18px;
+  color: #FFFFFD;
+}
+
+.sm_plan_btn {
+  display: none;
+}
+
+.subscriptionPlanCard_header h4 {
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 32px;
+  color: #FFFFFF;
+}
+
+.featuresItems {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+}
+
+.featuresItem {
+  display: flex;
+  gap: 16px;
+}
+
+.featuresItem span {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+  color: #FFFFFD;
+}
+
+@media only screen and (max-width: 1200px) {
+  .container {
+    width: 90%;
+    margin: auto;
+  }
+
+  .authContainer {
+    flex-direction: column;
+    padding: 110px 24px;
+  }
+}
+
+@media only screen and (max-width: 570px) {
+  .lg_d_none {
+    display: block;
+  }
+
+  .authContainer {
+    width: 100%;
+  }
+
+  .authContainer .loginImgArea {
+    display: none;
+  }
+
+  .authContainer .formArea {
+    width: 100%;
+  }
+
+  .modal-content {
+    width: 335px;
+    height: 222px;
+    top: 273px;
+  }
+
+  .progressTitle h1 {
+    font-size: 20px;
+    line-height: 23px;
+  }
+
+  .progress .track {
+    height: 13px;
+    margin-top: 67px;
+  }
+
+  .progress .percentTag {
+    font-size: 14px;
+    top: -12px;
+  }
+
+  .modal .crossBtn {
+    width: 18.75px;
+    height: 18.75px;
+    top: 15.62px;
+    right: 15.62px;
+  }
+
+  .modal .crossBtn img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media only screen and (max-width: 424px) {
+
+  /* solide slider css start */
+  .splide__slide {
+    width: fit-content !important;
+  }
+
+  /* solide slider css end*/
+  .pageTitle h1 {
+    font-size: 32px;
+    line-height: 37px;
+  }
+
+  .pageTitle p {
+    font-size: 16px;
+    line-height: 130%;
+    margin-top: 16px;
+  }
+
+  .formControl {
+    margin-bottom: 24px;
+    row-gap: 10px;
+  }
+
+  .formControl label {
+    font-size: 18px;
+    line-height: 21px;
+  }
+
+  .dashboard_children_title .title {
+    font-size: 20px;
+    line-height: 23px;
+    margin-bottom: 28px;
+  }
+
+  .s_btn {
+    padding: 7px 18px;
+    font-size: 12px;
+    line-height: 14px;
+    white-space: nowrap;
+  }
+
+  .subscriptionPlanCard_header h4 {
+    font-size: 18px;
+    line-height: 21px;
+  }
+
+  .featuresItem span {
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  .checkIcon img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .featuresItems {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .plan_btn {
+    display: none;
+  }
+
+  .sm_plan_btn {
+    display: block;
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  .subscriptionPlanCard:not(:last-child) {
+    margin-bottom: 40px;
+  }
+
+  .dashboard_children_title:not(:first-child) {
+    margin-top: 40px;
+  }
+
+  .dashboardLayout .for label {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+  }
+}

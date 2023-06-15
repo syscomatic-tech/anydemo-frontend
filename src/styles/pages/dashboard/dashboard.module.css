@@ -1,0 +1,192 @@
+.dashboardBody {
+  display: flex;
+  align-items: flex-start;
+  gap: 117px;
+  padding: 94px 0 150px 0;
+}
+
+.mainArea {
+  position: relative;
+  min-width: 291px;
+  min-height: 668px;
+  height: fit-content;
+}
+
+.divider {
+  position: absolute;
+  top: 0px;
+  right: -59px;
+  height: 100%;
+  width: 1px;
+  background: #FFFFFD;
+}
+
+.imgArea {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.profileImage {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.edit {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(90deg, #206983 24.29%, #2F5377 79.78%);
+  border-radius: 50%;
+  position: absolute;
+  bottom: 0px;
+  right: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile {
+  width: fit-content;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 64px;
+}
+
+.profile h4 {
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 32px;
+  color: #FFFFFF;
+}
+
+.profileImage img {
+  width: 100%;
+  height: 100%;
+}
+
+.lists li {
+  width: 100%;
+  height: 64px;
+  background: transparent;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.lists li:not(:last-child) {
+  margin-bottom: 12px;
+}
+
+.lists .active {
+  position: relative;
+  background: linear-gradient(90deg, #23AFB7 1.46%, #169AA4 79.47%);
+  padding-left: 24px;
+}
+
+.lists .active::before {
+  content: "";
+  width: 1px;
+  height: 100%;
+  background: #32E5EB;
+  position: absolute;
+  right: -59px;
+  top: 0px;
+  z-index: 1;
+  border-radius: 0 50% 50% 0;
+}
+
+.lists li {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-transform: capitalize;
+  cursor: pointer;
+}
+
+.lists .icon {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lists span {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 23px;
+  color: #FFFFFF;
+}
+
+.childrenArea {
+  width: calc(100% - 291px + 117px);
+}
+
+@media only screen and (max-width: 424px) {
+  .dashboardBody {
+    flex-direction: column;
+    padding: 0 0 86px 0;
+    row-gap: 40px;
+  }
+
+  .mainArea,
+  .childrenArea {
+    width: 100%;
+  }
+
+  .mainArea {
+    display: flex;
+    flex-direction: column-reverse;
+    min-height: fit-content;
+  }
+
+  .profile {
+    margin: 40px auto 0 auto;
+  }
+
+  .lists {
+    display: flex;
+    align-items: center;
+    column-gap: 24px;
+    overflow-x: scroll;
+    height: 40px;
+  }
+
+  .lists::-webkit-scrollbar {
+    display: none;
+  }
+
+  .lists li {
+    white-space: nowrap;
+    gap: 8px;
+    height: fit-content;
+  }
+
+  .lists li:not(:last-child) {
+    margin-bottom: 0px;
+  }
+
+  .lists .active {
+    position: relative;
+    background: none;
+    padding-left: 0;
+  }
+
+  .lists .active::before {
+    width: 100%;
+    height: 3px;
+    right: 0;
+    top: 100%;
+    border-radius: 10px;
+  }
+
+  .divider {
+    display: none;
+  }
+}

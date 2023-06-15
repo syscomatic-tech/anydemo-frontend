@@ -1,0 +1,50 @@
+.joinPage {
+  width: 100%;
+}
+
+.joinContent {
+  display: flex;
+  margin: 100px 0 120px 0;
+}
+
+.joinLeft {
+  width: 570px;
+  height: 774px;
+}
+
+.joinRight {
+  padding: 30px 60px;
+  width: calc(100% - 570px);
+  border-color: #23AFB7;
+  border-style: solid;
+  border-width: 1px 1px 1px 0;
+  border-radius: 0 4px 4px 0;
+}
+
+.actionBtn {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  justify-content: end;
+}
+
+.actionBtn div {
+  width: 160px;
+}
+
+@media only screen and (max-width: 424px) {
+  .joinContent {
+    flex-direction: column;
+    margin: 40px 0 110px 0;
+  }
+
+  .joinLeft {
+    display: none;
+  }
+
+  .joinRight {
+    width: 100%;
+    border: none;
+    padding: 0;
+  }
+}

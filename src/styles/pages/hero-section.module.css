@@ -1,0 +1,133 @@
+.heroSection {
+  width: 100%;
+  height: fit-content;
+  padding: 20px 0px 120px 0px;
+  background-image: url('/img/hero/Group-1.png'), url('/img/hero/Group-91.png'), url('/img/hero/Ellipse-5.png');
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-position: 421px 308px, 930px -10px, 1120px 450px;
+}
+
+.heroBtn {
+  width: 147px;
+  height: 48px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 18px;
+  margin-top: 48px;
+}
+
+.heroSection__container {
+  width: 1200px;
+  height: fit-content;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.heroSection__container__text {
+  height: 366px;
+  width: 513px;
+  border-radius: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.heroSection__container__text h1 {
+  height: 192px;
+  width: 435px;
+  font-family: Ubuntu;
+  font-size: 56px;
+  font-weight: 500;
+  line-height: 64px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.heroSection__container__text h1>span {
+  color: #32E5EB;
+}
+
+.heroSection__container__text p {
+  width: 277px;
+  font-family: 'Inter';
+  font-weight: 500;
+  text-align: left !important;
+  font-size: 16px;
+  line-height: 30px;
+  color: #989898;
+  margin-top: 20px;
+}
+
+.heroSection__container__text span {
+  margin-top: 40px;
+}
+
+.heroSection__container__image {
+  height: 400px;
+  width: 580px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media only screen and (max-width: 990px) {
+  .heroSection {
+    padding: 0px 0px 100px 0px;
+  }
+
+  .heroSection__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: fit-content;
+  }
+
+  .heroSection__container__image {
+    display: none;
+  }
+
+  .heroSection__container__text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    gap: 0px;
+    width: 100%;
+    padding: 0px 10px;
+    height: fit-content;
+  }
+
+  .heroSection__container__text h1 {
+    width: 100%;
+    height: fit-content;
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 48px;
+    text-align: center;
+    color: #FFF8F8;
+  }
+
+  .heroSection__container__text p {
+    width: 100%;
+    height: fit-content;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 30px;
+    text-align: center !important;
+    color: #989898;
+    margin-top: 16px;
+  }
+
+  .heroSection__container__text span {
+    margin-top: 24px;
+  }
+}

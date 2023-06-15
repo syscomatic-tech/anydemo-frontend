@@ -1,0 +1,200 @@
+.player {
+  padding: 15px 22px;
+  width: 100%;
+  height: 80px;
+  background: linear-gradient(179.92deg, #3B343F 0.07%, #1D1F27 82.76%);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.songInfoContainer {
+  height: 48px;
+}
+
+.songInfo {
+  height: 100%;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #FFFFFF;
+}
+
+.playerImg {
+  width: 48px;
+  height: 48px;
+}
+
+.playerImg img {
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.sName {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sName p {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 23px;
+  text-transform: capitalize;
+}
+
+.sName span {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+  color: #B2B2B2;
+  text-transform: capitalize;
+}
+
+/* controlArea */
+.controlArea {
+  width: 560px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.controller {
+  min-width: 140px;
+  min-height: 28px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+.controller svg {
+  cursor: pointer;
+}
+
+.timeProgress {
+  width: 100%;
+  height: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.timeProgress span {
+  font-family: 'Circular Std';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #B2B2B2;
+}
+
+.timeProgress .progress {
+  position: relative;
+  width: 504px;
+  height: 4px;
+  background: #3E6F9E;
+  border-radius: 4px;
+}
+
+.timeProgress .progressFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: #B2B2B2;
+  border-radius: 4px;
+  z-index: 1;
+}
+
+.volumeArea {
+  width: 176px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+
+}
+
+.volumeProgress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.volumeProgressFill {
+  position: relative;
+  width: 72px;
+  height: 4px;
+  background: #777777;
+  border-radius: 4px;
+}
+
+.volumeProgressFillInner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: #B2B2B2;
+  border-radius: 4px;
+  z-index: 1;
+}
+
+.sm_option {
+  display: none;
+}
+
+@media only screen and (max-width:424px) {
+  .player {
+    min-height: 183px;
+    flex-direction: column;
+    padding: 22px 24px;
+  }
+
+  .sName {
+    gap: 4px;
+  }
+
+  .sName p {
+    font-size: 20px;
+    line-height: 23px;
+  }
+
+  .sName span {
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  .volumeArea {
+    display: none;
+  }
+
+  .controlArea {
+    width: 100%;
+  }
+
+  .songInfoContainer {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .playerImg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .playerImg img {
+    width: 100%;
+  }
+
+  .sm_option {
+    display: block;
+  }
+}

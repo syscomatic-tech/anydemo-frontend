@@ -1,0 +1,13 @@
+version: '3.9'
+services:
+  frontend:
+    build:
+      context: '.'
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    container_name: anydemo-client
+    volumes:
+      - ./:/app
+    environment:
+      NEXT_PUBLIC_BASE_URL: https://api.syscomatic.com/api/v1
