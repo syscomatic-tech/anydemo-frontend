@@ -4,8 +4,7 @@ import toast from 'react-hot-toast';
 import { saveAs } from 'file-saver';
 
 // Base URL
-const baseURL =
-  process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:5050/api/v1';
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const token =
   typeof window !== 'undefined' ? localStorage.getItem('accessToken') : '';
