@@ -1,9 +1,10 @@
 'use client';
+
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
 import { useRegisterMutation } from '@/src/redux/features/auth/authApi';
@@ -14,6 +15,7 @@ import { toast } from 'react-hot-toast';
 
 const SignUpPage = () => {
   const { register, handleSubmit } = useForm();
+  const token = useSelector((state) => state.auth.token);
 
   const [registerUser] = useRegisterMutation();
 
@@ -23,7 +25,7 @@ const SignUpPage = () => {
 
   const handleGoogleLogin = async () => {
     dispatch(authenticateWithGoogle());
-    if (localStorage.getItem('accessToken')) {
+    if (token) {
       router.push('/login');
     }
   };
@@ -31,8 +33,6 @@ const SignUpPage = () => {
   const onSubmit = async (values) => {
     try {
       await registerUser(values).unwrap();
-
-      localStorage.setItem('email', values.email);
 
       router.push('/checkMailToVerify');
 

@@ -1,18 +1,15 @@
 'use client';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 
 import { updateProfile } from '../../axios/axios';
 
 import u from '../../styles/pages/dashboard/userAccount.module.css';
-import useLocalStorage from '@/src/hooks/useLocalStorage';
 
 const UserAccount = () => {
   const dispatch = useDispatch();
-  const [state] = useLocalStorage('accessToken');
-
-  const token = state;
+  const token = useSelector((state) => state.auth.token);
 
   const [formData, setFormData] = useState({
     name: '',

@@ -35,7 +35,6 @@ export default function LogInPage({ searchParams }) {
 
   const onSubmit = async (values) => {
     try {
-      localStorage.removeItem('email');
       await loginUser(values).unwrap();
       if (callback) {
         return router.push(callback);

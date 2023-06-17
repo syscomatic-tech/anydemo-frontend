@@ -1,3 +1,5 @@
+'use client';
+
 import { createSlice } from '@reduxjs/toolkit';
 import {
   registerUser,
@@ -7,14 +9,15 @@ import {
   resetPassword,
 } from '@/src/axios/axios';
 import { authApiSlice } from './authApi';
+import { getFromLocalStorage } from '@/src/utils/helpers';
 
 // Auth slice
 
 const authInitialState = {
-  user: localStorage.getItem('user')
-    ? JSON.parse(localStorage.getItem('user'))
+  user: getFromLocalStorage('user')
+    ? JSON.parse(getFromLocalStorage('user'))
     : null,
-  token: localStorage.getItem('accessToken') ?? null,
+  token: getFromLocalStorage('user') ?? null,
   loading: false,
   error: null,
   resetPasswordStatus: null,
@@ -121,6 +124,13 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     });
+    builder.addMatcher(
+      authApiSlice.endpoints.register.matchFulfilled,
+      (state, action) => {
+        const { user } = action.payload;
+        localStorage.setItem('email', user.email);
+      }
+    );
     builder.addMatcher(
       authApiSlice.endpoints.login.matchFulfilled,
       (state, action) => {
