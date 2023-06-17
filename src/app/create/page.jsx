@@ -18,6 +18,7 @@ import {
   setArtist,
   setVoice,
 } from '@/src/redux/features/music/musicConversionSlice';
+import useLocalStorage from '@/src/hooks/useLocalStorage';
 
 const MakeDemo = () => {
   const router = useRouter();
@@ -25,7 +26,8 @@ const MakeDemo = () => {
 
   const [convertMusic] = useConvertMusicMutation();
 
-  const token = useSelector((state) => state.auth.token);
+  const [state] = useLocalStorage('accessToken');
+  const token = state;
   const musicData = useSelector(selectConversionData);
 
   const [step2, setStep2] = useState(false);
