@@ -1,6 +1,9 @@
 // store/rootReducer.js
 import { combineReducers } from 'redux';
-import authReducer from '../features/authSlice';
+
+import { apiSlice } from '@/src/redux/api/api.slice';
+
+import authReducer from '@/src/redux/features/auth/authSlice';
 import profileReducer from '../features/profileSlice';
 import voiceReducer from '../features/voiceSlice';
 import musicConversionReducer from '../features/music/musicConversionSlice';
@@ -11,15 +14,16 @@ import emailVerificationReducer from '../features/emailVerificationSlice';
 import planReducer from '../features/planSlice';
 
 const rootReducer = combineReducers({
-    auth: authReducer,
-    profile: profileReducer,
-    voice: voiceReducer,
-    plan: planReducer,
-    musicConversion: musicConversionReducer,
-    musicDownload: musicDownloadReducer,
-    musicStream: musicStreamReducer,
-    userMusic: userMusicReducer,
-    emailVerification: emailVerificationReducer,
+  [apiSlice.reducerPath]: apiSlice.reducer,
+  auth: authReducer,
+  profile: profileReducer,
+  voice: voiceReducer,
+  plan: planReducer,
+  musicConversion: musicConversionReducer,
+  musicDownload: musicDownloadReducer,
+  musicStream: musicStreamReducer,
+  userMusic: userMusicReducer,
+  emailVerification: emailVerificationReducer,
 });
 
 export default rootReducer;

@@ -7,21 +7,30 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 
-import { convertMusic, getAllVoices } from '@/src/axios/axios';
+import { getAllVoices } from '@/src/axios/axios';
 import MainLayout from '@/src/components/layouts/MainLayout';
 import LoadingProgressModal from '@/src/components/LoadingProgressModal';
 
 import d from '../../styles/pages/demo.module.css';
+import { useConvertMusicMutation } from '@/src/redux/features/music/musicApi';
+import {
+  selectConversionData,
+  setArtist,
+  setVoice,
+} from '@/src/redux/features/music/musicConversionSlice';
 
 const MakeDemo = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+
+  const [convertMusic] = useConvertMusicMutation();
+
+  const token = useSelector((state) => state.auth.token);
+  const musicData = useSelector(selectConversionData);
+
   const [step2, setStep2] = useState(false);
   const [step3, setStep3] = useState(false);
-  const [audioData, setAudioData] = useState({
-    voice: '',
-    artist: '',
-  });
+
   const [openProgress, setOpenProgress] = useState(false);
   const { voices } = useSelector((state) => state.voice);
 
@@ -50,42 +59,66 @@ const MakeDemo = () => {
       },
     },
   };
+
   useEffect(() => {
-    if (audioData.voice !== '') {
-      setStep2(true);
-      dispatch(getAllVoices());
-    }
-  }, [audioData]);
+    dispatch(getAllVoices());
+  }, []);
+
   const fileInputRef = useRef(null);
   const handleAudioUpload = (event) => {
     const file = event.target.files[0];
     if (file && file.type === 'audio/mpeg') {
-      setAudioData({
-        ...audioData,
-        voice: file,
-      });
+      dispatch(setVoice(file));
     } else {
       toast.error('Please upload audio file');
     }
   };
   const selectArtist = (artistId) => {
-    setAudioData({
-      ...audioData,
-      artist: artistId,
-    });
+    dispatch(setArtist(artistId));
   };
 
   const handleLabelClick = () => {
     fileInputRef.current.click();
   };
-  const handleConvertMusic = () => {
-    if (audioData.artist === '') {
-      toast.error('Please select artist');
-    } else {
+  const handleConvertMusic = async () => {
+    if (!musicData.artist) {
+      return toast.error('Please select artist');
+    }
+
+    if (!token) {
+      toast.error('Login to get demo');
+      return router.push(`/login?from=${location.href}`);
+    }
+
+    const audioFormData = new FormData();
+
+    Object.entries(musicData).map(([key, value]) => {
+      audioFormData.append(key, value);
+    });
+
+    try {
       setOpenProgress(true);
-      dispatch(convertMusic(audioData));
+      await convertMusic(audioFormData).unwrap();
+
+      toast.success('Music has been successfully converted');
+      setOpenProgress(false);
+
+      router.push('/dashboard/myMusic');
+    } catch (err) {
+      setOpenProgress(false);
+      toast.error(err?.data?.message ?? err?.message);
     }
   };
+
+  useEffect(() => {
+    if (musicData.voice) {
+      setStep2(true);
+    }
+
+    if (musicData.artist) {
+      setStep3(true);
+    }
+  }, [musicData]);
 
   return (
     <div className='container'>

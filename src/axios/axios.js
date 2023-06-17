@@ -1,19 +1,36 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import Axios from 'axios';
 import toast from 'react-hot-toast';
 import { saveAs } from 'file-saver';
 
 // Base URL
+
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
-const token =
-  typeof window !== 'undefined' ? localStorage.getItem('accessToken') : '';
+const axios = Axios.create({
+  baseURL: baseURL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+axios.interceptors.request.use(
+  (config) => {
+    if (!config.headers.Authorization) {
+      const token = localStorage.getItem('accessToken');
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
 // Authenticated config with Authorization header
 const config = {
   headers: {
     'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json',
-    authorization: `Bearer ${token}`,
   },
 };
 
@@ -21,14 +38,12 @@ const configMT = {
   headers: {
     //multipart/form-data
     'Content-Type': 'multipart/form-data',
-    authorization: `Bearer ${token}`,
   },
 };
 const configOT = {
   headers: {
     //multipart/form-data
     'Content-Type': 'application/octet-stream',
-    authorization: `Bearer ${token}`,
   },
 };
 // Config with Content-Type header
@@ -49,6 +64,7 @@ export const registerUser = createAsyncThunk(
         configCT
       );
       toast.success(response?.data?.message || 'Registered Successfully!');
+
       if (response.status === 200) {
         localStorage.setItem('email', userData.email);
       }

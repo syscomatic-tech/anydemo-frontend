@@ -23,7 +23,7 @@
   font-size: 24px;
   line-height: 28px;
   text-align: center;
-  color: #FFFFFF;
+  color: #ffffff;
   opacity: 0.4;
   transition: all 0.3s ease-in-out;
 }
@@ -32,7 +32,7 @@
   width: 31px;
   height: 31px;
   border-radius: 50%;
-  background: #2F4668;
+  background: #2f4668;
 }
 
 .progress .active {
@@ -40,7 +40,7 @@
 }
 
 .active .circle {
-  background: linear-gradient(90deg, #19A7AD 11.69%, #1D8093 79.78%);
+  background: linear-gradient(90deg, #19a7ad 11.69%, #1d8093 79.78%);
 }
 
 .target.active span {
@@ -63,7 +63,7 @@
   width: 50%;
   height: 0;
   color: transparent;
-  border-bottom: 3px #4E4A88;
+  border-bottom: 3px #4e4a88;
   border-style: dashed;
 }
 
@@ -85,7 +85,7 @@
   font-weight: 500;
   font-size: 32px;
   line-height: 37px;
-  color: #32E5EB;
+  color: #32e5eb;
 }
 
 .upload button {
@@ -97,7 +97,16 @@
   align-items: center;
   justify-content: center;
   border: 2px solid;
-  border-image: linear-gradient(47.36deg, #2DF1E6 12.24%, #3694B0 37.45%, #468DB3 39.38%, #6F79BA 44.93%, #8D6BBF 49.97%, #9F63C2 54.29%, #A660C3 57.37%);
+  border-image: linear-gradient(
+    47.36deg,
+    #2df1e6 12.24%,
+    #3694b0 37.45%,
+    #468db3 39.38%,
+    #6f79ba 44.93%,
+    #8d6bbf 49.97%,
+    #9f63c2 54.29%,
+    #a660c3 57.37%
+  );
   border-image-slice: 1;
   border-radius: 8px;
   -webkit-background-clip: padding-box;
@@ -109,7 +118,7 @@
   font-size: 40px;
   line-height: 46px;
   text-align: start;
-  color: #FFFFFF;
+  color: #ffffff;
   margin-bottom: 48px;
 }
 
@@ -126,7 +135,11 @@
 }
 
 .demoCard:hover {
-  background: radial-gradient(49.86% 49.86% at 50% 49.86%, #3B343F 0%, #1D1F27 83.03%);
+  background: radial-gradient(
+    49.86% 49.86% at 50% 49.86%,
+    #3b343f 0%,
+    #1d1f27 83.03%
+  );
   opacity: 0.7;
 }
 
@@ -154,14 +167,14 @@
   font-weight: 700;
   font-size: 40px;
   line-height: 46px;
-  color: #32E5EB;
+  color: #32e5eb;
   margin-bottom: 34px;
 }
 
 .p_v_card {
   width: 380px;
   height: 451px;
-  background: linear-gradient(179.92deg, #3B343F 0.07%, #1D1F27 82.76%);
+  background: linear-gradient(179.92deg, #3b343f 0.07%, #1d1f27 82.76%);
   border-radius: 6px;
   overflow: hidden;
 }
@@ -201,7 +214,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #FFFFFF;
+  color: #ffffff;
   min-width: 102px;
   height: 42px;
   background: #232229;
@@ -229,7 +242,7 @@
   font-weight: 300;
   font-size: 18px;
   line-height: 27px;
-  color: #8F8F8F;
+  color: #8f8f8f;
   margin-top: 10px;
 }
 
@@ -245,7 +258,7 @@
   font-weight: 700;
   font-size: 32px;
   line-height: 130%;
-  color: #FFFFFD;
+  color: #fffffd;
 }
 
 .p_v_titleArea .rating {
@@ -260,7 +273,7 @@
   font-size: 12px;
   line-height: 4px;
   margin-left: 2.5px;
-  color: #FFFFFD;
+  color: #fffffd;
 }
 
 .p_v_btn {
@@ -270,13 +283,22 @@
 .p_v_btn button {
   width: 124px;
   height: 40px;
-  background: linear-gradient(47.36deg, #2DF1E6 12.24%, #3694B0 37.45%, #468DB3 39.38%, #6F79BA 44.93%, #8D6BBF 49.97%, #9F63C2 54.29%, #A660C3 57.37%);
+  background: linear-gradient(
+    47.36deg,
+    #2df1e6 12.24%,
+    #3694b0 37.45%,
+    #468db3 39.38%,
+    #6f79ba 44.93%,
+    #8d6bbf 49.97%,
+    #9f63c2 54.29%,
+    #a660c3 57.37%
+  );
   border-radius: 6px;
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
-  color: #FFFFFD;
+  color: #fffffd;
 }
 
 .p_v_card .premium {
@@ -298,7 +320,7 @@
   font-style: normal;
   font-weight: 500;
   font-size: 32px;
-  color: #FFFFFF;
+  color: #ffffff;
   white-space: nowrap;
 }
 
@@ -312,20 +334,31 @@
   max-width: 565px;
   width: 100%;
   height: 76px;
-  background: linear-gradient(212.36deg, #B843B7 27.16%, #A548B2 29.91%, #7D51A9 36.6%, #6058A2 42.71%, #4E5C9E 47.98%, #485E9C 51.81%, #4393BB 66.42%, #39EEF2 89.85%);
+  background: linear-gradient(
+    212.36deg,
+    #b843b7 27.16%,
+    #a548b2 29.91%,
+    #7d51a9 36.6%,
+    #6058a2 42.71%,
+    #4e5c9e 47.98%,
+    #485e9c 51.81%,
+    #4393bb 66.42%,
+    #39eef2 89.85%
+  );
   border-radius: 8px;
   font-weight: 500;
   font-size: 24px;
   text-align: center;
-  color: #FFF8F8;
+  color: #fff8f8;
 }
 
 @media only screen and (max-width: 1200px) {
   .upload {
-    width: 100%
+    width: 100%;
   }
 
   .upload button {
+    width: 100%;
     padding: 0;
   }
 }
@@ -376,12 +409,12 @@
   }
 
   .line {
-    top: 66%
+    top: 66%;
   }
 
   .line1,
   .line2 {
-    border-bottom: 1px #4E4A88;
+    border-bottom: 1px #4e4a88;
     border-style: dashed;
   }
 

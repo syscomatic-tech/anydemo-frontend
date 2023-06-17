@@ -6,18 +6,32 @@ import {
   authenticateWithGoogle,
   resetPassword,
 } from '@/src/axios/axios';
+import { authApiSlice } from './authApi';
 
 // Auth slice
+
+const authInitialState = {
+  user: localStorage.getItem('user')
+    ? JSON.parse(localStorage.getItem('user'))
+    : null,
+  token: localStorage.getItem('accessToken') ?? null,
+  loading: false,
+  error: null,
+  resetPasswordStatus: null,
+  forgetPasswordStatus: null,
+};
+
 const authSlice = createSlice({
   name: 'auth',
-  initialState: {
-    user: null,
-    loading: false,
-    error: null,
-    resetPasswordStatus: null,
-    forgetPasswordStatus: null,
+  initialState: authInitialState,
+  reducers: {
+    logout: (state, action) => {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('user');
+      state.user = null;
+      state.token = null;
+    },
   },
-  reducers: {},
   extraReducers: (builder) => {
     // Handling the registration request
     builder.addCase(registerUser.pending, (state) => {
@@ -55,6 +69,9 @@ const authSlice = createSlice({
     // Handling the logout request
     builder.addCase('auth/logout', (state) => {
       state.user = null;
+      state.token = null;
+      localStorage.removeItem('user');
+      localStorage.removeItem('accessToken');
     });
 
     // Handling the forget password request
@@ -104,8 +121,18 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     });
+    builder.addMatcher(
+      authApiSlice.endpoints.login.matchFulfilled,
+      (state, action) => {
+        const { user, accessToken } = action.payload;
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('user', JSON.stringify(user));
+        state.user = user;
+        state.token = accessToken;
+      }
+    );
   },
 });
-
 export const { actions } = authSlice;
+export const { logout } = actions;
 export default authSlice.reducer;

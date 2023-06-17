@@ -39,6 +39,14 @@ const ResendEmail = () => {
           <span>If you not got any mail, please clicking button below</span>
         </p>
         <button className={v.action}>Resend Email</button>
+        <Link
+          href='/login'
+          className={
+            'w-[399px] h-[48px] px-[32px] py-[13.5px] rounded-[8px] bg-white mb-5 text-center font-semibold'
+          }
+        >
+          Login
+        </Link>
         <p className={v.haveIssue}>
           <span>
             Any Question? Email us at{' '}

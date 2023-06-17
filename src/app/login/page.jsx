@@ -2,10 +2,10 @@
 
 import LogInPage from '@/src/components/loginPage/loginPage';
 
-export default function LogIn() {
+export default function LogIn(params) {
   return (
     <div className='container'>
-      <LogInPage />
+      <LogInPage {...params} />
     </div>
   );
 }

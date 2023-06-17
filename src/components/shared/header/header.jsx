@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProfile } from '@/src/axios/axios';
+import { logout } from '@/src/redux/features/auth/authSlice';
 
 const Header = () => {
   const router = useRouter();
@@ -15,7 +16,6 @@ const Header = () => {
   const [isLogin, setIsLogin] = useState(false);
   const user = useSelector((state) => state.profile.profile);
 
-  console.log('user', user);
   useEffect(() => {
     if (localStorage.getItem('accessToken')) {
       setIsLogin(true);
@@ -23,7 +23,7 @@ const Header = () => {
     }
   }, []);
   const handleLogout = () => {
-    localStorage.removeItem('accessToken');
+    dispatch(logout());
     setIsLogin(false);
     router.push('/login');
   };

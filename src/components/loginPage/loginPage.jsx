@@ -4,12 +4,21 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-hot-toast';
+import { useForm } from 'react-hook-form';
 
-import { loginUser, authenticateWithGoogle } from '../../axios/axios';
+import { useLoginMutation } from '@/src/redux/features/auth/authApi';
+import { authenticateWithGoogle } from '../../axios/axios';
 
-export default function LogInPage() {
-  const [formData, setFormData] = useState({ email: '', password: '' });
+export default function LogInPage({ searchParams }) {
+  const { register, handleSubmit } = useForm();
+
+  const callback = searchParams.from;
+
   const [showPassword, setShowPassword] = useState(false);
+
+  const [loginUser] = useLoginMutation();
+
   const dispatch = useDispatch();
   const router = useRouter();
   const user = useSelector((state) => state.auth.user);
@@ -20,21 +29,21 @@ export default function LogInPage() {
     }
   }, [user]);
 
-  const handleLogin = () => {
-    const userData = {
-      email: formData.email,
-      password: formData.password,
-    };
-    dispatch(loginUser(userData)); // Use dispatch instead of useDispatch
-  };
-
   const handleGoogleLogin = () => {
     dispatch(authenticateWithGoogle());
   };
 
-  const handleForm = (e) => {
-    e.preventDefault();
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const onSubmit = async (values) => {
+    try {
+      localStorage.removeItem('email');
+      await loginUser(values).unwrap();
+      if (callback) {
+        return router.push(callback);
+      }
+      router.push('/dashboard/overview');
+    } catch (err) {
+      toast.error(err?.data?.message ?? err?.message);
+    }
   };
 
   return (
@@ -52,15 +61,21 @@ export default function LogInPage() {
               <Image src='/img/login.png' width={445} height={485} alt='' />
             </div>
           </div>
-          <div className='formArea'>
+          <d className='formArea'>
             <h4>Login your Account</h4>
-            <div className='form'>
+            <form className='form' onSubmit={handleSubmit(onSubmit)}>
               <div className='formControl'>
                 <label htmlFor='email'>Email</label>
                 <input
-                  onChange={handleForm}
                   type='email'
                   name='email'
+                  {...register('email', {
+                    required: 'Email is required',
+                    pattern: {
+                      value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                      message: 'Invalid email',
+                    },
+                  })}
                   id='email'
                   placeholder='Enter your email'
                 />
@@ -68,9 +83,10 @@ export default function LogInPage() {
               <div className='formControl'>
                 <label htmlFor='password'>Password</label>
                 <input
-                  onChange={handleForm}
                   type={showPassword ? 'text' : 'password'}
-                  name='password'
+                  {...register('password', {
+                    required: 'Password is required',
+                  })}
                   id='password'
                   placeholder='Enter your password'
                 />
@@ -88,7 +104,7 @@ export default function LogInPage() {
                   Forgot Password?
                 </Link>
               </div>
-              <button onClick={() => handleLogin()} className='actionBtn'>
+              <button type='submit' className='actionBtn'>
                 Login
               </button>
               <div className='alternativeLigInOptions'>
@@ -115,8 +131,8 @@ export default function LogInPage() {
                   </Link>
                 </div>
               </div>
-            </div>
-          </div>
+            </form>
+          </d>
         </div>
       </div>
       {/* <Verify /> */}

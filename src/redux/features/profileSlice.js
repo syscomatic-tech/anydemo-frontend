@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getProfile, updateProfile } from '@/src/axios/axios';
+import { authApiSlice } from './auth/authApi';
 
 // Profile slice
 const profileSlice = createSlice({
@@ -41,6 +42,14 @@ const profileSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     });
+    builder.addMatcher(
+      authApiSlice.endpoints.login.matchFulfilled,
+      (state, action) => {
+        const { user } = action.payload;
+
+        state.profile = user;
+      }
+    );
   },
 });
 

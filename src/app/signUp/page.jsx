@@ -1,38 +1,25 @@
 'use client';
 import React, { useState } from 'react';
-import signUp from '../../styles/pages/auth.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useDispatch, useSelector } from 'react-redux';
-import { registerUser, authenticateWithGoogle } from '../../axios/axios';
 import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
+
+import { useRegisterMutation } from '@/src/redux/features/auth/authApi';
+import { authenticateWithGoogle } from '../../axios/axios';
+
+import signUp from '../../styles/pages/auth.module.css';
+import { toast } from 'react-hot-toast';
 
 const SignUpPage = () => {
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    password: '',
-  });
+  const { register, handleSubmit } = useForm();
+
+  const [registerUser] = useRegisterMutation();
+
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.auth);
-
-  const handleRegistration = async () => {
-    const { fullName, email, password } = formData;
-
-    const userData = {
-      fullName,
-      email,
-      password,
-    };
-
-    dispatch(registerUser(userData));
-
-    if (localStorage.getItem('email') === email) {
-      router.push('/checkMailToVerify');
-    }
-  };
 
   const handleGoogleLogin = async () => {
     dispatch(authenticateWithGoogle());
@@ -41,10 +28,21 @@ const SignUpPage = () => {
     }
   };
 
-  const handleForm = (e) => {
-    e.preventDefault();
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const onSubmit = async (values) => {
+    try {
+      await registerUser(values).unwrap();
+
+      localStorage.setItem('email', values.email);
+
+      router.push('/checkMailToVerify');
+
+      toast.success('User registered successfully');
+    } catch (err) {
+      console.log({ err: err.data });
+      toast.error(err?.data?.message ?? err?.message);
+    }
   };
+
   return (
     <div className='container'>
       <div className={signUp.header_logo}>
@@ -62,41 +60,47 @@ const SignUpPage = () => {
           </div>
           <div className='formArea'>
             <h4>Create Account</h4>
-            <div className='form'>
+            <form className='form' onSubmit={handleSubmit(onSubmit)}>
               <div className='formControl'>
                 <label htmlFor='text'>Full Name</label>
                 <input
-                  onChange={handleForm}
                   type='text'
                   id='name'
-                  name='fullName'
                   placeholder='Enter your full name'
+                  {...register('fullName', {
+                    required: 'Full name is required',
+                  })}
                 />
               </div>
               <div className='formControl'>
                 <label htmlFor='email'>Email</label>
                 <input
-                  onChange={handleForm}
                   type='email'
                   id='email'
-                  name='email'
+                  {...register('email', {
+                    required: 'Emaill is required',
+                    pattern: {
+                      value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                      message: 'Invalid email',
+                    },
+                  })}
                   placeholder='Enter your email'
                 />
               </div>
               <div className='formControl'>
                 <label htmlFor='password'>Password</label>
                 <input
-                  onChange={handleForm}
                   type={showPassword ? 'text' : 'password'}
                   id='password'
-                  name='password'
+                  {...register('password', {
+                    required: 'Password is required',
+                  })}
                   placeholder='Type your Password'
                 />
               </div>
               <div className='controlPassword'>
                 <div className='showPassword'>
                   <input
-                    onChange={handleForm}
                     onClick={() => setShowPassword(!showPassword)}
                     type='checkbox'
                     id='showPassword'
@@ -104,7 +108,7 @@ const SignUpPage = () => {
                   <label htmlFor='showPassword'>Show Password</label>
                 </div>
               </div>
-              <button className='actionBtn' onClick={handleRegistration}>
+              <button type='submit' className='actionBtn'>
                 Create account
               </button>
               <div className='alternativeLigInOptions'>
@@ -131,7 +135,7 @@ const SignUpPage = () => {
                   </Link>
                 </div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>

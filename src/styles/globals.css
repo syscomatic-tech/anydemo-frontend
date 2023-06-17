@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Ubuntu:wght@300;400;500;700&display=swap');
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --max-width: 1100px;
   --border-radius: 12px;
@@ -13,7 +17,7 @@
 
 body {
   width: 100%;
-  background: #0F0E19;
+  background: #0f0e19;
   font-family: 'Ubuntu';
   font-style: normal;
 }
@@ -60,7 +64,7 @@ button {
   height: 200px;
   left: -30px;
   top: 22px;
-  background: #B843B7;
+  background: #b843b7;
   filter: blur(200px);
   z-index: -1;
 }
@@ -71,7 +75,7 @@ button {
   height: 200px;
   right: 0px;
   bottom: 400px;
-  background: #B843B7;
+  background: #b843b7;
   filter: blur(200px);
   z-index: -1;
 }
@@ -92,7 +96,7 @@ button {
   height: 85%;
   left: 50%;
   top: 50%;
-  background: linear-gradient(179.92deg, #3B343F 0.07%, #1D1F27 82.76%);
+  background: linear-gradient(179.92deg, #3b343f 0.07%, #1d1f27 82.76%);
   transform: translate(-50%, -50%);
   border-radius: 20px;
   z-index: 100;
@@ -109,7 +113,7 @@ button {
   font-weight: 700;
   font-size: 40px;
   line-height: 46px;
-  color: #FFFFFF;
+  color: #ffffff;
   text-align: center;
 }
 
@@ -119,7 +123,7 @@ button {
   margin-top: 100px;
   width: 70%;
   height: 47px;
-  background: #2F4668;
+  background: #2f4668;
   border-radius: 20px;
 }
 
@@ -128,7 +132,16 @@ button {
   height: 100%;
   top: 0;
   left: 0;
-  background: linear-gradient(47.36deg, #2DF1E6 12.24%, #3694B0 37.45%, #468DB3 39.38%, #6F79BA 44.93%, #8D6BBF 49.97%, #9F63C2 54.29%, #A660C3 57.37%);
+  background: linear-gradient(
+    47.36deg,
+    #2df1e6 12.24%,
+    #3694b0 37.45%,
+    #468db3 39.38%,
+    #6f79ba 44.93%,
+    #8d6bbf 49.97%,
+    #9f63c2 54.29%,
+    #a660c3 57.37%
+  );
   border-radius: 20px;
 }
 
@@ -137,7 +150,7 @@ button {
   top: -25px;
   font-weight: 500;
   font-size: 24px;
-  color: #FFFFFF;
+  color: #ffffff;
   transform: translate(-100%, -50%);
 }
 
@@ -159,20 +172,29 @@ button {
   gap: 40px;
   width: 89px;
   height: 40px;
-  color: #FFF8F8;
+  color: #fff8f8;
   border-radius: 8px;
   cursor: pointer;
 }
 
 .fillBtn {
-  background: linear-gradient(90deg, #23AFB7 1.46%, #169AA4 79.47%);
+  background: linear-gradient(90deg, #23afb7 1.46%, #169aa4 79.47%);
 }
 
 .btnTransparent {
-  --full: linear-gradient(47.36deg, #2DF1E6 12.24%, #3694B0 37.45%, #468DB3 39.38%, #6F79BA 44.93%, #8D6BBF 49.97%, #9F63C2 54.29%, #A660C3 57.37%);
+  --full: linear-gradient(
+    47.36deg,
+    #2df1e6 12.24%,
+    #3694b0 37.45%,
+    #468db3 39.38%,
+    #6f79ba 44.93%,
+    #8d6bbf 49.97%,
+    #9f63c2 54.29%,
+    #a660c3 57.37%
+  );
   border: solid 1px transparent;
   border-radius: 10px;
-  background: linear-gradient(to right bottom, #2DF1E6, #A660C3) border-box;
+  background: linear-gradient(to right bottom, #2df1e6, #a660c3) border-box;
 
   @supports (-webkit-mask-clip: text) {
     /* -webkit-text-fill-color: transparent; */
@@ -198,14 +220,22 @@ button {
 
 .pageTitle h1 {
   font-weight: 500;
-  color: #FFF8F8;
+  color: #fff8f8;
   font-size: 56px;
   line-height: 64px;
 }
 
-
 .pageTitle h1 span {
-  background: linear-gradient(57.89deg, #2DF1E6 61.08%, #3694B0 67.87%, #468DB3 68.39%, #6F79BA 69.88%, #8D6BBF 71.24%, #9F63C2 72.4%, #A660C3 73.23%);
+  background: linear-gradient(
+    57.89deg,
+    #2df1e6 61.08%,
+    #3694b0 67.87%,
+    #468db3 68.39%,
+    #6f79ba 69.88%,
+    #8d6bbf 71.24%,
+    #9f63c2 72.4%,
+    #a660c3 73.23%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -218,7 +248,7 @@ button {
   line-height: 27px;
   text-align: center;
   color: rgba(255, 255, 255, 0.7);
-  margin-top: 24PX;
+  margin-top: 24px;
 }
 
 .formArea {
@@ -248,7 +278,16 @@ button {
   height: 561px;
   left: -38px;
   top: -38px;
-  background: linear-gradient(47.36deg, #2DF1E6 12.24%, #3694B0 37.45%, #468DB3 39.38%, #6F79BA 44.93%, #8D6BBF 49.97%, #9F63C2 54.29%, #A660C3 57.37%);
+  background: linear-gradient(
+    47.36deg,
+    #2df1e6 12.24%,
+    #3694b0 37.45%,
+    #468db3 39.38%,
+    #6f79ba 44.93%,
+    #8d6bbf 49.97%,
+    #9f63c2 54.29%,
+    #a660c3 57.37%
+  );
   border-radius: 5px;
   z-index: -1;
 }
@@ -259,7 +298,7 @@ button {
   font-weight: 700;
   font-size: 28px;
   line-height: 32px;
-  color: #FFFFFD;
+  color: #fffffd;
   margin-bottom: 56px;
 }
 
@@ -285,7 +324,7 @@ button {
   font-weight: 400;
   font-size: 24px;
   line-height: 28px;
-  color: #FFFFFD;
+  color: #fffffd;
 }
 
 .dashboardLayout .for label {
@@ -297,11 +336,11 @@ button {
   width: 100%;
   max-width: 100%;
   height: 48px;
-  background: #1D1C2D;
+  background: #1d1c2d;
   border-radius: 8px;
   border: none;
   padding: 15px;
-  color: #FFFFFD;
+  color: #fffffd;
 }
 
 .formControl input::placeholder,
@@ -326,7 +365,7 @@ button {
   font-weight: 400;
   font-size: 16px;
   line-height: 18px;
-  background: linear-gradient(0deg, #2DF1E6, #2DF1E6);
+  background: linear-gradient(0deg, #2df1e6, #2df1e6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -345,7 +384,7 @@ button {
 .showPassword input {
   width: 21px;
   height: 21px;
-  background: #D9D9D9;
+  background: #d9d9d9;
   border-radius: 2px;
 }
 
@@ -355,14 +394,14 @@ button {
   font-weight: 400;
   font-size: 18px;
   line-height: 21px;
-  color: #FFFFFD;
+  color: #fffffd;
 }
 
 .actionBtn {
   padding: 13.5px 32px;
   width: 100%;
   height: 48px;
-  background: linear-gradient(90deg, #23AFB7 1.46%, #169AA4 79.47%);
+  background: linear-gradient(90deg, #23afb7 1.46%, #169aa4 79.47%);
   border-radius: 8px;
   font-family: 'Ubuntu';
   font-style: normal;
@@ -370,14 +409,14 @@ button {
   font-size: 18px;
   line-height: 21px;
   text-align: center;
-  color: #FFF8F8;
+  color: #fff8f8;
   margin-top: 40px;
 }
 
 .s_btn {
   padding: 8px 24px;
-  color: #FFFFFD;
-  background: linear-gradient(90deg, #23AFB7 1.46%, #169AA4 79.47%);
+  color: #fffffd;
+  background: linear-gradient(90deg, #23afb7 1.46%, #169aa4 79.47%);
   border-radius: 6px;
   font-weight: 500;
   font-size: 16px;
@@ -386,12 +425,12 @@ button {
 
 .s_btn_t {
   background: transparent;
-  border: 1px solid #2DF1E6;
+  border: 1px solid #2df1e6;
 }
 
 .actionBtn_secondary {
   background: transparent;
-  border: 1px solid #2DF1E6;
+  border: 1px solid #2df1e6;
 }
 
 .alternativeLigInOptions {
@@ -405,7 +444,7 @@ button {
   font-weight: 500;
   font-size: 18px;
   line-height: 21px;
-  color: #FFFFFD;
+  color: #fffffd;
 }
 
 .alternativeLigInOptions .haveAccount p {
@@ -418,7 +457,16 @@ button {
 .alternativeLigInOptions .login {
   font-weight: 700;
   font-size: 16px;
-  background: linear-gradient(55.41deg, #2DF1E6 12.79%, #3694B0 54.92%, #468DB3 58.14%, #6F79BA 67.42%, #8D6BBF 75.85%, #9F63C2 83.06%, #A660C3 88.21%);
+  background: linear-gradient(
+    55.41deg,
+    #2df1e6 12.79%,
+    #3694b0 54.92%,
+    #468db3 58.14%,
+    #6f79ba 67.42%,
+    #8d6bbf 75.85%,
+    #9f63c2 83.06%,
+    #a660c3 88.21%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -463,10 +511,10 @@ button {
   font-weight: 500;
   font-size: 16px;
   line-height: 18px;
-  color: #FFFFFF;
+  color: #ffffff;
   width: 142px;
   height: 100%;
-  background: #1FC2C7;
+  background: #1fc2c7;
   border-radius: 0px 8px 8px 0px;
 }
 
@@ -476,13 +524,13 @@ button {
   font-weight: 400;
   font-size: 16px;
   line-height: 18px;
-  color: #FFFFFF;
+  color: #ffffff;
   transform: translateX(3px);
   border: solid 2px transparent;
   border-radius: 8px 0px 0px 8px;
   width: calc(100% - 145px);
   height: 42px;
-  background: #0F0E19;
+  background: #0f0e19;
 }
 
 .gradientBorder {
@@ -490,14 +538,23 @@ button {
   width: 100%;
   height: 100%;
   border-radius: 8px;
-  background: linear-gradient(47.36deg, #2DF1E6 12.24%, #3694B0 37.45%, #468DB3 39.38%, #6F79BA 44.93%, #8D6BBF 49.97%, #9F63C2 54.29%, #A660C3 57.37%);
+  background: linear-gradient(
+    47.36deg,
+    #2df1e6 12.24%,
+    #3694b0 37.45%,
+    #468db3 39.38%,
+    #6f79ba 44.93%,
+    #8d6bbf 49.97%,
+    #9f63c2 54.29%,
+    #a660c3 57.37%
+  );
   top: 0;
   left: 0;
   z-index: -1;
 }
 
 .dashboard_children_title {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .dashboard_children_title .title {
@@ -513,7 +570,7 @@ button {
 
 .subscriptionPlanCard {
   width: 100%;
-  background: linear-gradient(90deg, #206983 24.29%, #2F5377 79.78%);
+  background: linear-gradient(90deg, #206983 24.29%, #2f5377 79.78%);
   border-radius: 4px;
   padding: 32px;
   display: flex;
@@ -537,11 +594,11 @@ button {
   align-items: center;
   width: 131px;
   height: 34px;
-  background: linear-gradient(179.92deg, #3B343F 0.07%, #1D1F27 82.76%);
+  background: linear-gradient(179.92deg, #3b343f 0.07%, #1d1f27 82.76%);
   border-radius: 6px;
   font-size: 16px;
   line-height: 18px;
-  color: #FFFFFD;
+  color: #fffffd;
 }
 
 .sm_plan_btn {
@@ -552,7 +609,7 @@ button {
   font-weight: 500;
   font-size: 28px;
   line-height: 32px;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .featuresItems {
@@ -570,7 +627,7 @@ button {
   font-weight: 400;
   font-size: 16px;
   line-height: 18px;
-  color: #FFFFFD;
+  color: #fffffd;
 }
 
 @media only screen and (max-width: 1200px) {
@@ -637,7 +694,6 @@ button {
 }
 
 @media only screen and (max-width: 424px) {
-
   /* solide slider css start */
   .splide__slide {
     width: fit-content !important;
