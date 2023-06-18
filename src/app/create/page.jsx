@@ -19,6 +19,7 @@ import {
   setVoice,
 } from '@/src/redux/features/music/musicConversionSlice';
 import useLocalStorage from '@/src/hooks/useLocalStorage';
+import { selectToken } from '@/src/redux/features/auth/authSlice';
 
 const MakeDemo = () => {
   const router = useRouter();
@@ -26,8 +27,7 @@ const MakeDemo = () => {
 
   const [convertMusic] = useConvertMusicMutation();
 
-  const [state] = useLocalStorage('accessToken');
-  const token = state;
+  const token = useSelector(selectToken);
   const musicData = useSelector(selectConversionData);
 
   const [step2, setStep2] = useState(false);
@@ -107,8 +107,10 @@ const MakeDemo = () => {
 
       router.push('/dashboard/myMusic');
     } catch (err) {
-      setOpenProgress(false);
-      toast.error(err?.data?.message ?? err?.message);
+      if (token) {
+        setOpenProgress(false);
+        toast.error(err?.data?.message ?? err?.message);
+      }
     }
   };
 

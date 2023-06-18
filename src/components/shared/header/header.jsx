@@ -1,4 +1,5 @@
 'use client';
+
 import Image from 'next/image';
 import header from './../../../styles/pages/header.module.css';
 import Link from 'next/link';
@@ -6,25 +7,24 @@ import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProfile } from '@/src/axios/axios';
-import { logout } from '@/src/redux/features/auth/authSlice';
+import { logout, selectToken } from '@/src/redux/features/auth/authSlice';
 
 const Header = () => {
   const router = useRouter();
   const pathName = usePathname();
   const dispatch = useDispatch();
   const [activeMobNav, setActiveMobNav] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
+
   const user = useSelector((state) => state.profile.profile);
+  const accessToken = useSelector(selectToken);
 
   useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
-      setIsLogin(true);
+    if (accessToken) {
       dispatch(getProfile());
     }
   }, []);
   const handleLogout = () => {
     dispatch(logout());
-    setIsLogin(false);
     router.push('/login');
   };
   const lists = [
@@ -104,7 +104,7 @@ const Header = () => {
           </div>
           <div
             className={
-              header.header_links + ' ' + (isLogin ? header.profile_sm : '')
+              header.header_links + ' ' + (accessToken ? header.profile_sm : '')
             }
             style={{ display: activeMobNav ? 'flex' : '' }}
           >
@@ -122,7 +122,7 @@ const Header = () => {
                   )}
                 </li>
               ))}
-              {isLogin && (
+              {accessToken && (
                 <li className='lg_d_none' onClick={() => handleLogout()}>
                   <Link
                     href=''
@@ -140,7 +140,7 @@ const Header = () => {
                 </li>
               )}
             </ul>
-            {isLogin ? (
+            {accessToken ? (
               <div className={header.profile}>
                 <div
                   className={

@@ -2,7 +2,7 @@ import Image from 'next/image';
 import login from '../../styles/pages/auth.module.css';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
@@ -10,10 +10,11 @@ import { useForm } from 'react-hook-form';
 import { useLoginMutation } from '@/src/redux/features/auth/authApi';
 import { authenticateWithGoogle } from '../../axios/axios';
 
-export default function LogInPage({ searchParams }) {
+export default function LogInPage() {
+  const searchParams = useSearchParams();
   const { register, handleSubmit } = useForm();
 
-  const callback = searchParams.from;
+  const callback = searchParams.get('from');
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -36,6 +37,7 @@ export default function LogInPage({ searchParams }) {
   const onSubmit = async (values) => {
     try {
       await loginUser(values).unwrap();
+
       if (callback) {
         return router.push(callback);
       }

@@ -18,9 +18,9 @@ import d from '../../styles/pages/dashboard/dashboard.module.css';
 
 const DashboardLayout = () => {
   const [activeChildren, setActiveChildren] = useState(0);
-  const router = useRouter();
   const param = useParams();
   const user = useSelector((state) => state.profile.profile);
+
   const Children = () => {
     switch (param.category) {
       case 'overview':

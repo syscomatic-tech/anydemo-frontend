@@ -9,15 +9,12 @@ import {
   resetPassword,
 } from '@/src/axios/axios';
 import { authApiSlice } from './authApi';
-import { getFromLocalStorage } from '@/src/utils/helpers';
 
 // Auth slice
 
 const authInitialState = {
-  user: getFromLocalStorage('user')
-    ? JSON.parse(getFromLocalStorage('user'))
-    : null,
-  token: getFromLocalStorage('user') ?? null,
+  user: null,
+  token: null,
   loading: false,
   error: null,
   resetPasswordStatus: null,
@@ -135,10 +132,9 @@ const authSlice = createSlice({
       authApiSlice.endpoints.login.matchFulfilled,
       (state, action) => {
         const { user, accessToken } = action.payload;
-        localStorage.setItem('accessToken', accessToken);
-        localStorage.setItem('user', JSON.stringify(user));
         state.user = user;
         state.token = accessToken;
+        localStorage.setItem('anydemo-accessToken', accessToken);
       }
     );
   },
@@ -146,3 +142,5 @@ const authSlice = createSlice({
 export const { actions } = authSlice;
 export const { logout } = actions;
 export default authSlice.reducer;
+
+export const selectToken = (state) => state.auth.token;

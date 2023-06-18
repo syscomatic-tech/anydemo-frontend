@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google';
 import { Toaster } from 'react-hot-toast';
 
+import PersistProvider from '@/src/redux/PersistProvider';
 import { ReduxProvider } from '@/src/redux/provider';
 
 import './../styles/globals.css';
@@ -17,7 +18,7 @@ export default function RootLayout({ children }) {
     <html lang='en'>
       <body className={inter.className}>
         <ReduxProvider>
-          {children}
+          <PersistProvider>{children}</PersistProvider>
           <Toaster />
         </ReduxProvider>
       </body>

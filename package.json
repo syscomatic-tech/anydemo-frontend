@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev -p 3002",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3002",
     "lint": "next lint"
   },
   "dependencies": {
@@ -19,7 +19,8 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.44.3",
     "react-hot-toast": "^2.4.1",
-    "react-redux": "^8.0.7"
+    "react-redux": "^8.0.7",
+    "redux-persist": "^6.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",

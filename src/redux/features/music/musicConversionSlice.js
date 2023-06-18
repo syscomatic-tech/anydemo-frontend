@@ -16,7 +16,6 @@ const musicConversionSlice = createSlice({
       state.artist = action.payload;
     },
     setVoice: (state, action) => {
-      console.log({ file: action.payload });
       state.voice = action.payload;
     },
   },
