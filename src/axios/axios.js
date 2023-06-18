@@ -297,14 +297,21 @@ export const downloadedMusicList = createAsyncThunk(
 // streamMusic
 export const streamMusic = createAsyncThunk(
   'musicStream/streamMusic',
-  async (musicId) => {
+  async (music) => {
     try {
-      const response = await axios.get(
-        `${baseURL}/music/${musicId}/stream`,
-        configMT
-      );
-      console.log('streamMusic', response);
-      return response.data;
+      const response = await axios.get(`${baseURL}/music/${music._id}/stream`, {
+        ...configMT,
+        responseType: 'blob',
+      });
+
+      const blob = new Blob([response.data]);
+      const url = URL.createObjectURL(blob);
+
+      return {
+        music: url,
+        title: music.title,
+        author: music.author.fullName,
+      };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

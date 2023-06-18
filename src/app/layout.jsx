@@ -5,6 +5,7 @@ import PersistProvider from '@/src/redux/PersistProvider';
 import { ReduxProvider } from '@/src/redux/provider';
 
 import './../styles/globals.css';
+import MusicPlayer from '../components/Music/MusicPlayer';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,7 +19,10 @@ export default function RootLayout({ children }) {
     <html lang='en'>
       <body className={inter.className}>
         <ReduxProvider>
-          <PersistProvider>{children}</PersistProvider>
+          <PersistProvider>
+            {children}
+            <MusicPlayer />
+          </PersistProvider>
           <Toaster />
         </ReduxProvider>
       </body>

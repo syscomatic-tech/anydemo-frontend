@@ -10,7 +10,12 @@ export const musicApiSlice = apiSlice.injectEndpoints({
         body: music,
       }),
     }),
+    streamMusic: builder.query({
+      query: (musicId) => ({
+        url: `/music/${musicId}/stream`,
+      }),
+    }),
   }),
 });
 
-export const { useConvertMusicMutation } = musicApiSlice;
+export const { useConvertMusicMutation, useStreamMusicQuery } = musicApiSlice;

@@ -5,6 +5,10 @@ const musicStreamSlice = createSlice({
   name: 'musicStream',
   initialState: {
     streamingMusic: null,
+    currentMusic: {
+      title: '',
+      author: '',
+    },
     loading: false,
     error: null,
   },
@@ -15,8 +19,13 @@ const musicStreamSlice = createSlice({
         state.loading = true;
       })
       .addCase(streamMusic.fulfilled, (state, action) => {
+        const { music, title, author } = action.payload;
         state.loading = false;
-        state.streamingMusic = action.payload;
+        state.streamingMusic = music;
+        state.currentMusic = {
+          title: title,
+          author: author,
+        };
       })
       .addCase(streamMusic.rejected, (state, action) => {
         state.loading = false;
@@ -28,5 +37,6 @@ const musicStreamSlice = createSlice({
 export const selectStreamingMusic = (state) => state.musicStream.streamingMusic;
 export const selectStreamLoading = (state) => state.musicStream.loading;
 export const selectStreamError = (state) => state.musicStream.error;
+export const selectCurrentMusic = (state) => state.musicStream.currentMusic;
 
 export default musicStreamSlice.reducer;

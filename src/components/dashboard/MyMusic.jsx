@@ -73,6 +73,10 @@ const MyMusic = () => {
     dispatch(downloadMusic(music));
   };
 
+  const onStreamMusic = (music) => {
+    dispatch(streamMusic(music));
+  };
+
   useEffect(() => {
     dispatch(fetchUserMusic());
   }, []);
@@ -96,6 +100,7 @@ const MyMusic = () => {
                 width={53.33}
                 height={53.33}
                 alt='playButton'
+                onClick={() => onStreamMusic(item)}
               />
               <div className={m.share}>
                 <Image
