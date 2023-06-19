@@ -20,21 +20,21 @@ import {
 } from '@/src/redux/features/music/musicConversionSlice';
 import useLocalStorage from '@/src/hooks/useLocalStorage';
 import { selectToken } from '@/src/redux/features/auth/authSlice';
+import { useGetAllVoiceQuery } from '@/src/redux/features/voice/voice.api';
 
 const MakeDemo = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
   const [convertMusic] = useConvertMusicMutation();
+  const { data: voices } = useGetAllVoiceQuery();
 
   const token = useSelector(selectToken);
   const musicData = useSelector(selectConversionData);
 
   const [step2, setStep2] = useState(false);
   const [step3, setStep3] = useState(false);
-
   const [openProgress, setOpenProgress] = useState(false);
-  const { voices } = useSelector((state) => state.voice);
 
   const options = {
     perPage: 3,
@@ -61,10 +61,6 @@ const MakeDemo = () => {
       },
     },
   };
-
-  useEffect(() => {
-    dispatch(getAllVoices());
-  }, []);
 
   const fileInputRef = useRef(null);
   const handleAudioUpload = (event) => {
