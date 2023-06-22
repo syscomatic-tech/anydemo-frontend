@@ -12,7 +12,15 @@ const musicStreamSlice = createSlice({
     loading: false,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    closePlayer: (state, action) => {
+      state.streamingMusic = null;
+      state.currentMusic = {
+        title: '',
+        author: '',
+      };
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(streamMusic.pending, (state) => {
@@ -39,4 +47,5 @@ export const selectStreamLoading = (state) => state.musicStream.loading;
 export const selectStreamError = (state) => state.musicStream.error;
 export const selectCurrentMusic = (state) => state.musicStream.currentMusic;
 
+export const { closePlayer } = musicStreamSlice.actions;
 export default musicStreamSlice.reducer;

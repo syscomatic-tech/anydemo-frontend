@@ -1,18 +1,26 @@
 'use client';
 
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ReactAudioPlayer from 'react-audio-player';
 import Image from 'next/image';
+import { X } from 'lucide-react';
 
 import {
+  closePlayer,
   selectCurrentMusic,
   selectStreamingMusic,
 } from '@/src/redux/features/music/musicStreamSlice';
 
 export default function MusicPlayer() {
+  const dispatch = useDispatch();
+
   const streamingMusic = useSelector(selectStreamingMusic);
   const currentMusic = useSelector(selectCurrentMusic);
+
+  const onClose = () => {
+    dispatch(closePlayer());
+  };
 
   return (
     <div
@@ -21,7 +29,7 @@ export default function MusicPlayer() {
       }`}
     >
       {streamingMusic && (
-        <div className='music-player-container max-w-[1200px] mx-auto flex justify-between gap-4'>
+        <div className='music-player-container max-w-[1200px] mx-auto flex justify-between items-center gap-4'>
           <div className='flex items-center gap-4'>
             <div className='music-cover'>
               <Image src='/img/poster.png' width={48} height={48} />
@@ -41,7 +49,13 @@ export default function MusicPlayer() {
           >
             Your browser does not support the audio tag
           </ReactAudioPlayer>
-          <div></div>
+          <span
+            title='Close player'
+            onClick={onClose}
+            className='cursor-pointer'
+          >
+            <X color='white' />
+          </span>
         </div>
       )}
     </div>

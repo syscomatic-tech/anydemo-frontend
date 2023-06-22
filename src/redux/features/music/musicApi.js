@@ -15,7 +15,16 @@ export const musicApiSlice = apiSlice.injectEndpoints({
         url: `/music/${musicId}/stream`,
       }),
     }),
+    getDownloadedMusic: builder.query({
+      query: () => ({
+        url: '/music/user/download',
+      }),
+    }),
   }),
 });
 
-export const { useConvertMusicMutation, useStreamMusicQuery } = musicApiSlice;
+export const {
+  useConvertMusicMutation,
+  useStreamMusicQuery,
+  useGetDownloadedMusicQuery,
+} = musicApiSlice;

@@ -1,18 +1,27 @@
 'use client';
-import { useEffect, useState } from 'react';
-import d from '../../styles/pages/dashboard/downloads.module.css';
+import { useState } from 'react';
 import Image from 'next/image';
-import AudioPlayer from '@/src/components/shared/AudioPlayer';
 import { useDispatch } from 'react-redux';
-import { downloadedMusicList } from '@/src/axios/axios';
+
+import { streamMusic } from '@/src/axios/axios';
+import { useGetDownloadedMusicQuery } from '@/src/redux/features/music/musicApi';
+
+import d from '../../styles/pages/dashboard/downloads.module.css';
+
 const Downloads = () => {
   const dispatch = useDispatch();
+  const { data: downloadedMusics } = useGetDownloadedMusicQuery();
 
   const [showOptions, setShowOptions] = useState(null);
 
-  useEffect(() => {
-    dispatch(downloadedMusicList());
-  }, []);
+  const onStreamMusic = (music) => {
+    const musicData = {
+      _id: music.music,
+      title: music.title,
+      author: music.author.fullName,
+    };
+    dispatch(streamMusic(musicData));
+  };
 
   return (
     <div className='dashboard_children'>
@@ -21,20 +30,26 @@ const Downloads = () => {
       </div>
       <div className={d.container}>
         <div className={d.songs}>
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((item, index) => (
+          {downloadedMusics?.map((item, index) => (
             <div key={index} className={d.song}>
               <div className={d.song_title}>
                 <div className={d.song_img}>
                   <Image width={48} height={48} src='/img/song.png' alt='' />
                 </div>
-                <span className={d.songName}>A Sky Full</span>
+                <span title={item.title} className={'truncate max-w-[150px]'}>
+                  {item.title}
+                </span>
               </div>
 
               <div className={d.info}>
-                <span className={d.category}>Bettles</span>
+                <span className={d.category}>{item.genre}</span>
                 <span className={d.time}>5:21</span>
                 <div className={d.icons}>
-                  <div className={d.playIcon}>
+                  <div
+                    className={d.playIcon}
+                    role='button'
+                    onClick={() => onStreamMusic(item)}
+                  >
                     <Image width={32} height={32} src='/svg/play.svg' alt='' />
                   </div>
                   <div className={d.threeDotsIcon}>
@@ -61,9 +76,6 @@ const Downloads = () => {
             </div>
           ))}
         </div>
-      </div>
-      <div className={d.player}>
-        <AudioPlayer />
       </div>
     </div>
   );
