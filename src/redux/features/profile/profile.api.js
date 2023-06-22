@@ -9,6 +9,14 @@ export const profileaApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: () => ['Profile'],
     }),
+    updateProfile: builder.mutation({
+      query: (body) => ({
+        url: '/user/profile',
+        method: 'PUT',
+        body: body,
+      }),
+      invalidatesTags: () => ['Profile'],
+    }),
     updateProfilePicture: builder.mutation({
       query: (body) => ({
         url: '/user/profile-picture',
@@ -20,5 +28,8 @@ export const profileaApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useUpdateProfilePictureMutation, useGetProfileQuery } =
-  profileaApiSlice;
+export const {
+  useUpdateProfileMutation,
+  useUpdateProfilePictureMutation,
+  useGetProfileQuery,
+} = profileaApiSlice;

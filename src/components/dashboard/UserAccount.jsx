@@ -1,72 +1,84 @@
 'use client';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Link from 'next/link';
 
-import { updateProfile } from '../../axios/axios';
+import Link from 'next/link';
+import { useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
+
+import { selectProfile } from '@/src/redux/features/profile/profileSlice';
+import { useUpdateProfileMutation } from '@/src/redux/features/profile/profile.api';
 
 import u from '../../styles/pages/dashboard/userAccount.module.css';
 
 const UserAccount = () => {
-  const dispatch = useDispatch();
+  const user = useSelector(selectProfile);
   const token = useSelector((state) => state.auth.token);
 
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    userName: '',
-    phone: '',
+  const [updateProfile, { isLoading }] = useUpdateProfileMutation();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { isDirty },
+  } = useForm({
+    defaultValues: {
+      fullName: user.fullName,
+      email: user.email,
+      username: user.username,
+      phoneNumber: user.phoneNumber,
+    },
   });
 
-  const handleForm = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleUpdateProfile = async (e) => {
-    e.preventDefault();
-    await dispatch(updateProfile(formData)); // Use dispatch instead of useDispatch
+  const onSubmit = async (values) => {
+    try {
+      await updateProfile(values).unwrap();
+      toast.success('Profile updated successfully');
+    } catch (err) {
+      toast.error(err?.data?.message ?? err?.message);
+    }
   };
 
   return (
     <div className='dashboard_children'>
       <div className='dashboard_children_title'>
         <h4 className='title'>Profile</h4>
-        <form className='form'>
+        <form className='form' onSubmit={handleSubmit(onSubmit)}>
           <div className={u.inputArea}>
             <div className='formControl'>
               <label htmlFor='name'>Full Name</label>
               <input
-                name='fullName'
                 type='text'
                 id='name'
-                onChange={handleForm}
+                {...register('fullName', { required: 'Full name is required' })}
               />
             </div>
             <div className='formControl'>
               <label htmlFor='email'>Email</label>
               <input
-                name='email'
                 type='email'
                 id='email'
-                onChange={handleForm}
+                {...register('email', { required: 'Email is required' })}
               />
             </div>
             <div className='formControl'>
               <label htmlFor='userName'>User Name</label>
               <input
-                name='username'
                 type='text'
                 id='userName'
-                onChange={handleForm}
+                {...register('username', { required: 'Username is required' })}
               />
             </div>
             <div className='formControl'>
               <label htmlFor='phone'>Mobile Number</label>
               <input
-                name='phoneNumber'
                 type='tel'
                 id='phone'
-                onChange={handleForm}
+                {...register('phoneNumber', {
+                  // pattern: {
+                  //   value: /^(?:(?:\+|)?\d{13}$/,
+                  //   message: 'Please enter a valid phone number',
+                  // },
+                })}
               />
             </div>
           </div>
@@ -74,11 +86,13 @@ const UserAccount = () => {
             <button
               type='submit'
               className='s_btn'
-              onClick={handleUpdateProfile}
+              disabled={!isDirty | isLoading}
             >
-              Update Profile
+              {isLoading ? ' Updating Profile' : ' Update Profile'}
             </button>
-            <button className='s_btn s_btn_t'>Reset</button>
+            <button type='reset' className='s_btn s_btn_t' disabled={isLoading}>
+              Reset
+            </button>
           </div>
         </form>
       </div>

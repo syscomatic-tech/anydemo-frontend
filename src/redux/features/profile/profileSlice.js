@@ -46,3 +46,5 @@ const profileSlice = createSlice({
 });
 
 export default profileSlice.reducer;
+
+export const selectProfile = (state) => state.profile.profile;
