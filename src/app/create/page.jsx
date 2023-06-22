@@ -101,7 +101,7 @@ const MakeDemo = () => {
       toast.success('Music has been successfully converted');
       setOpenProgress(false);
 
-      router.push('/dashboard/myMusic');
+      router.push('/dashboard/mymusic');
     } catch (err) {
       if (token) {
         setOpenProgress(false);
