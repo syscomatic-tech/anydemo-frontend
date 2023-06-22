@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
@@ -14,16 +14,19 @@ import Downloads from '@/src/components/dashboard/Downloads';
 import MyMusic from '@/src/components/dashboard/MyMusic';
 import ManageSubscription from '@/src/components/dashboard/ManageSubscription';
 import UserAccount from '@/src/components/dashboard/UserAccount';
+import { logout } from '@/src/redux/features/auth/authSlice';
 
 import Header from '../shared/header/header';
 import AudioPlayer from '../shared/AudioPlayer';
 import d from '../../styles/pages/dashboard/dashboard.module.css';
 
 const DashboardLayout = () => {
-  const [activeChildren, setActiveChildren] = useState(0);
+  const dispatch = useDispatch();
   const param = useParams();
+  const router = useRouter();
   const user = useSelector((state) => state.profile.profile);
 
+  const [activeChildren, setActiveChildren] = useState(0);
   const [updateProfilePicture] = useUpdateProfilePictureMutation();
 
   const Children = () => {
@@ -72,6 +75,10 @@ const DashboardLayout = () => {
       icon: '/svg/LogoutOutline.svg',
       title: 'log out',
       link: '/login',
+      action: () => {
+        dispatch(logout());
+        router.push('/login');
+      },
     },
   ];
 
@@ -133,25 +140,45 @@ const DashboardLayout = () => {
               <h4>{user?.fullName || 'N/A'}</h4>
             </div>
             <ul className={d.lists}>
-              {lists.map((list, index) => (
-                <Link key={index} href={list?.link}>
-                  <li
-                    className={
-                      list.link.includes(param.category) ? d.active : ''
-                    }
-                  >
-                    <div className={d.icon}>
-                      <Image
-                        src={list.icon}
-                        width={28}
-                        height={28}
-                        alt='icon'
-                      />
-                    </div>
-                    <span>{list.title}</span>
-                  </li>
-                </Link>
-              ))}
+              {lists.map((list, index) =>
+                list.action ? (
+                  <button key={index} onClick={list.action}>
+                    <li
+                      className={
+                        list.link.includes(param.category) ? d.active : ''
+                      }
+                    >
+                      <div className={d.icon}>
+                        <Image
+                          src={list.icon}
+                          width={28}
+                          height={28}
+                          alt='icon'
+                        />
+                      </div>
+                      <span>{list.title}</span>
+                    </li>
+                  </button>
+                ) : (
+                  <Link key={index} href={list?.link}>
+                    <li
+                      className={
+                        list.link.includes(param.category) ? d.active : ''
+                      }
+                    >
+                      <div className={d.icon}>
+                        <Image
+                          src={list.icon}
+                          width={28}
+                          height={28}
+                          alt='icon'
+                        />
+                      </div>
+                      <span>{list.title}</span>
+                    </li>
+                  </Link>
+                )
+              )}
             </ul>
             <div className={d.divider}></div>
           </div>

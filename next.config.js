@@ -4,6 +4,7 @@ const nextConfig = {
     //for all domains
     domains: ['th.bing.com', 'localhost', 'api.syscomatic.com'],
   },
+  plugins: [require('daisyui')],
 };
 
 module.exports = nextConfig;
