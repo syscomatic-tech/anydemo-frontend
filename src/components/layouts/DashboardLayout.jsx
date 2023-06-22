@@ -5,7 +5,10 @@ import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
+import { toast } from 'react-hot-toast';
 
+import { useUpdateProfilePictureMutation } from '@/src/redux/features/profile/profile.api';
+import { baseStorageURL } from '@/src/utils/url';
 import Overview from '@/src/components/dashboard/Overview';
 import Downloads from '@/src/components/dashboard/Downloads';
 import MyMusic from '@/src/components/dashboard/MyMusic';
@@ -20,6 +23,8 @@ const DashboardLayout = () => {
   const [activeChildren, setActiveChildren] = useState(0);
   const param = useParams();
   const user = useSelector((state) => state.profile.profile);
+
+  const [updateProfilePicture] = useUpdateProfilePictureMutation();
 
   const Children = () => {
     switch (param.category) {
@@ -69,6 +74,27 @@ const DashboardLayout = () => {
       link: '/login',
     },
   ];
+
+  const profilePicture = user.profilePicture
+    ? `${baseStorageURL}/user/${user.profilePicture}`
+    : '/img/user.png';
+
+  const handleProfilePicChange = async (e) => {
+    if (e.target.files.length > 1) {
+      toast.error('Please select a image to set profile picture');
+    }
+
+    const formData = new FormData();
+
+    formData.append('profilePicture', e.target.files[0]);
+
+    try {
+      await updateProfilePicture(formData).unwrap();
+    } catch (err) {
+      console.log({ err });
+    }
+  };
+
   return (
     <div className='dashboardLayout'>
       <div className='bgEffect1'></div>
@@ -81,20 +107,28 @@ const DashboardLayout = () => {
               <div className={d.imgArea}>
                 <div className={d.profileImage}>
                   <Image
-                    src='/img/header/profile.png'
+                    src={profilePicture}
                     width={120}
                     height={120}
                     alt='profile'
                   />
                 </div>
-                <div className={d.edit}>
+                <button className={d.edit}>
                   <Image
                     src='/svg/Plus.svg'
                     width={20}
                     height={20}
                     alt='edit'
                   />
-                </div>
+                  <input
+                    className='-indent-[999px] cursor-pointer absolute inline opacity-0 w-full h-full inset-0'
+                    type='file'
+                    accept='image/png, image/gif, image/jpeg'
+                    name='image'
+                    id='image'
+                    onChange={handleProfilePicChange}
+                  />
+                </button>
               </div>
               <h4>{user?.fullName || 'N/A'}</h4>
             </div>

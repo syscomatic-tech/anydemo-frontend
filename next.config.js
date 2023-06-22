@@ -2,8 +2,8 @@
 const nextConfig = {
   images: {
     //for all domains
-    domains: ['th.bing.com', '*'],
+    domains: ['th.bing.com', 'localhost', 'api.syscomatic.com'],
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

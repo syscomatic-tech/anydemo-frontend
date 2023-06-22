@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getProfile, updateProfile } from '@/src/axios/axios';
-import { authApiSlice } from './auth/authApi';
+import { authApiSlice } from '../auth/authApi';
+import { profileaApiSlice } from './profile.api';
 
 // Profile slice
 const profileSlice = createSlice({
@@ -12,21 +13,6 @@ const profileSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getProfile.pending, (state) => {
-      state.loading = true;
-      state.error = null;
-    });
-
-    builder.addCase(getProfile.fulfilled, (state, action) => {
-      state.loading = false;
-      state.profile = action.payload;
-    });
-
-    builder.addCase(getProfile.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    });
-
     //Update Profile
     builder.addCase(updateProfile.pending, (state) => {
       state.loading = true;
@@ -48,6 +34,12 @@ const profileSlice = createSlice({
         const { user } = action.payload;
 
         state.profile = user;
+      }
+    );
+    builder.addMatcher(
+      profileaApiSlice.endpoints.getProfile.matchFulfilled,
+      (state, action) => {
+        state.profile = action.payload;
       }
     );
   },

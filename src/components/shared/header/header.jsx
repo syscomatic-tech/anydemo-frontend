@@ -1,13 +1,17 @@
 'use client';
 
-import Image from 'next/image';
-import header from './../../../styles/pages/header.module.css';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
+import Image from 'next/image';
+
+import Link from 'next/link';
 import { getProfile } from '@/src/axios/axios';
 import { logout, selectToken } from '@/src/redux/features/auth/authSlice';
+import { baseStorageURL } from '@/src/utils/url';
+
+import header from './../../../styles/pages/header.module.css';
+import { useGetProfileQuery } from '@/src/redux/features/profile/profile.api';
 
 const Header = () => {
   const router = useRouter();
@@ -18,15 +22,15 @@ const Header = () => {
   const user = useSelector((state) => state.profile.profile);
   const accessToken = useSelector(selectToken);
 
-  useEffect(() => {
-    if (accessToken) {
-      dispatch(getProfile());
-    }
-  }, []);
+  useGetProfileQuery({
+    skip: accessToken === '',
+  });
+
   const handleLogout = () => {
     dispatch(logout());
     router.push('/login');
   };
+
   const lists = [
     {
       icon: '/svg/UserCircleOutline.svg',
@@ -88,6 +92,10 @@ const Header = () => {
     },
   ];
 
+  const profilePicture = user.profilePicture
+    ? `${baseStorageURL}/user/${user.profilePicture}`
+    : '/img/user.png';
+
   return (
     <div className={header.header}>
       <div className='container'>
@@ -95,7 +103,8 @@ const Header = () => {
           <div className={header.header_logo}>
             <Link href='/'>
               <Image
-                src='/img/header/logo.png'
+                className='logo'
+                src={'/img/header/logo.png'}
                 width={40}
                 height={40}
                 alt='logo'
@@ -149,10 +158,11 @@ const Header = () => {
                   onClick={() => setActiveMobNav(!activeMobNav)}
                 >
                   <Image
-                    src='/img/header/profile.png'
+                    src={profilePicture}
                     width={40}
                     height={40}
                     alt='profile'
+                    className='rounded-full object-cover'
                   />
                   <p>{user?.fullName}</p>
                 </div>

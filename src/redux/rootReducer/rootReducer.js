@@ -4,7 +4,7 @@ import { combineReducers } from 'redux';
 import { apiSlice } from '@/src/redux/api/api.slice';
 
 import authReducer from '@/src/redux/features/auth/authSlice';
-import profileReducer from '../features/profileSlice';
+import profileReducer from '../features/profile/profileSlice';
 import voiceReducer from '../features/voice/voiceSlice';
 import musicConversionReducer from '../features/music/musicConversionSlice';
 import musicDownloadReducer from '../features/music/musicDownloadSlice';

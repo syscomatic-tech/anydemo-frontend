@@ -26,7 +26,11 @@
   "devDependencies": {
     "autoprefixer": "^10.4.14",
     "eslint": "^8.42.0",
+    "husky": "^8.0.3",
     "postcss": "^8.4.24",
     "tailwindcss": "^3.3.2"
+  },
+  "script": {
+    "prepare": "husky install"
   }
 }

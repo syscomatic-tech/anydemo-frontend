@@ -18,7 +18,7 @@
   right: -59px;
   height: 100%;
   width: 1px;
-  background: #FFFFFD;
+  background: #fffffd;
 }
 
 .imgArea {
@@ -32,12 +32,13 @@
   height: 100%;
   border-radius: 50%;
   overflow: hidden;
+  object-fit: cover;
 }
 
 .edit {
   width: 32px;
   height: 32px;
-  background: linear-gradient(90deg, #206983 24.29%, #2F5377 79.78%);
+  background: linear-gradient(90deg, #206983 24.29%, #2f5377 79.78%);
   border-radius: 50%;
   position: absolute;
   bottom: 0px;
@@ -61,12 +62,15 @@
   font-weight: 700;
   font-size: 28px;
   line-height: 32px;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .profileImage img {
-  width: 100%;
-  height: 100%;
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  object-position: top;
 }
 
 .lists li {
@@ -85,15 +89,15 @@
 
 .lists .active {
   position: relative;
-  background: linear-gradient(90deg, #23AFB7 1.46%, #169AA4 79.47%);
+  background: linear-gradient(90deg, #23afb7 1.46%, #169aa4 79.47%);
   padding-left: 24px;
 }
 
 .lists .active::before {
-  content: "";
+  content: '';
   width: 1px;
   height: 100%;
-  background: #32E5EB;
+  background: #32e5eb;
   position: absolute;
   right: -59px;
   top: 0px;
@@ -121,7 +125,7 @@
   font-weight: 500;
   font-size: 20px;
   line-height: 23px;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .childrenArea {

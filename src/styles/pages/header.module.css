@@ -3,7 +3,6 @@
   height: 116px;
   display: flex;
   align-items: center;
-
 }
 
 .header_container {
@@ -24,7 +23,7 @@
   column-gap: 214px;
 }
 
-.header_links>ul {
+.header_links > ul {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -36,7 +35,7 @@
   cursor: pointer;
 }
 
-.header_links>ul>li {
+.header_links > ul > li {
   font-family: 'Ubuntu';
   font-style: normal;
   font-weight: 400;
@@ -44,11 +43,11 @@
   line-height: 21px;
   text-align: center;
   text-transform: capitalize;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .header_links .active {
-  color: #32E5EB;
+  color: #32e5eb;
 }
 
 .header_profile {
@@ -71,7 +70,15 @@
   font-size: 16px;
   line-height: 18px;
 
-  color: #FFFFFF;
+  color: #ffffff;
+}
+
+.header_profile_logo img {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  object-fit: cover;
+  object-position: top;
 }
 
 .bar {
@@ -91,7 +98,7 @@
   padding: 21px 18px;
   align-items: start;
   top: 42px;
-  background: linear-gradient(179.92deg, #3B343F 0.07%, #1D1F27 82.76%);
+  background: linear-gradient(179.92deg, #3b343f 0.07%, #1d1f27 82.76%);
   border-radius: 5px;
   flex-direction: column;
   z-index: 10;
@@ -114,7 +121,7 @@
   font-size: 16px;
   line-height: 18px;
   white-space: nowrap;
-  color: #FFFFFD;
+  color: #fffffd;
   width: 100%;
   text-align: start;
 }
@@ -135,9 +142,7 @@
   padding-bottom: 20px;
 }
 
-
 @media only screen and (max-width: 1200px) {
-
   .header_links {
     column-gap: 0;
   }
@@ -160,7 +165,7 @@
     padding: 21px 18px;
     align-items: start;
     top: 42px;
-    background: linear-gradient(179.92deg, #3B343F 0.07%, #1D1F27 82.76%);
+    background: linear-gradient(179.92deg, #3b343f 0.07%, #1d1f27 82.76%);
     border-radius: 5px;
     flex-direction: column;
     z-index: 10;
@@ -182,7 +187,7 @@
     font-weight: 500;
     font-size: 16px;
     line-height: 18px;
-    color: #FFFFFD;
+    color: #fffffd;
     width: 100%;
     text-align: start;
   }
@@ -237,4 +242,5 @@
   }
 }
 
-@media only screen and (max-width: 570px) {}
+@media only screen and (max-width: 570px) {
+}
