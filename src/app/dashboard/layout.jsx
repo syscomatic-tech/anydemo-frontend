@@ -62,7 +62,7 @@ const DashboardLayout = ({ children }) => {
   ];
 
   const profilePicture =
-    user && user?.profilePicture
+    user && user.profilePicture
       ? `${baseStorageURL}/user/${user?.profilePicture}`
       : '/img/user.png';
 

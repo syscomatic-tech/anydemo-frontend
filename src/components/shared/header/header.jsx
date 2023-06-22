@@ -92,9 +92,10 @@ const Header = () => {
     },
   ];
 
-  const profilePicture = user.profilePicture
-    ? `${baseStorageURL}/user/${user.profilePicture}`
-    : '/img/user.png';
+  const profilePicture =
+    user && user.profilePicture
+      ? `${baseStorageURL}/user/${user?.profilePicture}`
+      : '/img/user.png';
 
   return (
     <div className={header.header}>
