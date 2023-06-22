@@ -17,7 +17,7 @@ const SignUpPage = () => {
   const { register, handleSubmit } = useForm();
   const token = useSelector((state) => state.auth.token);
 
-  const [registerUser] = useRegisterMutation();
+  const [registerUser, { isLoading }] = useRegisterMutation();
 
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
@@ -108,8 +108,8 @@ const SignUpPage = () => {
                   <label htmlFor='showPassword'>Show Password</label>
                 </div>
               </div>
-              <button type='submit' className='actionBtn'>
-                Create account
+              <button type='submit' className='actionBtn' disabled={isLoading}>
+                {isLoading ? 'Creating account...' : 'Create account'}
               </button>
               <div className='alternativeLigInOptions'>
                 <p>Or Sign up with</p>

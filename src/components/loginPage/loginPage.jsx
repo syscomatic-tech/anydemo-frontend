@@ -18,7 +18,7 @@ export default function LogInPage() {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const [loginUser] = useLoginMutation();
+  const [loginUser, { isLoading }] = useLoginMutation();
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -105,8 +105,8 @@ export default function LogInPage() {
                   Forgot Password?
                 </Link>
               </div>
-              <button type='submit' className='actionBtn'>
-                Login
+              <button type='submit' className='actionBtn' disabled={isLoading}>
+                {isLoading ? 'Logging in...' : 'Login'}
               </button>
               <div className='alternativeLigInOptions'>
                 <p>Or login with</p>
@@ -117,12 +117,6 @@ export default function LogInPage() {
                     height={32}
                     alt='google'
                     onClick={() => handleGoogleLogin()}
-                  />
-                  <Image
-                    src='/img/facebook.png'
-                    width={32}
-                    height={32}
-                    alt='facebook'
                   />
                 </div>
                 <div className='haveAccount'>
