@@ -38,7 +38,7 @@ const SignUpPage = () => {
 
       toast.success('User registered successfully');
     } catch (err) {
-      console.log({ err: err.data });
+      console.log({ err });
       toast.error(err?.data?.message ?? err?.message);
     }
   };

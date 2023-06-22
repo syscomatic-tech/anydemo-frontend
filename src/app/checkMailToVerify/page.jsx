@@ -3,10 +3,11 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import v from '../../styles/resendEmail.module.css';
+import useLocalStorage from '@/src/hooks/useLocalStorage';
+import v from '@/src/styles/resendEmail.module.css';
 
 const ResendEmail = () => {
-  const email = '';
+  const email = useLocalStorage('email');
 
   return (
     <div className={v.resendEmail}>

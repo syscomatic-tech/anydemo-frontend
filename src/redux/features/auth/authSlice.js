@@ -125,6 +125,7 @@ const authSlice = createSlice({
       authApiSlice.endpoints.register.matchFulfilled,
       (state, action) => {
         const { user } = action.payload;
+        console.log({ user });
         localStorage.setItem('email', user.email);
       }
     );

@@ -1,10 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import o from '../../styles/pages/dashboard/overview.module.css';
-import SubscriptionPlanCard from '@/src/components/SubscriptionPlanCard';
-import Link from 'next/link';
 import { useSelector } from 'react-redux';
+import Link from 'next/link';
+
+import SubscriptionPlanCard from '@/src/components/SubscriptionPlanCard';
+
+import o from '@/src/styles/pages/dashboard/overview.module.css';
 
 const Overview = () => {
   const user = useSelector((state) => state.profile.profile);
@@ -70,7 +72,7 @@ const Overview = () => {
       <div className='dashboard_children_title'>
         <div className={o.profileTitle}>
           <h4 className={o.p_title + ' ' + 'title'}>Profile</h4>
-          <Link href='/dashboard/userAccount'>
+          <Link href='/dashboard/user-account'>
             <button className='s_btn'>Edit Profile</button>
           </Link>
         </div>

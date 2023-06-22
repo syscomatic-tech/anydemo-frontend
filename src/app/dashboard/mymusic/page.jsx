@@ -1,11 +1,12 @@
 'use client';
 import Image from 'next/image';
-import m from '../../styles/pages/dashboard/myMusic.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+
 import { downloadMusic, fetchUserMusic, streamMusic } from '@/src/axios/axios';
-import Mp3Player from '@/src/components/Mp3Player';
 import { NoDataFound } from '@/src/components/helper';
+
+import m from '@/src/styles/pages/dashboard/myMusic.module.css';
 
 const MyMusic = () => {
   const dispatch = useDispatch();

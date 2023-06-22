@@ -1,50 +1,30 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import Image from 'next/image';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, usePathname } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 
 import { useUpdateProfilePictureMutation } from '@/src/redux/features/profile/profile.api';
 import { baseStorageURL } from '@/src/utils/url';
-import Overview from '@/src/components/dashboard/Overview';
-import Downloads from '@/src/components/dashboard/Downloads';
-import MyMusic from '@/src/components/dashboard/MyMusic';
-import ManageSubscription from '@/src/components/dashboard/ManageSubscription';
-import UserAccount from '@/src/components/dashboard/UserAccount';
-import { logout } from '@/src/redux/features/auth/authSlice';
+import { logout, selectToken } from '@/src/redux/features/auth/authSlice';
 
-import Header from '../shared/header/header';
-import AudioPlayer from '../shared/AudioPlayer';
-import d from '../../styles/pages/dashboard/dashboard.module.css';
+import Header from '@/src/components/shared/header/header';
+import d from '@/src/styles/pages/dashboard/dashboard.module.css';
 
-const DashboardLayout = () => {
+const DashboardLayout = ({ children }) => {
   const dispatch = useDispatch();
-  const param = useParams();
+  const pathname = usePathname();
+
   const router = useRouter();
   const user = useSelector((state) => state.profile.profile);
+  const token = useSelector(selectToken);
 
   const [activeChildren, setActiveChildren] = useState(0);
   const [updateProfilePicture] = useUpdateProfilePictureMutation();
 
-  const Children = () => {
-    switch (param.category) {
-      case 'overview':
-        return <Overview />;
-      case 'downloads':
-        return <Downloads />;
-      case 'myMusic':
-        return <MyMusic />;
-      case 'manageSubscription':
-        return <ManageSubscription />;
-      case 'userAccount':
-        return <UserAccount />;
-      default:
-        return <Overview />;
-    }
-  };
   const lists = [
     {
       icon: '/svg/UserCircleOutline.svg',
@@ -59,22 +39,21 @@ const DashboardLayout = () => {
     {
       icon: '/svg/ic_outline-music-note.svg',
       title: 'my music',
-      link: '/dashboard/myMusic',
+      link: '/dashboard/mymusic',
     },
     {
       icon: '/svg/Mask group.svg',
       title: 'manage subscription',
-      link: '/dashboard/manageSubscription',
+      link: '/dashboard/manage-subscription',
     },
     {
       icon: '/svg/mdi_user-outline.svg',
       title: 'user account',
-      link: '/dashboard/userAccount',
+      link: '/dashboard/user-account',
     },
     {
       icon: '/svg/LogoutOutline.svg',
       title: 'log out',
-      link: '/login',
       action: () => {
         dispatch(logout());
         router.push('/login');
@@ -101,6 +80,12 @@ const DashboardLayout = () => {
       console.log({ err });
     }
   };
+
+  useEffect(() => {
+    if (!token) {
+      router.push('/login');
+    }
+  }, [token]);
 
   return (
     <div className='dashboardLayout'>
@@ -143,11 +128,7 @@ const DashboardLayout = () => {
               {lists.map((list, index) =>
                 list.action ? (
                   <button key={index} onClick={list.action}>
-                    <li
-                      className={
-                        list.link.includes(param.category) ? d.active : ''
-                      }
-                    >
+                    <li className={pathname === list.link ? d.active : ''}>
                       <div className={d.icon}>
                         <Image
                           src={list.icon}
@@ -161,11 +142,7 @@ const DashboardLayout = () => {
                   </button>
                 ) : (
                   <Link key={index} href={list?.link}>
-                    <li
-                      className={
-                        list.link.includes(param.category) ? d.active : ''
-                      }
-                    >
+                    <li className={pathname === list.link ? d.active : ''}>
                       <div className={d.icon}>
                         <Image
                           src={list.icon}
@@ -182,9 +159,7 @@ const DashboardLayout = () => {
             </ul>
             <div className={d.divider}></div>
           </div>
-          <div className={d.childrenArea}>
-            <Children />
-          </div>
+          <div className='w-full'>{children}</div>
         </div>
       </div>
       <div>{activeChildren === 2 && <AudioPlayer />}</div>

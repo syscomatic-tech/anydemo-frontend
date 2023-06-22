@@ -1,10 +1,12 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import SubscriptionPlanCard from '@/src/components/SubscriptionPlanCard';
-import s from '../../styles/pages/subscription.module.css';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { NoDataFound } from '@/src/components/helper';
+import SubscriptionPlanCard from '@/src/components/SubscriptionPlanCard';
 import { cancelSubscription, getAllPlans } from '@/src/axios/axios';
+
+import s from '@/src/styles/pages/subscription.module.css';
 
 const ManageSubscription = () => {
   const [selectedPlan, setSelectedPlan] = useState({});
@@ -34,11 +36,10 @@ const ManageSubscription = () => {
         plan.annualPricingId || plan.monthlyPricingId === subscription?.priceId
     );
     setSelectedPlan(myPlan);
-    console.log('myPlan', myPlan);
   }, [plans, subscription]);
 
   return (
-    <div className='dashboard_children'>
+    <div className='max-h-[670px] overflow-y-scroll pb-5'>
       <div className='dashboard_children_title'>
         <h4 className='title'>Your Subscription Plan</h4>
         <SubscriptionPlanCard selected={true} data={selectedPlan} />

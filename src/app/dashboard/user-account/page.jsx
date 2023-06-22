@@ -1,18 +1,18 @@
 'use client';
 
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useController, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { X } from 'lucide-react';
 
 import { selectProfile } from '@/src/redux/features/profile/profileSlice';
 import { useUpdateProfileMutation } from '@/src/redux/features/profile/profile.api';
-
-import u from '../../styles/pages/dashboard/userAccount.module.css';
-import { useState } from 'react';
-import Modal from '../Modal';
-import Input from '../form/Input';
 import { useChangePasswordMutation } from '@/src/redux/features/auth/authApi';
+
+import Modal from '@/src/components/Modal';
+import Input from '@/src/components/form/Input';
+import u from '@/src/styles/pages/dashboard/userAccount.module.css';
 
 const ChangePasswordModal = ({ show, setShow }) => {
   const { control, handleSubmit, reset } = useForm();
@@ -95,9 +95,10 @@ const UserAccount = () => {
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
 
   const {
-    register,
     handleSubmit,
     formState: { isDirty },
+    control,
+    reset,
   } = useForm({
     defaultValues: {
       fullName: user.fullName,
@@ -120,52 +121,56 @@ const UserAccount = () => {
 
   return (
     <>
-      <div className='dashboard_children'>
+      <div className='max-h-[670px] overflow-y-scroll pb-5'>
         <div className='dashboard_children_title'>
           <h4 className='title'>Profile</h4>
-          <form className='form' onSubmit={handleSubmit(onSubmit)}>
+          <form
+            className='form'
+            onSubmit={handleSubmit(onSubmit)}
+            onReset={reset}
+          >
             <div className={u.inputArea}>
-              <div className='formControl'>
-                <label htmlFor='name'>Full Name</label>
-                <input
-                  type='text'
-                  id='name'
-                  {...register('fullName', {
-                    required: 'Full name is required',
-                  })}
-                />
-              </div>
-              <div className='formControl'>
-                <label htmlFor='email'>Email</label>
-                <input
-                  type='email'
-                  id='email'
-                  {...register('email', { required: 'Email is required' })}
-                />
-              </div>
-              <div className='formControl'>
-                <label htmlFor='userName'>User Name</label>
-                <input
-                  type='text'
-                  id='userName'
-                  {...register('username', {
-                    required: 'Username is required',
-                  })}
-                />
-              </div>
-              <div className='formControl'>
-                <label htmlFor='phone'>Mobile Number</label>
-                <input
-                  type='tel'
-                  id='phone'
-                  {...register('phoneNumber', {
-                    // pattern: {
-                    //   value: /^(?:(?:\+|)?\d{13}$/,
-                    //   message: 'Please enter a valid phone number',
-                    // },
-                  })}
-                />
-              </div>
+              <Input
+                control={control}
+                name='fullName'
+                label='Full name'
+                rules={{
+                  required: 'Full name is required',
+                }}
+              />
+              <Input
+                control={control}
+                name='email'
+                label='Email'
+                rules={{
+                  required: 'Email is required',
+                  pattern: {
+                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                    message: 'Please enter a valid email',
+                  },
+                }}
+              />
+
+              <Input
+                control={control}
+                name='username'
+                label='Username'
+                rules={{
+                  required: 'Username is required',
+                }}
+              />
+              <Input
+                control={control}
+                name='phoneNumber'
+                label='Phone number'
+                rules={{
+                  pattern: {
+                    value:
+                      /^\+?\d{1,3}?[-.\s]?\(?\d{1,3}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/,
+                    message: 'Please enter a valid phone number',
+                  },
+                }}
+              />
             </div>
             <div className={u.btnArea}>
               <button

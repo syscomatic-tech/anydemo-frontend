@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { streamMusic } from '@/src/axios/axios';
 import { useGetDownloadedMusicQuery } from '@/src/redux/features/music/musicApi';
 
-import d from '../../styles/pages/dashboard/downloads.module.css';
+import d from '@/src/styles/pages/dashboard/downloads.module.css';
 
 const Downloads = () => {
   const dispatch = useDispatch();
