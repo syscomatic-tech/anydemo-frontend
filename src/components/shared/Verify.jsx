@@ -1,21 +1,28 @@
 'use client';
 import Image from 'next/image';
-import v from '../../styles/verify.module.css';
 import Link from 'next/link';
-import { verifyEmail } from '../../axios/axios';
-import { useDispatch } from 'react-redux';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { toast } from 'react-hot-toast';
 
-const VerifyPage = ({ searchParams }) => {
-  const dispatch = useDispatch();
+import { useVerifyEmailAddressMutation } from '@/src/redux/features/auth/authApi';
+import v from '@/src/styles/verify.module.css';
+
+const VerifyPage = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const token = searchParams.token;
+  const token = searchParams.get('token');
 
-  const handleVerify = () => {
-    if (token) {
-      dispatch(verifyEmail(token));
+  const [verifyEmailAddress, { isLoading }] = useVerifyEmailAddressMutation();
+
+  const handleVerify = async () => {
+    try {
+      await verifyEmailAddress({ token }).unwrap();
+      toast.success('Email verification successful');
       router.push('/login');
+    } catch (err) {
+      console.log({ err });
+      toast.error(err?.data?.message ?? err?.message);
     }
   };
   return (
@@ -28,11 +35,11 @@ const VerifyPage = ({ searchParams }) => {
         <p className={v.tag}>
           <span>
             Thank you for signing up. Please verify your email address by
-            clicking the following link
+            clicking the following button
           </span>
         </p>
         <button className={v.action} onClick={handleVerify}>
-          confirm your email
+          {isLoading ? ' confirming your email...' : ' confirm your email'}
         </button>
         <p className={v.haveIssue}>
           <span>Have any issues? Visit</span> <Link href='#'> contact us</Link>
