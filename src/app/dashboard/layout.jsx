@@ -61,9 +61,10 @@ const DashboardLayout = ({ children }) => {
     },
   ];
 
-  const profilePicture = user.profilePicture
-    ? `${baseStorageURL}/user/${user.profilePicture}`
-    : '/img/user.png';
+  const profilePicture =
+    user && user?.profilePicture
+      ? `${baseStorageURL}/user/${user?.profilePicture}`
+      : '/img/user.png';
 
   const handleProfilePicChange = async (e) => {
     if (e.target.files.length > 1) {
