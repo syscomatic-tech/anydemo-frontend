@@ -1,10 +1,9 @@
-'use client';
-import React, { useState } from 'react';
-import reset from '../../styles/pages/auth.module.css';
-import Image from 'next/image';
-import { resetPassword } from '@/src/axios/axios';
-import { useDispatch } from 'react-redux';
-import { useRouter } from 'next/navigation';
+"use client";
+import React, { useState } from "react";
+import Image from "next/image";
+import { resetPassword } from "@/src/axios/axios";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
 
 const ResetPassword = ({ searchParams }) => {
   const router = useRouter();
@@ -13,9 +12,9 @@ const ResetPassword = ({ searchParams }) => {
   const token = searchParams.token;
 
   const [showPassword, setShowPassword] = useState(false);
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const handleResetPassword = () => {
     const data = {
@@ -25,73 +24,73 @@ const ResetPassword = ({ searchParams }) => {
 
     if (password === confirmPassword) {
       dispatch(resetPassword(data));
-      router.push('/login');
+      router.push("/login");
     }
   };
 
   const handleChangePassword = (event) => {
     setPassword(event.target.value);
-    setPasswordError('');
+    setPasswordError("");
   };
 
   const handleChangeConfirmPassword = (event) => {
     setConfirmPassword(event.target.value);
-    setPasswordError('');
+    setPasswordError("");
   };
 
   const validatePassword = () => {
     if (password !== confirmPassword) {
-      setPasswordError('Passwords do not match');
+      setPasswordError("Passwords do not match");
     }
   };
 
   return (
-    <div className={reset.reset}>
-      <div className='authContainer'>
-        <div className='loginImgArea'>
-          <div className='imgBox'>
-            <div className='bg'></div>
-            <Image src='/img/password.png' width={445} height={485} alt='' />
+    <div className="w-full min-h-[711px] h-full bg-[#0F0E19] flex items-center justify-center">
+      <div className="authContainer">
+        <div className="loginImgArea">
+          <div className="imgBox">
+            <div className="bg"></div>
+            <Image src="/img/password.png" width={445} height={485} alt="" />
           </div>
         </div>
-        <div className='formArea'>
+        <div className="formArea">
           <h4>Create New Password</h4>
-          <div className='form'>
-            <div className={`formControl ${reset.mb_40}`}>
-              <label htmlFor='password'>New Password</label>
+          <div className="form">
+            <div className={`formControl mb-[40px]`}>
+              <label htmlFor="password">New Password</label>
               <input
-                type={showPassword ? 'text' : 'password'}
-                id='password'
-                placeholder='Type your Password'
+                type={showPassword ? "text" : "password"}
+                id="password"
+                placeholder="Type your Password"
                 value={password}
                 onChange={handleChangePassword}
               />
             </div>
-            <div className={`formControl ${reset.mb_16}`}>
-              <label htmlFor='password'>Confirm Password</label>
+            <div className={`formControl mb-[16px]`}>
+              <label htmlFor="password">Confirm Password</label>
               <input
-                type={showPassword ? 'text' : 'password'}
-                id='password'
-                placeholder='Type your Password'
+                type={showPassword ? "text" : "password"}
+                id="password"
+                placeholder="Type your Password"
                 value={confirmPassword}
                 onChange={handleChangeConfirmPassword}
                 onBlur={validatePassword}
               />
               {passwordError && (
-                <div style={{ color: 'red' }}>{passwordError}</div>
+                <div style={{ color: "red" }}>{passwordError}</div>
               )}
             </div>
-            <div className='controlPassword'>
-              <div className='showPassword'>
+            <div className="controlPassword">
+              <div className="showPassword">
                 <input
                   onClick={() => setShowPassword(!showPassword)}
-                  type='checkbox'
-                  id='showPassword'
+                  type="checkbox"
+                  id="showPassword"
                 />
-                <label htmlFor='showPassword'>Show Password</label>
+                <label htmlFor="showPassword">Show Password</label>
               </div>
             </div>
-            <button className='actionBtn' onClick={handleResetPassword}>
+            <button className="actionBtn" onClick={handleResetPassword}>
               Reset password
             </button>
           </div>

@@ -1,21 +1,3 @@
-.header {
-  width: 100%;
-  height: 116px;
-  display: flex;
-  align-items: center;
-}
-
-.header_container {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.header_logo {
-  cursor: pointer;
-}
-
 .header_links {
   display: flex;
   flex-direction: row;
@@ -36,7 +18,7 @@
 }
 
 .header_links > ul > li {
-  font-family: 'Ubuntu';
+  font-family: "Ubuntu";
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
@@ -153,9 +135,9 @@
 }
 
 @media only screen and (max-width: 990px) {
-  .header_container {
+  /* .header_container {
     position: relative;
-  }
+  } */
 
   .header_links {
     position: absolute;
@@ -182,7 +164,7 @@
   }
 
   .header_links ul li {
-    font-family: 'Ubuntu';
+    font-family: "Ubuntu";
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
