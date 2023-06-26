@@ -5,46 +5,26 @@ import { useEffect, useState } from "react";
 
 import { downloadMusic, fetchUserMusic, streamMusic } from "@/src/axios/axios";
 import { NoDataFound } from "@/src/components/helper";
+import {
+  useGetConvertedMusicQuery,
+  useStreamMusicQuery,
+} from "@/src/redux/features/music/musicApi";
 
 const MyMusic = () => {
   const dispatch = useDispatch();
-  const { music } = useSelector((state) => state.userMusic);
-  const { streamingMusic, loading } = useSelector((state) => state.musicStream);
+
+  const [musicFile, setMusicFile] = useState("");
+  const [isLoading, setIsLoading] = useState(null);
+
   const { downloadedMusic, error } = useSelector(
     (state) => state.musicDownload
   );
-  const [isLoading, setIsLoading] = useState(null);
-  console.log("downloadedMusic", downloadedMusic, error);
+  const { data: musics } = useGetConvertedMusicQuery();
+  const { data: musicStream, isLoading: loading } = useStreamMusicQuery(
+    musicFile,
+    { skip: musicFile === "" }
+  );
 
-  const contentType = "audio/mpeg";
-  const fileName = "music.mp3";
-  // function downloadAudio(base64Data, fileName, contentType) {
-  //   const byteCharacters = atob(base64Data);
-  //   const byteArrays = [];
-
-  //   for (let offset = 0; offset < byteCharacters.length; offset += 512) {
-  //     const slice = byteCharacters.slice(offset, offset + 512);
-
-  //     const byteNumbers = new Array(slice.length);
-  //     for (let i = 0; i < slice.length; i++) {
-  //       byteNumbers[i] = slice.charCodeAt(i);
-  //     }
-
-  //     const byteArray = new Uint8Array(byteNumbers);
-  //     byteArrays.push(byteArray);
-  //   }
-
-  //   const blob = new Blob(byteArrays, { type: contentType });
-
-  //   const url = URL.createObjectURL(blob);
-
-  //   const link = document.createElement('a');
-  //   link.href = url;
-  //   link.download = fileName;
-  //   link.click();
-
-  //   URL.revokeObjectURL(url);
-  // }
   function downloadAudioChunks(audioData) {
     // 1. Extract audio data by removing the ID3 tag
     const audioDataWithoutID3 = audioData?.substring(10);
@@ -70,36 +50,18 @@ const MyMusic = () => {
   };
 
   const handleDownload = (music, index) => {
-    setIsLoading(index); // Set the loading state to true
+    // Set the loading state to true
 
-    dispatch(downloadMusic(music))
-      .then(() => {
-        setIsLoading(null); // Set the loading state to null if the dispatch succeeds
-      })
-      .catch(() => {
-        setIsLoading(null); // Set the loading state to null if the dispatch fails
-      });
+    dispatch(downloadMusic(music));
   };
 
   const onStreamMusic = (music, index) => {
-    setIsLoading(index); // Set the loading state to true
-
-    dispatch(streamMusic(music))
-      .then(() => {
-        setIsLoading(null); // Set the loading state to null if the dispatch succeeds
-      })
-      .catch(() => {
-        setIsLoading(null); // Set the loading state to null if the dispatch fails
-      });
+    setMusicFile(music?.song);
   };
-  useEffect(() => {
-    dispatch(fetchUserMusic());
-  }, []);
-
   return (
     <div className="dashboard_children max-h-[670px] overflow-y-scroll">
       <div className="grid  grid-cols-2 lg:grid-cols-[repeat(3,226px)] justify-between gap-y-12">
-        {music?.map((item, index) => (
+        {musics?.map((item, index) => (
           <div
             key={index}
             className="lg:w-[226px] w-11/12 min-h-[396px] rounded-lg bg-[linear-gradient(90deg,#206983_24.29%,#2f5377_79.78%)] group"
@@ -169,7 +131,7 @@ const MyMusic = () => {
           </div>
         ))}
       </div>
-      {music?.length <= 0 && <NoDataFound />}
+      {musics?.length <= 0 && <NoDataFound />}
     </div>
   );
 };

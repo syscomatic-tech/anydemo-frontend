@@ -4,11 +4,10 @@ import React from "react";
 
 const SubscriptionPlanCard = (props) => {
   const { data, selected } = props || {};
-  console.log(data);
   return (
     <div className="subscriptionPlanCard">
       <div className="subscriptionPlanCard_header">
-        <h4>{data?.title}</h4>
+        <h4 className="text-4xl text-white">{data?.title}</h4>
         {selected ? (
           <Link href="/pricing">
             <button className="plan_btn hover:!opacity-80 transition-all">

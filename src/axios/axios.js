@@ -299,10 +299,13 @@ export const streamMusic = createAsyncThunk(
   "musicStream/streamMusic",
   async (music) => {
     try {
-      const response = await axios.get(`${baseURL}/music/${music._id}/stream`, {
-        ...configMT,
-        responseType: "blob",
-      });
+      const response = await axios.get(
+        `${baseURL}/music/${music?.song}/stream`,
+        {
+          ...configMT,
+          responseType: "blob",
+        }
+      );
 
       const blob = new Blob([response.data]);
       const url = URL.createObjectURL(blob);

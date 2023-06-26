@@ -2,17 +2,18 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { getAllPlans, subscribeToPlan } from "@/src/axios/axios";
+
 import Loading from "@/src/components/shared/Loading";
 import MainLayout from "@/src/components/layouts/MainLayout";
 import useAos from "@/src/hooks/useAos";
+import { useGetAllPlanQuery } from "@/src/redux/features/plan/planApi";
 
 const SubscriptionPlan = () => {
   const dispatch = useDispatch();
-
-  const { plans, loading, planLoading } = useSelector((state) => state.plan);
+  const { data: plans, isLoading: loading } = useGetAllPlanQuery();
 
   const [active, setActive] = useState("month");
 
@@ -122,7 +123,7 @@ const SubscriptionPlan = () => {
                     }
                   >
                     <button
-                      disabled={planLoading}
+                      disabled={loading}
                       onClick={() =>
                         handleSubscribe(
                           active === "month"

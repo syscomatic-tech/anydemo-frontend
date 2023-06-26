@@ -1,23 +1,35 @@
-import { apiSlice } from '@/src/redux/api/api.slice';
+import { apiSlice } from "@/src/redux/api/api.slice";
 
 export const musicApiSlice = apiSlice.injectEndpoints({
   overrideExisting: true,
   endpoints: (builder) => ({
     convertMusic: builder.mutation({
       query: (music) => ({
-        url: '/music/convert',
-        method: 'POST',
+        url: "/music/convert",
+        method: "POST",
+        body: music,
+      }),
+    }),
+    isolateMusic: builder.mutation({
+      query: (music) => ({
+        url: "/music/isolate",
+        method: "POST",
         body: music,
       }),
     }),
     streamMusic: builder.query({
-      query: (musicId) => ({
-        url: `/music/${musicId}/stream`,
+      query: (songFile) => ({
+        url: `/music/${songFile}/stream`,
       }),
     }),
     getDownloadedMusic: builder.query({
       query: () => ({
-        url: '/music/user/download',
+        url: "/music/user/download",
+      }),
+    }),
+    getConvertedMusic: builder.query({
+      query: () => ({
+        url: "/music/user/",
       }),
     }),
   }),
@@ -27,4 +39,6 @@ export const {
   useConvertMusicMutation,
   useStreamMusicQuery,
   useGetDownloadedMusicQuery,
+  useIsolateMusicMutation,
+  useGetConvertedMusicQuery,
 } = musicApiSlice;

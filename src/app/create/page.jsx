@@ -26,7 +26,7 @@ const MakeDemo = () => {
 
   const [convertMusic] = useConvertMusicMutation();
   const { data: voices } = useGetAllVoiceQuery();
-
+  console.log("Voices", voices);
   const token = useSelector(selectToken);
   const musicData = useSelector(selectConversionData);
 
@@ -118,6 +118,7 @@ const MakeDemo = () => {
     }
   }, [musicData]);
   useAos();
+
   return (
     <div className="container">
       <MainLayout>
@@ -131,7 +132,7 @@ const MakeDemo = () => {
             </p>
           </div>
           <div
-            className="relative flex items-center justify-between px-20 mt-44"
+            className="relative flex items-center justify-between px-20 mt-36"
             data-aos="fade-up"
             data-aos-delay={400}
           >
@@ -149,7 +150,7 @@ const MakeDemo = () => {
                 className={`w-[31px] h-[31px] rounded-[50%] cursor-pointer ${
                   !step2 && !step3
                     ? " cursor-pointer bg-[linear-gradient(90deg,#19a7ad_11.69%,#1d8093_79.78%)]"
-                    : "bg-[#2f4668]"
+                    : "bg-[#2f4668] cursor-pointer"
                 }`}
               ></div>
             </div>
@@ -220,19 +221,19 @@ const MakeDemo = () => {
                       <div className="aspect-w-10 aspect-h-7">
                         <Image
                           className="object-cover group-hover:scale-105 transition-all"
-                          src={v?.artistImage}
+                          src={`https://fd1d-103-144-49-87.ngrok-free.app/files/voice/${v?.artistImage}`}
                           layout="fill"
                           alt=""
                         />
                       </div>
                     </div>
-                    <Image
+                    {/* <Image
                       className="absolute  -translate-x-2/4 -translate-y-2/4 opacity-0 transition-all duration-[0.3s] ease-[ease-in-out] left-2/4 top-2/4"
                       src="/img/check.png"
                       width={80}
                       height={80}
                       alt=""
-                    />
+                    /> */}
                     <div className="absolute font-medium text-2xl leading-[130%] flex items-center justify-center text-white min-w-[102px] h-[42px] rounded-[0px_12px_12px_0px] left-0 top-[22.5px] bg-[#232229]">
                       <p>{v?.genre}</p>
                     </div>

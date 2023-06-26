@@ -1,17 +1,17 @@
 // store/rootReducer.js
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 
-import { apiSlice } from '@/src/redux/api/api.slice';
+import { apiSlice } from "@/src/redux/api/api.slice";
 
-import authReducer from '@/src/redux/features/auth/authSlice';
-import profileReducer from '../features/profile/profileSlice';
-import voiceReducer from '../features/voice/voiceSlice';
-import musicConversionReducer from '../features/music/musicConversionSlice';
-import musicDownloadReducer from '../features/music/musicDownloadSlice';
-import musicStreamReducer from '../features/music/musicStreamSlice';
-import userMusicReducer from '../features/music/userMusicSlice';
-import emailVerificationReducer from '../features/emailVerificationSlice';
-import planReducer from '../features/planSlice';
+import authReducer from "@/src/redux/features/auth/authSlice";
+import profileReducer from "../features/profile/profileSlice";
+import voiceReducer from "../features/voice/voiceSlice";
+import musicConversionReducer from "../features/music/musicConversionSlice";
+import musicDownloadReducer from "../features/music/musicDownloadSlice";
+import musicStreamReducer from "../features/music/musicStreamSlice";
+import userMusicReducer from "../features/music/userMusicSlice";
+import emailVerificationReducer from "../features/emailVerificationSlice";
+import planReducer from "../features/plan/planSlice";
 
 const rootReducer = combineReducers({
   [apiSlice.reducerPath]: apiSlice.reducer,

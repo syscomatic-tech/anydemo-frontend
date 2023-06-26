@@ -99,7 +99,9 @@ const Overview = () => {
         data-aos-delay={600}
       >
         <h4 className="title">Your Current Plan</h4>
-        <SubscriptionPlanCard data={{ selected: true }} />
+        <SubscriptionPlanCard
+          data={{ selected: true, title: user?.subscription?.plan }}
+        />
       </div>
     </div>
   );

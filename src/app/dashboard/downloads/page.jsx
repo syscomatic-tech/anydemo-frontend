@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { streamMusic } from "@/src/axios/axios";
 import { useGetDownloadedMusicQuery } from "@/src/redux/features/music/musicApi";
 import Link from "next/link";
+import { NoDataFound } from "@/src/components/helper";
 
 const Downloads = () => {
   const dispatch = useDispatch();
@@ -17,9 +18,9 @@ const Downloads = () => {
       title: music.title,
       author: music.author.fullName,
     };
-    dispatch(streamMusic(musicData));
+    dispatch(streamMusic(music));
+    console.log(music);
   };
-  console.log(downloadedMusics);
   return (
     <div className="dashboard_children relative">
       <div className="dashboard_children_title">
@@ -91,6 +92,7 @@ const Downloads = () => {
           ))}
         </div>
       </div>
+      {downloadedMusics?.length <= 0 && <NoDataFound />}
     </div>
   );
 };

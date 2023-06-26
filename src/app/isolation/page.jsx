@@ -7,26 +7,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 
-import { getAllVoices } from "@/src/axios/axios";
 import MainLayout from "@/src/components/layouts/MainLayout";
 import LoadingProgressModal from "@/src/components/LoadingProgressModal";
 
-import { useConvertMusicMutation } from "@/src/redux/features/music/musicApi";
+import { useIsolateMusicMutation } from "@/src/redux/features/music/musicApi";
 import {
   selectConversionData,
-  setArtist,
   setVoice,
 } from "@/src/redux/features/music/musicConversionSlice";
-import useLocalStorage from "@/src/hooks/useLocalStorage";
 import { selectToken } from "@/src/redux/features/auth/authSlice";
-import { useGetAllVoiceQuery } from "@/src/redux/features/voice/voice.api";
+import useAos from "@/src/hooks/useAos";
 
 const MakeDemo = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const [convertMusic] = useConvertMusicMutation();
-  const { data: voices } = useGetAllVoiceQuery();
+  const [isolateMusic] = useIsolateMusicMutation();
 
   const token = useSelector(selectToken);
   const musicData = useSelector(selectConversionData);
@@ -68,9 +64,6 @@ const MakeDemo = () => {
       toast.error("Please upload audio file");
     }
   };
-  const selectArtist = (artistId) => {
-    dispatch(setArtist(artistId));
-  };
 
   const handleLabelClick = () => {
     fileInputRef.current.click();
@@ -86,15 +79,14 @@ const MakeDemo = () => {
     Object.entries(musicData).map(([key, value]) => {
       audioFormData.append(key, value);
     });
-
     try {
       setOpenProgress(true);
-      await convertMusic(audioFormData).unwrap();
+      await isolateMusic(audioFormData).unwrap();
 
       toast.success("Music has been successfully converted");
       setOpenProgress(false);
 
-      router.push("/dashboard/mymusic");
+      router.push("/dashboard/isolated-voices");
     } catch (err) {
       if (token) {
         setOpenProgress(false);
@@ -108,16 +100,24 @@ const MakeDemo = () => {
       setStep2(true);
     }
   }, [musicData]);
-
+  useAos();
   return (
     <div className="container">
       <MainLayout>
         <div className="py-[80px]">
           <div className="pageTitle">
-            <h1>Make a demo</h1>
-            <p>Choose Your Favorite Artist Voice to make your song</p>
+            <h1 data-aos="fade-up" data-aos-delay={200}>
+              Make a demo
+            </h1>
+            <p data-aos="fade-up" data-aos-delay={300}>
+              Choose Your Favorite Artist Voice to make your song
+            </p>
           </div>
-          <div className="relative flex items-center justify-between px-20 mt-44">
+          <div
+            className="relative flex items-center justify-between px-20 mt-36"
+            data-aos="fade-up"
+            data-aos-delay={400}
+          >
             <div
               className={`w-fit flex flex-col z-[2] `}
               onClick={() => {
@@ -128,9 +128,9 @@ const MakeDemo = () => {
                 01
               </span>
               <div
-                className={`w-[31px] h-[31px] rounded-[50%]  ${
+                className={`w-[31px] h-[31px] rounded-[50%] cursor-pointer ${
                   !step2
-                    ? "cursor-pointer bg-[linear-gradient(90deg,#19a7ad_11.69%,#1d8093_79.78%)]"
+                    ? " bg-[linear-gradient(90deg,#19a7ad_11.69%,#1d8093_79.78%)]"
                     : "bg-[#2f4668]"
                 }`}
               ></div>
@@ -162,13 +162,17 @@ const MakeDemo = () => {
             </div>
           </div>
           {!step2 && (
-            <div className="flex flex-col items-start gap-6 lg:w-[912px] mt-[65px] mb-[255px] mx-auto p-0">
+            <div
+              className="flex flex-col items-start gap-6 lg:w-[912px] mt-[65px] mb-[255px] mx-auto p-0"
+              data-aos="fade-up"
+              data-aos-delay={600}
+            >
               <h4 className=" font-medium text-[32px] leading-[37px] text-[#32e5eb]">
                 Upload Your Recording
               </h4>
               <label htmlFor="uploadAudio" onClick={handleLabelClick}>
                 <button
-                  className="lg:w-full w-[90vw] h-40 flex items-center justify-center bg-clip-padding  lg:px-[416px] py-[98px] rounded-lg border-2 border-solid bg-transparent   bg-clip-padding-box"
+                  className="lg:w-full w-[90vw] h-40 flex items-center justify-center bg-clip-padding  lg:px-[416px] py-[98px] rounded-lg border-2 border-solid bg-transparent  transition-all hover:bg-[#ffffff0c] bg-clip-padding-box"
                   style={{
                     borderImage:
                       "linear-gradient(47.36deg, #2df1e6 12.24%, #3694b0 37.45%, #468db3 39.38%, #6f79ba 44.93%, #8d6bbf 49.97%, #9f63c2 54.29%, #a660c3 57.37%)",

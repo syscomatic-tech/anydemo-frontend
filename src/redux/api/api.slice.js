@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
@@ -6,12 +6,12 @@ const baseQuery = fetchBaseQuery({
     const { token } = getState().auth;
 
     if (token) {
-      headers.set('authorization', `Bearer ${token}`);
+      headers.set("authorization", `Bearer ${token}`);
     }
-
+    headers.set("ngrok-skip-browser-warning", true);
     return headers;
   },
-  credentials: 'include', // This allows server to set cookies
+  credentials: "include", // This allows server to set cookies
 });
 
 const baseQueryWithReAuth = async (args, api, extraOptions) => {
@@ -41,7 +41,7 @@ const baseQueryWithReAuth = async (args, api, extraOptions) => {
 
 export const apiSlice = createApi({
   baseQuery: baseQueryWithReAuth,
-  tagTypes: ['Profile'],
+  tagTypes: ["Profile"],
   refetchOnReconnect: true,
   keepUnusedDataFor: 45,
   endpoints: (builder) => ({}),

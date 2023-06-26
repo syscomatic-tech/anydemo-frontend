@@ -12,6 +12,22 @@ const profileSlice = createSlice({
     error: null,
   },
   reducers: {},
+  extraReducers: (builder) => {
+    builder.addMatcher(
+      authApiSlice.endpoints.login.matchFulfilled,
+      (state, action) => {
+        const { user } = action.payload;
+
+        state.profile = user;
+      }
+    );
+    builder.addMatcher(
+      profileaApiSlice.endpoints.getProfile.matchFulfilled,
+      (state, action) => {
+        state.profile = action.payload;
+      }
+    );
+  },
 });
 
 export default profileSlice.reducer;

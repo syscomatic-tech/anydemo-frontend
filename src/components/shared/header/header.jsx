@@ -8,7 +8,6 @@ import { logout, selectToken } from "@/src/redux/features/auth/authSlice";
 import { baseStorageURL } from "@/src/utils/url";
 
 import { useGetProfileQuery } from "@/src/redux/features/profile/profile.api";
-import { useState } from "react";
 import { toast } from "react-hot-toast";
 
 const Header = () => {
@@ -17,15 +16,15 @@ const Header = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.profile.profile);
   const accessToken = useSelector(selectToken);
-
-  useGetProfileQuery({
+  const { data } = useGetProfileQuery({
     skip: accessToken === "",
   });
+  console.log(data);
   const handleLogout = async () => {
     try {
       dispatch(logout());
       toast("Logging you out...");
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulating a delay of 2 seconds
+      await new Promise((resolve) => setTimeout(resolve, 3000)); // Simulating a delay of 2 seconds
 
       router.push("/login");
       toast.success("Logged you out successfully!");
