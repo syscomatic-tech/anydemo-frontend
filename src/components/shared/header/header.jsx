@@ -39,27 +39,37 @@ const Header = () => {
   const lists = [
     {
       icon: "/svg/UserCircleOutline.svg",
-      title: "Overview",
+      title: "overview",
       path: "/dashboard/overview",
     },
     {
       icon: "/svg/DownloadOutline.svg",
-      title: "Downloads",
+      title: "downloads",
       path: "/dashboard/downloads",
     },
     {
+      icon: "/svg/voice_isolation.svg",
+      title: "Isolated Voice",
+      path: "/dashboard/isolated-voices",
+    },
+    {
       icon: "/svg/ic_outline-music-note.svg",
-      title: "My Music",
+      title: "my music",
       path: "/dashboard/mymusic",
     },
     {
+      icon: "/svg/custom-model.svg",
+      title: "custom models",
+      path: "/dashboard/custom-models",
+    },
+    {
       icon: "/svg/Mask group.svg",
-      title: "Manage Subscription",
+      title: "manage subscription",
       path: "/dashboard/manage-subscription",
     },
     {
       icon: "/svg/mdi_user-outline.svg",
-      title: "User Account",
+      title: "user account",
       path: "/dashboard/user-account",
     },
   ];
@@ -114,7 +124,7 @@ const Header = () => {
         <ul className="menu menu-horizontal px-1 gap-6 capitalize">
           <li
             className={
-              pathName.includes("create" || "isolation")
+              pathName.includes("create" || "isolation" || "custom")
                 ? "text-[#32e5eb] text-lg dropdown dropdown-hover transition-all  hover:text-[#32e5eb]"
                 : "not-italic font-normal text-lg leading-[21px] text-center transition-all  hover:text-[#32e5eb]  text-white dropdown dropdown-hover"
             }
@@ -150,7 +160,7 @@ const Header = () => {
                 <Link href="/isolation">Voice Isolation</Link>
               </li>
               <li className="py-2 text-white border-b hover:border-gray-200 transition-all hover:bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] hover:rounded   border-gray-500">
-                <Link href="/create">Custom Model</Link>
+                <Link href="/custom">Custom Model</Link>
               </li>
             </ul>
           </li>
@@ -254,7 +264,7 @@ const Header = () => {
                       <Link href="/isolation">Voice Isolation</Link>
                     </li>
                     <li className="py-2 text-white ">
-                      <Link href="#">Custom Model</Link>
+                      <Link href="/custom">Custom Model</Link>
                     </li>
                   </ul>
                 </li>

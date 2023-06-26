@@ -284,6 +284,7 @@ button {
     transform: scale(1);
   }
 }
+
 .btnTransparent {
   --full: linear-gradient(
     47.36deg,
@@ -318,7 +319,40 @@ button {
 .lg_d_none {
   display: none;
 }
+.loader {
+  display: flex;
+  align-items: center;
+}
 
+.barr {
+  display: inline-block;
+  width: 3px;
+  height: 20px;
+  background-color: rgb(0, 0, 0);
+  border-radius: 10px;
+  animation: scale-up4 1s linear infinite;
+}
+
+.barr:nth-child(2) {
+  height: 35px;
+  margin: 0 5px;
+  animation-delay: 0.25s;
+}
+
+.barr:nth-child(3) {
+  animation-delay: 0.5s;
+}
+
+@keyframes scale-up4 {
+  20% {
+    background-color: #ffff;
+    transform: scaleY(1.5);
+  }
+
+  40% {
+    transform: scaleY(1);
+  }
+}
 .pageTitle {
   text-align: center;
   font-family: "Ubuntu";

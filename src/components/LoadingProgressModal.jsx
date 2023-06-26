@@ -1,14 +1,15 @@
-'use client';
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+"use client";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import "../styles/globals.css";
 const LoadingProgressModal = (props) => {
   const { title, open, setOpen } = props;
   const [percent, setPercent] = useState(0);
   const { convertedMusic, loading } = useSelector(
     (state) => state.musicConversion
   );
-  console.log('percent', percent);
+  console.log("percent", percent);
   useEffect(() => {
     if (open) {
       let interval;
@@ -34,29 +35,30 @@ const LoadingProgressModal = (props) => {
   }, [open, percent, convertedMusic]);
 
   return (
-    <div className='modal'>
-      <div className='modal-content'>
+    <div className="modal modal-open">
+      <div className="modal-content">
         <div>
-          <div className='progressTitle'>
-            <h1>{title}</h1>
+          <div className="progressTitle">
+            <h1>
+              {title} : {percent}%{" "}
+            </h1>
           </div>
-          <div className='progress'>
-            <div className='track'>
+          <div className="progress ">
+            <div className="track">
               <div
                 style={{ width: `${percent + 5}%` }}
-                className='percent'
+                className="percent"
               ></div>
-              <span style={{ left: `${percent + 5}%` }} className='percentTag'>
+              <span style={{ left: `${percent + 5}%` }} className="percentTag">
                 {percent}%
               </span>
             </div>
           </div>
         </div>
-        `
-        <button className='crossBtn' onClick={() => setOpen(false)}>
-          <Image src='/img/cross.png' width={37.5} height={37.5} alt='cross' />
+
+        <button className="crossBtn" onClick={() => setOpen(false)}>
+          <Image src="/img/cross.png" width={37.5} height={37.5} alt="cross" />
         </button>
-        `
       </div>
     </div>
   );

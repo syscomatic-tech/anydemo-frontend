@@ -112,7 +112,7 @@ const MakeDemo = () => {
   return (
     <div className="container">
       <MainLayout>
-        <div className="py-[150px]">
+        <div className="py-[80px]">
           <div className="pageTitle">
             <h1>Make a demo</h1>
             <p>Choose Your Favorite Artist Voice to make your song</p>

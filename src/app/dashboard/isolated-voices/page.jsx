@@ -11,7 +11,7 @@ const Downloads = () => {
   const dispatch = useDispatch();
   const { data: downloadedMusics } = useGetDownloadedMusicQuery();
 
-  const onStreamMusic = (music, index) => {
+  const onStreamMusic = (music) => {
     const musicData = {
       _id: music.music,
       title: music.title,
@@ -19,12 +19,12 @@ const Downloads = () => {
     };
     dispatch(streamMusic(musicData));
   };
-  console.log(downloadedMusics);
+
   return (
     <div className="dashboard_children relative">
       <div className="dashboard_children_title">
         <h4 className="text-xl font-semibold" data-aos="fade-up">
-          Listen Your Downloaded Music
+          Listen Your Isolated Voices
         </h4>
       </div>
       <div className="mt-10">
@@ -47,12 +47,12 @@ const Downloads = () => {
 
               <div className="flex flex-row gap-3 lg:gap-20 items-center">
                 <span>{item.genre}</span>
-                <span>{item?.duration}</span>
+                <span>5:21</span>
                 <div className="flex flex-row gap-3 lg:gap-8 items-center ">
                   <div
                     className="w-8 h-8"
                     role="button"
-                    onClick={() => onStreamMusic(item, index)}
+                    onClick={() => onStreamMusic(item)}
                   >
                     <Image
                       width={32}
@@ -63,7 +63,7 @@ const Downloads = () => {
                     />
                   </div>
                   <div className="w-5 h-5 relative dropdown dropdown-end ">
-                    <label tabIndex={1}>
+                    <label tabIndex={0}>
                       <Image
                         width={20}
                         height={20}
@@ -74,15 +74,15 @@ const Downloads = () => {
                     </label>
                     <ul
                       className="   w-fit  cursor-pointer  capitalize dropdown-content absolute right-0 z-[100] menu p-2 shadow bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] rounded  "
-                      tabIndex={1}
+                      tabIndex={0}
                     >
                       <li className="py-2 text-white border-b hover:border-gray-200 transition-all hover:bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] hover:rounded   border-gray-500">
                         <Link href="#"> Remove from list</Link>
                       </li>
 
-                      {/* <li className="py-2 text-white border-b hover:border-gray-200 transition-all hover:bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] hover:rounded   border-gray-500">
+                      <li className="py-2 text-white border-b hover:border-gray-200 transition-all hover:bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] hover:rounded   border-gray-500">
                         <Link href="#">Share</Link>
-                      </li> */}
+                      </li>
                     </ul>
                   </div>
                 </div>

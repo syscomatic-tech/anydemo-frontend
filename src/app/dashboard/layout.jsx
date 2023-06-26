@@ -37,9 +37,19 @@ const DashboardLayout = ({ children }) => {
       link: "/dashboard/downloads",
     },
     {
+      icon: "/svg/voice_isolation.svg",
+      title: "Isolated Voice",
+      link: "/dashboard/isolated-voices",
+    },
+    {
       icon: "/svg/ic_outline-music-note.svg",
       title: "my music",
       link: "/dashboard/mymusic",
+    },
+    {
+      icon: "/svg/custom-model.svg",
+      title: "custom models",
+      link: "/dashboard/custom-models",
     },
     {
       icon: "/svg/Mask group.svg",
@@ -54,9 +64,19 @@ const DashboardLayout = ({ children }) => {
     {
       icon: "/svg/LogoutOutline.svg",
       title: "log out",
-      action: () => {
-        dispatch(logout());
-        router.push("/login");
+      action: async () => {
+        try {
+          dispatch(logout());
+          toast("Logging you out...");
+          await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulating a delay of 2 seconds
+
+          router.push("/login");
+          toast.success("Logged you out successfully!");
+        } catch (error) {
+          // Handle any errors that occur during the process
+          console.error("Logout failed:", error);
+          toast.error("Logout failed. Please try again!");
+        }
       },
     },
   ];
@@ -95,7 +115,7 @@ const DashboardLayout = ({ children }) => {
       <div className="bgEffect2"></div>
       <Header />
       <div className="container ">
-        <div className="flex flex-col lg:flex-row items-start lg:gap-[117px] lg:pt-[94px] pb-0 px-0   ">
+        <div className="flex flex-col lg:flex-row items-start lg:gap-[117px] lg:pt-[60px] pb-0 px-0   ">
           <div className="relative lg:min-w-[291px] lg:min-h-[668px] h-fit block">
             <div className="w-fit max-w-full  flex-col gap-4 items-center mb-16 hidden lg:flex">
               <div className=" relative w-[120px] h-[120px]">

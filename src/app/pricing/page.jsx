@@ -161,7 +161,8 @@ const SubscriptionPlan = () => {
             <div
               className="text-white hidden lg:block bg-transparent"
               data-aos="fade-right"
-              data-aos-delay={400}
+              data-aos-delay={300}
+              data-aos-offset="200"
             >
               <div className="mt-56">
                 <div className="lg:block hidden">
@@ -186,7 +187,12 @@ const SubscriptionPlan = () => {
                   </ul>
                 </div>
               </div>
-              <div className="mt-16" data-aos="fade-right" data-aos-delay={500}>
+              <div
+                className="mt-16"
+                data-aos="fade-right"
+                data-aos-delay={400}
+                data-aos-offset="200"
+              >
                 <div className="lg:block hidden">
                   <h3 className="font-bold text-[22px] lg:text-[28px] leading-8 text-[#1FC2C7]   mb-6 ">
                     Advanced features
@@ -220,6 +226,7 @@ const SubscriptionPlan = () => {
                 }
                 data-aos="fade-up"
                 data-aos-delay={400 * (i + 1)}
+                data-aos-offset="200"
               >
                 <div>
                   <h3 className="capitalize font-medium text-[28px] leading-8 pb-3 border-b-[0.3px] border-b-[#FFFFFD] border-solid">

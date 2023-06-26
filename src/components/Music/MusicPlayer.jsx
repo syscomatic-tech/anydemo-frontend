@@ -24,12 +24,12 @@ export default function MusicPlayer() {
 
   return (
     <div
-      className={`music-player-box fixed bottom-0 p-4 w-full z-[1000] bg-gradient-to-b from-[#3B343F] from-[0.07%] to-[#1D1F27] to-[82.76%] ${
+      className={`music-player-box w-[100vw] fixed bottom-0 p-4  z-[1000] bg-gradient-to-b from-[#3B343F] from-[0.07%] to-[#1D1F27] to-[82.76%] ${
         !streamingMusic && "hidden"
       }`}
     >
       {streamingMusic && (
-        <div className="music-player-container lg:max-w-[1200px] mx-auto flex lg:justify-between items-center gap-4">
+        <div className="music-player-container  mx-auto flex lg:justify-between items-center gap-4">
           <div className="flex items-center gap-4">
             <div className="music-cover">
               <Image src="/img/poster.png" width={48} height={48} />
@@ -42,7 +42,7 @@ export default function MusicPlayer() {
             </div>
           </div>
           <ReactAudioPlayer
-            className="flex-1  audio-player"
+            className=" w-1/2 audio-player"
             src={streamingMusic}
             controls
             autoPlay
