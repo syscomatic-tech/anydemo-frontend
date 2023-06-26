@@ -1,13 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { streamMusic } from '@/src/axios/axios';
+import { createSlice } from "@reduxjs/toolkit";
+import { streamMusic } from "@/src/axios/axios";
 
 const musicStreamSlice = createSlice({
-  name: 'musicStream',
+  name: "musicStream",
   initialState: {
     streamingMusic: null,
     currentMusic: {
-      title: '',
-      author: '',
+      title: "",
+      author: "",
     },
     loading: false,
     error: null,
@@ -16,8 +16,8 @@ const musicStreamSlice = createSlice({
     closePlayer: (state, action) => {
       state.streamingMusic = null;
       state.currentMusic = {
-        title: '',
-        author: '',
+        title: "",
+        author: "",
       };
     },
   },

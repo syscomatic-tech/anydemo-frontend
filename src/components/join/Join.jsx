@@ -1,17 +1,22 @@
+"use client";
+import useAos from "@/src/hooks/useAos";
 import Image from "next/image";
 const Join = () => {
+  useAos();
   return (
     <div className="w-full">
       <div className="pageTitle">
-        <h1>
+        <h1 data-aos="fade-up" data-aos-delay={200}>
           <span>Join</span> For Monetization
         </h1>
-        <p>Want to monetize your voice? we can help</p>
+        <p data-aos="fade-up" data-aos-delay={300}>
+          Want to monetize your voice? we can help
+        </p>
       </div>
 
       {/* for small screens  */}
 
-      <div className="lg:hidden">
+      <div className="lg:hidden" data-aos="fade-up" data-aos-delay={500}>
         <div className=" py-[30px] px-[6px]">
           <div className="form">
             <div className="formControl">
@@ -40,15 +45,16 @@ const Join = () => {
                 style={{ maxHeight: "80px" }}
                 type="text"
                 id="message"
+                placeholder="Your Message here..."
               />
             </div>
-            <div className="flex gap-[30px]  items-center justify-end">
-              <div className="w-full">
-                <button className="actionBtn actionBtn_secondary">Reset</button>
-              </div>
-              <div>
-                <button className="actionBtn">Submit</button>
-              </div>
+            <div className="flex gap-[15px]  items-center justify-center">
+              <button className="btnTransparent w-1/2">
+                <span>Reset</span>
+              </button>
+              <button className="mainBtn w-1/2">
+                <span>Submit</span>
+              </button>
             </div>
           </div>
         </div>
@@ -57,10 +63,18 @@ const Join = () => {
       {/* for large screens  */}
 
       <div className="hidden lg:flex  mt-[16px] mb-[20px]">
-        <div className="w-[570px] h-[774px]">
+        <div
+          className="w-[570px] h-[774px]"
+          data-aos="fade-right"
+          data-aos-delay={400}
+        >
           <Image src="/img/unsplash.png" width={570} height={774} />
         </div>
-        <div className="w-[calc(100%-570px)] border border-solid border-t-[1px] border-r-[1px] border-b-[1px] border-l-0 rounded-r-md border-[#23afb7] py-[30px] px-[60px]">
+        <div
+          className="w-[calc(100%-570px)] border border-solid border-t-[1px] border-r-[1px] border-b-[1px] border-l-0 rounded-r-md border-[#23afb7] py-[30px] px-[60px]"
+          data-aos="fade-left"
+          data-aos-delay={500}
+        >
           <div className="form">
             <div className="formControl">
               <label htmlFor="name">Artist’s Name</label>
@@ -88,14 +102,18 @@ const Join = () => {
                 style={{ maxHeight: "80px" }}
                 type="text"
                 id="message"
+                placeholder="Your message here..."
               />
             </div>
-            <div className="flex gap-[30px]  items-center justify-end">
-              <div className="w-[160px]">
-                <button className="actionBtn actionBtn_secondary">Reset</button>
-              </div>
+            <div className="flex gap-[15px]  items-center justify-end">
+              <button className="btnTransparent">
+                <span>Reset</span>
+              </button>
+
               <div>
-                <button className="actionBtn">Submit</button>
+                <button className="mainBtn">
+                  <span>Submit</span>
+                </button>
               </div>
             </div>
           </div>

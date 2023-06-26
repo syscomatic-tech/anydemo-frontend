@@ -11,6 +11,7 @@ import { useRegisterMutation } from "@/src/redux/features/auth/authApi";
 import { authenticateWithGoogle } from "../../axios/axios";
 
 import { toast } from "react-hot-toast";
+import Loading from "@/src/components/shared/Loading";
 
 const SignUpPage = () => {
   const { register, handleSubmit } = useForm();
@@ -33,9 +34,9 @@ const SignUpPage = () => {
     try {
       await registerUser(values).unwrap();
 
-      router.push("/checkMailToVerify");
-
       toast.success("User registered successfully");
+
+      router.push("/verify");
     } catch (err) {
       console.log({ err });
       toast.error(err?.data?.message ?? err?.message);
@@ -51,13 +52,17 @@ const SignUpPage = () => {
       </div>
       <div className="w-full min-h-[711px] h-full bg-[#0F0E19] flex items-center justify-center">
         <div className="authContainer">
-          <div className="loginImgArea">
+          <div
+            className="loginImgArea"
+            data-aos="fade-right"
+            data-aos-delay={300}
+          >
             <div className="imgBox">
               <div className="bg"></div>
               <Image src="/img/signup.png" width={445} height={485} alt="" />
             </div>
           </div>
-          <div className="formArea">
+          <div className="formArea" data-aos="fade-left" data-aos-delay={300}>
             <h4>Create Account</h4>
             <form className="form" onSubmit={handleSubmit(onSubmit)}>
               <div className="formControl">
@@ -98,17 +103,28 @@ const SignUpPage = () => {
                 />
               </div>
               <div className="controlPassword">
-                <div className="showPassword">
+                <div className="showPassword cursor-pointer">
                   <input
                     onClick={() => setShowPassword(!showPassword)}
                     type="checkbox"
                     id="showPassword"
+                    className="cursor-pointer accent-primary"
                   />
-                  <label htmlFor="showPassword">Show Password</label>
+                  <label
+                    htmlFor="showPassword"
+                    className="cursor-pointer font-semibold"
+                  >
+                    Show Password
+                  </label>
                 </div>
               </div>
-              <button type="submit" className="actionBtn" disabled={isLoading}>
-                {isLoading ? "Creating account..." : "Create account"}
+              {isLoading && <Loading></Loading>}
+              <button
+                type="submit"
+                className="mainBtn mt-10  w-full"
+                disabled={isLoading}
+              >
+                <span className="">Signup</span>
               </button>
               <div className="alternativeLigInOptions">
                 <p>Or Sign up with</p>

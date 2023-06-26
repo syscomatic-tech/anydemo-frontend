@@ -81,28 +81,32 @@ const MyMusic = () => {
   }, []);
 
   return (
-    <div className="dashboard_children">
+    <div className="dashboard_children max-h-[670px] overflow-y-scroll">
       <div className="grid  grid-cols-2 lg:grid-cols-[repeat(3,226px)] justify-between gap-y-12">
         {music?.map((item, index) => (
           <div
             key={index}
-            className="lg:w-[226px] w-11/12 min-h-[396px] rounded-lg bg-[linear-gradient(90deg,#206983_24.29%,#2f5377_79.78%)]"
+            className="lg:w-[226px] w-11/12 min-h-[396px] rounded-lg bg-[linear-gradient(90deg,#206983_24.29%,#2f5377_79.78%)] group"
+            data-aos="fade-up"
+            data-aos-delay={100 * (index + 1)}
           >
-            <div className="relative w-full h-[230px] overflow-hidden rounded-[8px_8px_0px_0px]">
+            <div
+              className="relative w-full h-[230px] overflow-hidden rounded-[8px_8px_0px_0px] cursor-pointer"
+              onClick={() => onStreamMusic(item)}
+            >
               <Image
-                className="w-full h-full object-cover object-center"
+                className="w-full h-full object-cover object-center group-hover:scale-110 transition-all"
                 src="/img/poster.png"
                 width={226}
                 height={230}
                 alt="songPoster"
               />
               <Image
-                className="cursor-pointer absolute -translate-x-2/4 -translate-y-2/4 left-2/4 top-2/4"
+                className=" absolute -translate-x-2/4 -translate-y-2/4 left-2/4 top-2/4"
                 src="/svg/play.svg"
                 width={53.33}
                 height={53.33}
                 alt="playButton"
-                onClick={() => onStreamMusic(item)}
               />
               <div className="cursor-pointer absolute w-6 h-6 flex items-center justify-center rounded-[50%] right-3 bottom-[21px] bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)]">
                 <Image
@@ -132,7 +136,7 @@ const MyMusic = () => {
               <button
                 disabled={loading}
                 onClick={() => handleDownload(item)}
-                className="not-italic w-full h-[34px] font-medium text-base leading-[18px] text-[#fffffd] rounded-md bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)]"
+                className="not-italic w-full h-[34px] font-medium text-base leading-[18px] text-[#fffffd] rounded-md bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] transition-all hover:opacity-80"
               >
                 Download
               </button>

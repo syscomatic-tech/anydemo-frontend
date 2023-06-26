@@ -224,7 +224,7 @@ const MakeDemo = () => {
                           />
                         </div>
                         <Image
-                          className="opacity-0 group-hover:opacity-100 transition-all duration-[0.3s] ease-[ease-in-out] absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2;"
+                          className="opacity-0 group-hover:opacity-100 transition-all duration-[0.3s] ease-[ease-in-out] absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2"
                           src="/svg/play.svg"
                           width={64}
                           height={64}

@@ -29,6 +29,23 @@ a {
   color: inherit;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: #a4a4a4;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(139, 139, 139);
+}
+
 ul {
   list-style: none;
 }
@@ -246,6 +263,7 @@ button {
   font-weight: 700;
   z-index: 20;
   transition: all 0.3s ease-in-out;
+  white-space: nowrap;
 }
 
 .mainBtn:hover span {
@@ -280,7 +298,7 @@ button {
   border: solid 1px transparent;
   border-radius: 10px;
   background: linear-gradient(to right bottom, #2df1e6, #a660c3) border-box;
-  padding: 10px;
+  padding: 8px 20px;
   font-size: 1.125em;
   font-weight: 700;
   color: #fff;
@@ -290,6 +308,7 @@ button {
     -webkit-mask-composite: xor;
     transition: all 0.5s ease-in-out;
   }
+  white-space: nowrap;
 }
 
 .btnTransparent:hover {

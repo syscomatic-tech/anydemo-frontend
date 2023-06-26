@@ -53,8 +53,8 @@ const ManageSubscription = () => {
               1 year 2month
             </span>
           </div>
-          <button className="s_btn" onClick={handleCancelSubscription}>
-            Cancel Subscription
+          <button className="mainBtn" onClick={handleCancelSubscription}>
+            <span> Cancel Subscription</span>
           </button>
         </div>
       </div>

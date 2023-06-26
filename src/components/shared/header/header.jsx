@@ -1,6 +1,4 @@
 "use client";
-
-import { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
@@ -10,23 +8,32 @@ import { logout, selectToken } from "@/src/redux/features/auth/authSlice";
 import { baseStorageURL } from "@/src/utils/url";
 
 import { useGetProfileQuery } from "@/src/redux/features/profile/profile.api";
+import { useState } from "react";
+import { toast } from "react-hot-toast";
 
 const Header = () => {
   const router = useRouter();
   const pathName = usePathname();
   const dispatch = useDispatch();
-  const [activeMobNav, setActiveMobNav] = useState(false);
-
   const user = useSelector((state) => state.profile.profile);
   const accessToken = useSelector(selectToken);
 
   useGetProfileQuery({
     skip: accessToken === "",
   });
+  const handleLogout = async () => {
+    try {
+      dispatch(logout());
+      toast("Logging you out...");
+      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulating a delay of 2 seconds
 
-  const handleLogout = () => {
-    dispatch(logout());
-    router.push("/login");
+      router.push("/login");
+      toast.success("Logged you out successfully!");
+    } catch (error) {
+      // Handle any errors that occur during the process
+      console.error("Logout failed:", error);
+      toast.error("Logout failed. Please try again!");
+    }
   };
 
   const lists = [
@@ -43,17 +50,17 @@ const Header = () => {
     {
       icon: "/svg/ic_outline-music-note.svg",
       title: "My Music",
-      path: "/dashboard/myMusic",
+      path: "/dashboard/mymusic",
     },
     {
       icon: "/svg/Mask group.svg",
       title: "Manage Subscription",
-      path: "/dashboard/manageSubscription",
+      path: "/dashboard/manage-subscription",
     },
     {
       icon: "/svg/mdi_user-outline.svg",
       title: "User Account",
-      path: "/dashboard/userAccount",
+      path: "/dashboard/user-account",
     },
   ];
   const mainMenu = [
@@ -101,13 +108,15 @@ const Header = () => {
           </Link>
         </div>
       </div>
+
+      {/* Visible for large screens only  */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 gap-6 capitalize">
           <li
             className={
               pathName.includes("create" || "isolation")
-                ? "text-[#32e5eb] text-lg dropdown dropdown-hover"
-                : "not-italic font-normal text-lg leading-[21px] text-center  text-white dropdown dropdown-hover"
+                ? "text-[#32e5eb] text-lg dropdown dropdown-hover transition-all  hover:text-[#32e5eb]"
+                : "not-italic font-normal text-lg leading-[21px] text-center transition-all  hover:text-[#32e5eb]  text-white dropdown dropdown-hover"
             }
           >
             <label tabIndex={0}>
@@ -131,16 +140,16 @@ const Header = () => {
               </span>
             </label>
             <ul
-              className="   w-fit  cursor-pointer  capitalize dropdown-content  z-[1] menu p-2 shadow bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] rounded  "
+              className="   w-fit  cursor-pointer  capitalize dropdown-content  z-[20] menu p-2 shadow bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] rounded  "
               tabIndex={0}
             >
-              <li className="py-2 text-white border-b  border-gray-500">
+              <li className="py-2 text-white border-b hover:border-gray-200 transition-all hover:bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] hover:rounded   border-gray-500">
                 <Link href="/create">Voice Cloning</Link>
               </li>
-              <li className="py-2 text-white border-b  border-gray-500">
+              <li className="py-2 text-white border-b hover:border-gray-200 transition-all hover:bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] hover:rounded   border-gray-500">
                 <Link href="/isolation">Voice Isolation</Link>
               </li>
-              <li className="py-2 text-white ">
+              <li className="py-2 text-white border-b hover:border-gray-200 transition-all hover:bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] hover:rounded   border-gray-500">
                 <Link href="/create">Custom Model</Link>
               </li>
             </ul>
@@ -151,8 +160,8 @@ const Header = () => {
               style={{ opacity: menu.status === "disabled" ? 0.4 : 1 }}
               className={
                 pathName.includes(menu.path)
-                  ? "text-[#32e5eb] text-lg"
-                  : "not-italic font-normal text-lg leading-[21px] text-center  text-white"
+                  ? "text-[#32e5eb] text-lg transition-all  hover:text-[#32e5eb]"
+                  : "not-italic font-normal text-lg leading-[21px] transition-all  hover:text-[#32e5eb] text-center  text-white"
               }
             >
               {menu.status === "disabled" ? (
@@ -166,6 +175,7 @@ const Header = () => {
       </div>
       <div className="navbar-end">
         <div className="dropdown dropdown-end">
+          {/* Logged in user's profile picture and the dropdown  */}
           {accessToken ? (
             <div className="">
               <label tabIndex={0} className="btn m-1 border-none">
@@ -186,17 +196,20 @@ const Header = () => {
                       {user?.fullName}
                     </p>
                   </div>
+
                   <Image
                     src="/img/header/burger.png"
-                    width={16.5}
-                    height={10.5}
+                    width={22.5}
+                    height={14.5}
                     alt="bar"
                     className="block lg:hidden cursor-pointer"
                   />
                 </div>{" "}
               </label>
+
+              {/* Visible for small screens  */}
               <ul
-                className="block lg:hidden  gap-10 w-fit  cursor-pointer  capitalize dropdown-content  z-[1] menu p-2 shadow bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] rounded  "
+                className="block lg:hidden  gap-10 w-fit  cursor-pointer  capitalize dropdown-content  z-[20] menu p-2 shadow bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] rounded  "
                 tabIndex={0}
               >
                 {accessToken && (
@@ -229,10 +242,10 @@ const Header = () => {
                       : "not-italic font-normal text-lg leading-[21px]   text-white border-b py-4  border-gray-500 dropdown dropdown-left"
                   }
                 >
-                  <label tabIndex={1}>Create</label>
+                  <label tabIndex={2}>Create</label>
                   <ul
-                    className="   w-fit  cursor-pointer  capitalize dropdown-content  z-[1] menu p-2 shadow bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] rounded  "
-                    tabIndex={1}
+                    className="   w-fit  cursor-pointer  capitalize dropdown-content  z-[20] menu p-2 shadow bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] rounded  "
+                    tabIndex={2}
                   >
                     <li className="py-2 text-white border-b  border-gray-500">
                       <Link href="/create">Voice Cloning</Link>
@@ -262,8 +275,8 @@ const Header = () => {
                     )}
                   </li>
                 ))}
-
-                {accessToken && (
+                {/* Visible for logged in users  */}
+                {accessToken ? (
                   <li onClick={() => handleLogout()} className="py-4">
                     <div className="mr-2">
                       <Image
@@ -277,17 +290,28 @@ const Header = () => {
                       </span>
                     </div>
                   </li>
+                ) : (
+                  <div className=" gap-3 w-fit h-10 p-0">
+                    {/* Visible for not logged in users  */}
+                    <Link href="/login" className={" btnTransparent"}>
+                      <span>Sign In</span>
+                    </Link>
+
+                    <Link href="/signup" className={"mainBtn"}>
+                      <span> Sign Up</span>
+                    </Link>
+                  </div>
                 )}
               </ul>
-
+              {/* Visible for large screens */}
               <ul
-                className="lg:block  gap-10 w-fit  cursor-pointer  capitalize dropdown-content z-[1] menu p-2 shadow bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] rounded  hidden"
+                className="lg:block  gap-10 w-fit  cursor-pointer  capitalize dropdown-content z-[20] menu p-2 shadow bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] rounded  hidden"
                 tabIndex={0}
               >
                 {lists.map((list, index) => (
                   <li
                     key={index}
-                    className="border-b py-4 text-white border-gray-500 "
+                    className="py-4 text-white border-b hover:border-gray-200 transition-all hover:bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] hover:rounded   border-gray-500"
                   >
                     <Link href={list.path}>
                       <div className="mr-2">
@@ -304,7 +328,10 @@ const Header = () => {
                     </Link>
                   </li>
                 ))}
-                <li onClick={() => handleLogout()} className="py-4">
+                <li
+                  onClick={() => handleLogout()}
+                  className="py-4 text-white border-b hover:border-gray-200 transition-all hover:bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] hover:rounded   border-gray-500"
+                >
                   <div className="mr-2">
                     <Image
                       src="/svg/LogoutOutline.svg"
@@ -321,11 +348,12 @@ const Header = () => {
             </div>
           ) : (
             <div className="flex flex-row items-center lg:gap-6 gap-3 w-fit h-10 p-0">
+              {/* Visible for not logged in users  */}
               <Link href="/login" className={" btnTransparent"}>
                 <span>Sign In</span>
               </Link>
 
-              <Link href="/signUp" className={"mainBtn"}>
+              <Link href="/signup" className={"mainBtn"}>
                 <span> Sign Up</span>
               </Link>
             </div>

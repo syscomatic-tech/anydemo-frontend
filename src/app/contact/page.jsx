@@ -1,4 +1,6 @@
+"use client";
 import MainLayout from "@/src/components/layouts/MainLayout";
+import useAos from "@/src/hooks/useAos";
 import Image from "next/image";
 
 export const metadata = {
@@ -15,13 +17,16 @@ const contact = () => {
       icon: "/svg/location.svg",
     },
   ];
+  useAos();
   return (
     <MainLayout>
       <div className="container">
         <div>
           <div className={"mt-[30px] pageTitle"}>
-            <h1>Get In Touch</h1>
-            <p>
+            <h1 data-aos="fade-up" data-aos-delay={200}>
+              Get In Touch
+            </h1>
+            <p data-aos="fade-up" data-aos-delay={300}>
               lputate Class aptent taciti sociosqu ad litora torquent per
               conubia nostra, per inceptos himenaeos.
             </p>
@@ -29,12 +34,20 @@ const contact = () => {
 
           {/* for small devices */}
 
-          <div className="lg:hidden">
+          <div className="lg:hidden" data-aos="fade-up" data-aos-delay={500}>
             <div className="mt-9">
-              <h3 className="font-bold text-[28px]  text-[#fffffd]">
+              <h3
+                className="font-bold text-[28px]  text-[#fffffd]"
+                data-aos="fade-up"
+                data-aos-delay={200}
+              >
                 Contact Information
               </h3>
-              <p className="font-normal text-lg  my-4 text-[#C9C9C9]">
+              <p
+                className="font-normal text-lg  my-4 text-[#C9C9C9]"
+                data-aos="fade-up"
+                data-aos-delay={400}
+              >
                 Say something to start a live chat!
               </p>
             </div>
@@ -72,22 +85,38 @@ const contact = () => {
                 <div className="">
                   <div className="formControl ">
                     <label htmlFor="firstName">First Name</label>
-                    <input type="text" id="firstName" />
+                    <input
+                      type="text"
+                      id="firstName"
+                      placeholder="Your First Name"
+                    />
                   </div>
                 </div>
                 <div className="formControl">
                   <label htmlFor="lastName">Last Name</label>
-                  <input type="text" id="lastName" />
+                  <input
+                    type="text"
+                    id="lastName"
+                    placeholder="Your Last Name"
+                  />
                 </div>
                 <div className="">
                   <div className="formControl ">
                     <label htmlFor="email">Email</label>
-                    <input type="email" id="email" />
+                    <input
+                      type="email"
+                      id="email"
+                      placeholder="Your Email Address"
+                    />
                   </div>
                 </div>
                 <div className="formControl">
                   <label htmlFor="phone">Phone Number</label>
-                  <input type="text" id="phone" />
+                  <input
+                    type="text"
+                    id="phone"
+                    placeholder="Your Phone Number"
+                  />
                 </div>
                 <div className="formControl">
                   <label htmlFor="message">Message</label>
@@ -108,7 +137,11 @@ const contact = () => {
           </div>
 
           {/* For Large screens */}
-          <div className="hidden  w-full h-full lg:flex items-stretch justify-center text-[#fffffd] mt-[100px] mb-[150px] mx-0 p-3.5 bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)]">
+          <div
+            className="hidden  w-full h-full lg:flex items-stretch justify-center text-[#fffffd] mt-[100px] mb-[150px] mx-0 p-3.5 bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)]"
+            data-aos="fade-up"
+            data-aos-delay={500}
+          >
             <div className="relative z-[1] overflow-hidden w-2/5 min-h-full flex flex-col justify-between p-10 rounded-[10px] bg-[linear-gradient(90deg,#206983_24.29%,#2f5377_79.78%)]">
               <div>
                 <h3 className="font-bold text-[28px]  text-[#fffffd]">
@@ -152,21 +185,37 @@ const contact = () => {
                 <div className="flex gap-x-11">
                   <div className="formControl w-1/2">
                     <label htmlFor="firstName">First Name</label>
-                    <input type="text" id="firstName" />
+                    <input
+                      type="text"
+                      id="firstName"
+                      placeholder="Your First Name"
+                    />
                   </div>
                   <div className="formControl">
                     <label htmlFor="lastName">Last Name</label>
-                    <input type="text" id="lastName" />
+                    <input
+                      type="text"
+                      id="lastName"
+                      placeholder="Your Last Name"
+                    />
                   </div>
                 </div>
                 <div className="flex gap-x-11">
                   <div className="formControl w-1/2">
                     <label htmlFor="email">Email</label>
-                    <input type="email" id="email" />
+                    <input
+                      type="email"
+                      id="email"
+                      placeholder="Your Email Address"
+                    />
                   </div>
                   <div className="formControl">
                     <label htmlFor="phone">Phone Number</label>
-                    <input type="text" id="phone" />
+                    <input
+                      type="text"
+                      id="phone"
+                      placeholder="Your Phone Number"
+                    />
                   </div>
                 </div>
                 <div className="formControl">

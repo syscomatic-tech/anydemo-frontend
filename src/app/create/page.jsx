@@ -204,7 +204,7 @@ const MakeDemo = () => {
                     className="w-[380px] h-[451px] overflow-hidden rounded-md relative bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)]"
                   >
                     <div
-                      className="w-full h-[296px] cursor-pointer relative"
+                      className="w-full max-h-[296px] cursor-pointer relative"
                       onClick={() => {
                         selectArtist(v?._id);
                         setStep3(true);
@@ -331,7 +331,7 @@ const MakeDemo = () => {
                 {["1", "2", "3", "4"].map((demo, index) => {
                   return (
                     <SplideSlide key={index}>
-                      <div className="w-[295px] h-[363px] cursor-pointer relative m-auto hover:opacity-70">
+                      <div className="w-[295px] h-[363px] cursor-pointer relative m-auto hover:opacity-70 group">
                         <div>
                           <Image
                             src="/img/demo01.png"
@@ -342,7 +342,7 @@ const MakeDemo = () => {
                           />
                         </div>
                         <Image
-                          className="opacity-0 transition-all duration-[0.3s] ease-[ease-in-out] absolute -translate-x-2/4 -translate-y-2/4 left-2/4 top-2/4;"
+                          className="opacity-0 group-hover:opacity-100 transition-all duration-[0.3s] ease-[ease-in-out] absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2"
                           src="/svg/play.svg"
                           width={64}
                           height={64}

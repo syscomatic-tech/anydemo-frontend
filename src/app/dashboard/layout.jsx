@@ -12,6 +12,7 @@ import { baseStorageURL } from "@/src/utils/url";
 import { logout, selectToken } from "@/src/redux/features/auth/authSlice";
 
 import Header from "@/src/components/shared/header/header";
+import useAos from "@/src/hooks/useAos";
 
 const DashboardLayout = ({ children }) => {
   const dispatch = useDispatch();
@@ -86,6 +87,7 @@ const DashboardLayout = ({ children }) => {
       router.push("/login");
     }
   }, [token]);
+  useAos();
 
   return (
     <div className="dashboardLayout">
@@ -131,7 +133,7 @@ const DashboardLayout = ({ children }) => {
               {lists.map((list, index) =>
                 list.action ? (
                   <button key={index} onClick={list.action}>
-                    <li className="flex items-center justify-center whitespace-nowrap min-w-fit px-2 gap-x-2 capitalize mt-2 text-lg">
+                    <li className="flex items-center justify-center whitespace-nowrap min-w-fit px-2 gap-x-2 capitalize mt-4 text-lg ">
                       <div className="w-7 h-7 ">
                         <Image
                           src={list.icon}
@@ -150,8 +152,8 @@ const DashboardLayout = ({ children }) => {
                     <li
                       className={`rounded-xl flex items-center py-2 lg:py-4 gap-x-2 capitalize mt-2 text-lg  whitespace-nowrap min-w-fit px-2 ${
                         pathname === list.link
-                          ? " pl-6  right-[-59px] z-[1]   top-0 bg-[linear-gradient(90deg,#23afb7_1.46%,#169aa4_79.47%)]"
-                          : ""
+                          ? " pl-6  right-[-59px] z-[1] hover:opacity-80 transition-all  top-0 bg-[linear-gradient(90deg,#23afb7_1.46%,#169aa4_79.47%)]"
+                          : "hover:!bg-[#7e7e7e11]"
                       }`}
                     >
                       <div className="w-7 h-7 flex items-center justify-center">
