@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { streamMusic } from "@/src/axios/axios";
-import { musicApiSlice } from "./musicApi";
 
 const musicStreamSlice = createSlice({
   name: "musicStream",
@@ -23,13 +22,23 @@ const musicStreamSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addMatcher(
-      musicApiSlice.endpoints.streamMusic.matchFulfilled,
-      (state, action) => {
-        state.streamingMusic = action.payload;
-        console.log(action.payload);
-      }
-    );
+    builder
+      .addCase(streamMusic.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(streamMusic.fulfilled, (state, action) => {
+        const { music, title, author } = action.payload;
+        state.loading = false;
+        state.streamingMusic = music;
+        state.currentMusic = {
+          title: title,
+          author: author,
+        };
+      })
+      .addCase(streamMusic.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
   },
 });
 

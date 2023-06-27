@@ -27,6 +27,12 @@ export const musicApiSlice = apiSlice.injectEndpoints({
         url: "/music/user/download",
       }),
     }),
+    deleteDownloadedMusic: builder.mutation({
+      query: (musicId) => ({
+        url: `/music/download/${musicId}`,
+        method: "DELETE",
+      }),
+    }),
     getConvertedMusic: builder.query({
       query: () => ({
         url: "/music/user/",
@@ -40,5 +46,6 @@ export const {
   useStreamMusicQuery,
   useGetDownloadedMusicQuery,
   useIsolateMusicMutation,
+  useDeleteDownloadedMusicMutation,
   useGetConvertedMusicQuery,
 } = musicApiSlice;

@@ -5,26 +5,15 @@ import { useEffect, useState } from "react";
 
 import { downloadMusic, fetchUserMusic, streamMusic } from "@/src/axios/axios";
 import { NoDataFound } from "@/src/components/helper";
-import {
-  useGetConvertedMusicQuery,
-  useStreamMusicQuery,
-} from "@/src/redux/features/music/musicApi";
 
 const MyMusic = () => {
   const dispatch = useDispatch();
-
-  const [musicFile, setMusicFile] = useState("");
-  const [isLoading, setIsLoading] = useState(null);
-
+  const { music } = useSelector((state) => state.userMusic);
+  const { streamingMusic, loading } = useSelector((state) => state.musicStream);
   const { downloadedMusic, error } = useSelector(
     (state) => state.musicDownload
   );
-  const { data: musics } = useGetConvertedMusicQuery();
-  const { data: musicStream, isLoading: loading } = useStreamMusicQuery(
-    musicFile,
-    { skip: musicFile === "" }
-  );
-
+  const [isLoading, setIsLoading] = useState(null);
   function downloadAudioChunks(audioData) {
     // 1. Extract audio data by removing the ID3 tag
     const audioDataWithoutID3 = audioData?.substring(10);
@@ -50,18 +39,36 @@ const MyMusic = () => {
   };
 
   const handleDownload = (music, index) => {
-    // Set the loading state to true
+    setIsLoading(index); // Set the loading state to true
 
-    dispatch(downloadMusic(music));
+    dispatch(downloadMusic(music))
+      .then(() => {
+        setIsLoading(null); // Set the loading state to null if the dispatch succeeds
+      })
+      .catch(() => {
+        setIsLoading(null); // Set the loading state to null if the dispatch fails
+      });
   };
 
   const onStreamMusic = (music, index) => {
-    setMusicFile(music?.song);
+    setIsLoading(index); // Set the loading state to true
+
+    dispatch(streamMusic(music))
+      .then(() => {
+        setIsLoading(null); // Set the loading state to null if the dispatch succeeds
+      })
+      .catch(() => {
+        setIsLoading(null); // Set the loading state to null if the dispatch fails
+      });
   };
+  useEffect(() => {
+    dispatch(fetchUserMusic());
+  }, []);
+
   return (
-    <div className="dashboard_children max-h-[670px] overflow-y-scroll">
+    <div className="dashboard_children lg:max-h-[670px] lg:overflow-y-scroll">
       <div className="grid  grid-cols-2 lg:grid-cols-[repeat(3,226px)] justify-between gap-y-12">
-        {musics?.map((item, index) => (
+        {music?.map((item, index) => (
           <div
             key={index}
             className="lg:w-[226px] w-11/12 min-h-[396px] rounded-lg bg-[linear-gradient(90deg,#206983_24.29%,#2f5377_79.78%)] group"
@@ -131,7 +138,7 @@ const MyMusic = () => {
           </div>
         ))}
       </div>
-      {musics?.length <= 0 && <NoDataFound />}
+      {music?.length <= 0 && <NoDataFound />}
     </div>
   );
 };

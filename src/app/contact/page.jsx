@@ -142,7 +142,7 @@ const contact = () => {
                   <div className="formControl">
                     <label htmlFor="phone">Phone Number</label>
                     <input
-                      type="number"
+                      type="tel"
                       id="phone"
                       placeholder="Your Phone Number"
                       required
@@ -269,7 +269,7 @@ const contact = () => {
                   <div className="formControl">
                     <label htmlFor="phone">Phone Number</label>
                     <input
-                      type="number"
+                      type="tel"
                       id="phone"
                       placeholder="Your Phone Number"
                       required

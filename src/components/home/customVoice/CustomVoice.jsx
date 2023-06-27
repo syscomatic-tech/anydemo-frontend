@@ -19,7 +19,7 @@ const MusicIsolation = () => {
         </h1>
 
         <button
-          className={" mt-8 mainBtn "}
+          className={" mt-8 mainBtn mx-auto"}
           data-aos="fade-up"
           data-aos-delay={700}
         >

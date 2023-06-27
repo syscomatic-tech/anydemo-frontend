@@ -4,22 +4,36 @@ import Image from "next/image";
 import { useDispatch } from "react-redux";
 
 import { streamMusic } from "@/src/axios/axios";
-import { useGetDownloadedMusicQuery } from "@/src/redux/features/music/musicApi";
+import {
+  useDeleteDownloadedMusicMutation,
+  useGetDownloadedMusicQuery,
+} from "@/src/redux/features/music/musicApi";
 import Link from "next/link";
 import { NoDataFound } from "@/src/components/helper";
+import { toast } from "react-hot-toast";
 
 const Downloads = () => {
   const dispatch = useDispatch();
-  const { data: downloadedMusics } = useGetDownloadedMusicQuery();
-
+  const { data: downloadedMusics, refetch } = useGetDownloadedMusicQuery();
+  const [deleteMusic, { isLoading }] = useDeleteDownloadedMusicMutation();
   const onStreamMusic = (music, index) => {
-    const musicData = {
-      _id: music.music,
-      title: music.title,
-      author: music.author.fullName,
-    };
     dispatch(streamMusic(music));
     console.log(music);
+  };
+  const handleDelete = (musicId) => {
+    deleteMusic(musicId)
+      .unwrap()
+      .then(() => {
+        toast.success("Music deleted successfully!");
+        refetch(); // Fetch the updated list of downloaded music
+      })
+      .catch((error) => {
+        toast.error("Failed to delete music");
+      });
+
+    if (isLoading) {
+      toast("Deleting in progress...");
+    }
   };
   return (
     <div className="dashboard_children relative">
@@ -29,7 +43,7 @@ const Downloads = () => {
         </h4>
       </div>
       <div className="mt-10">
-        <div className="flex flex-col gap-y-12 max-h-[580px] overflow-y-scroll">
+        <div className="flex flex-col gap-y-12 lg:max-h-[670px] lg:overflow-y-scroll">
           {downloadedMusics?.map((item, index) => (
             <div
               key={index}
@@ -77,13 +91,12 @@ const Downloads = () => {
                       className="   w-fit  cursor-pointer  capitalize dropdown-content absolute right-0 z-[100] menu p-2 shadow bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] rounded  "
                       tabIndex={1}
                     >
-                      <li className="py-2 text-white border-b hover:border-gray-200 transition-all hover:bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] hover:rounded   border-gray-500">
-                        <Link href="#"> Remove from list</Link>
+                      <li
+                        className="py-2 text-white 0 transition-all hover:bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] hover:rounded   border-gray-500"
+                        onClick={() => handleDelete(item._id)}
+                      >
+                        <span> Remove from list</span>
                       </li>
-
-                      {/* <li className="py-2 text-white border-b hover:border-gray-200 transition-all hover:bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] hover:rounded   border-gray-500">
-                        <Link href="#">Share</Link>
-                      </li> */}
                     </ul>
                   </div>
                 </div>

@@ -1,14 +1,19 @@
-import { apiSlice } from '@/src/redux/api/api.slice';
+import { apiSlice } from "@/src/redux/api/api.slice";
 
 export const voiceApiSlice = apiSlice.injectEndpoints({
   overrideExisting: true,
   endpoints: (builder) => ({
     getAllVoice: builder.query({
       query: () => ({
-        url: '/voice',
+        url: "/voice",
+      }),
+    }),
+    getAllDemo: builder.query({
+      query: () => ({
+        url: "/music/latest",
       }),
     }),
   }),
 });
 
-export const { useGetAllVoiceQuery } = voiceApiSlice;
+export const { useGetAllVoiceQuery, useGetAllDemoQuery } = voiceApiSlice;

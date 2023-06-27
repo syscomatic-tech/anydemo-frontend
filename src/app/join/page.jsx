@@ -51,6 +51,7 @@ const joinPage = () => {
                     {...register("artistName", {
                       required: "Artists Name is required",
                     })}
+                    required
                   />
                 </div>
                 <div className="formControl">
@@ -67,6 +68,7 @@ const joinPage = () => {
                         message: "Invalid email",
                       },
                     })}
+                    required
                   />
                 </div>
                 <div className="formControl">
@@ -78,6 +80,7 @@ const joinPage = () => {
                     {...register("phoneNumber", {
                       required: "Phone number is required",
                     })}
+                    required
                   />
                 </div>
                 <div className="formControl">
@@ -89,6 +92,7 @@ const joinPage = () => {
                     {...register("facebookLink", {
                       required: "FB is required",
                     })}
+                    required
                   />
                 </div>
                 <div className="formControl">
@@ -101,14 +105,18 @@ const joinPage = () => {
                     {...register("message", {
                       required: "Your message is required",
                     })}
+                    required
                   />
                 </div>
                 <div className="flex gap-[15px]  items-center justify-center">
-                  <button className="btnTransparent w-1/2">
+                  <button
+                    className="btnTransparent w-1/2"
+                    onClick={() => reset()}
+                  >
                     <span>Reset</span>
                   </button>
                   <button className="mainBtn w-1/2" type="submit">
-                    <span>Submit</span>
+                    <span>{isLoading ? "Submitting..." : "Submit"}</span>
                   </button>
                 </div>
               </form>
@@ -130,10 +138,18 @@ const joinPage = () => {
               data-aos="fade-left"
               data-aos-delay={500}
             >
-              <form className="form">
+              <form className="form" onSubmit={handleSubmit(onSubmit)}>
                 <div className="formControl">
                   <label htmlFor="name">Artist’s Name</label>
-                  <input type="text" id="name" placeholder="Enter Your Name" />
+                  <input
+                    type="tel"
+                    id="name"
+                    placeholder="Enter Your Name"
+                    {...register("artistName", {
+                      required: "Artists Name is required",
+                    })}
+                    required
+                  />
                 </div>
                 <div className="formControl">
                   <label htmlFor="email">Email Address</label>
@@ -141,6 +157,15 @@ const joinPage = () => {
                     type="email"
                     id="email"
                     placeholder="Enter Your Email"
+                    {...register("email", {
+                      required: "Email is required",
+                      pattern: {
+                        value:
+                          /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                        message: "Invalid email",
+                      },
+                    })}
+                    required
                   />
                 </div>
                 <div className="formControl">
@@ -149,6 +174,10 @@ const joinPage = () => {
                     type="tel"
                     id="phone"
                     placeholder="Enter Your Number"
+                    {...register("phoneNumber", {
+                      required: "Phone number is required",
+                    })}
+                    required
                   />
                 </div>
                 <div className="formControl">
@@ -157,6 +186,10 @@ const joinPage = () => {
                     type="url"
                     id="FB_link"
                     placeholder="Enter Your Facebook Link"
+                    {...register("facebookLink", {
+                      required: "FB is required",
+                    })}
+                    required
                   />
                 </div>
                 <div className="formControl">
@@ -166,16 +199,20 @@ const joinPage = () => {
                     type="text"
                     id="message"
                     placeholder="Your message here..."
+                    {...register("message", {
+                      required: "Your message is required",
+                    })}
+                    required
                   />
                 </div>
                 <div className="flex gap-[15px]  items-center justify-end">
-                  <button className="btnTransparent">
+                  <button className="btnTransparent" onClick={() => reset()}>
                     <span>Reset</span>
                   </button>
 
                   <div>
-                    <button className="mainBtn">
-                      <span>Submit</span>
+                    <button className="mainBtn" type="submit">
+                      <span>{isLoading ? "Submitting..." : "Submit"}</span>
                     </button>
                   </div>
                 </div>

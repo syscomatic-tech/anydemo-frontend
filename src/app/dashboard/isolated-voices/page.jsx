@@ -1,25 +1,61 @@
 "use client";
-import { useState } from "react";
 import Image from "next/image";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
-import { streamMusic } from "@/src/axios/axios";
-import { useGetDownloadedMusicQuery } from "@/src/redux/features/music/musicApi";
-import Link from "next/link";
+import { downloadMusic, fetchUserMusic, streamMusic } from "@/src/axios/axios";
+import { NoDataFound } from "@/src/components/helper";
 
 const Downloads = () => {
   const dispatch = useDispatch();
-  const { data: downloadedMusics } = useGetDownloadedMusicQuery();
+  const { music } = useSelector((state) => state.userMusic);
+  const { streamingMusic, loading } = useSelector((state) => state.musicStream);
+  const { downloadedMusic, error } = useSelector(
+    (state) => state.musicDownload
+  );
+  const [isLoading, setIsLoading] = useState(null);
 
-  const onStreamMusic = (music) => {
-    const musicData = {
-      _id: music.music,
-      title: music.title,
-      author: music.author.fullName,
-    };
-    dispatch(streamMusic(musicData));
+  function downloadAudioChunks(audioData) {
+    const audioDataWithoutID3 = audioData?.substring(10);
+    const blob = new Blob([audioDataWithoutID3], { type: "audio/mpeg" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "audio.mp3";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+  const handleDownloadClick = () => {
+    downloadAudioChunks(downloadedMusic);
   };
 
+  const handleDownload = (music, index) => {
+    setIsLoading(index); // Set the loading state to true
+
+    dispatch(downloadMusic(music))
+      .then(() => {
+        setIsLoading(null); // Set the loading state to null if the dispatch succeeds
+      })
+      .catch(() => {
+        setIsLoading(null); // Set the loading state to null if the dispatch fails
+      });
+  };
+
+  const onStreamMusic = (music, index) => {
+    setIsLoading(index); // Set the loading state to true
+
+    dispatch(streamMusic(music))
+      .then(() => {
+        setIsLoading(null); // Set the loading state to null if the dispatch succeeds
+      })
+      .catch(() => {
+        setIsLoading(null); // Set the loading state to null if the dispatch fails
+      });
+  };
+  useEffect(() => {
+    dispatch(fetchUserMusic());
+  }, []);
   return (
     <div className="dashboard_children relative">
       <div className="dashboard_children_title">
@@ -28,8 +64,8 @@ const Downloads = () => {
         </h4>
       </div>
       <div className="mt-10">
-        <div className="flex flex-col gap-y-12 max-h-[580px] overflow-y-scroll">
-          {downloadedMusics?.map((item, index) => (
+        <div className="flex flex-col gap-y-12 lg:max-h-[670px] lg:overflow-y-scroll">
+          {music?.map((item, index) => (
             <div
               className="w-full "
               data-aos="fade-up"
@@ -78,11 +114,7 @@ const Downloads = () => {
                         tabIndex={0}
                       >
                         <li className="py-2 text-white border-b hover:border-gray-200 transition-all hover:bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] hover:rounded   border-gray-500">
-                          <Link href="#"> Remove from list</Link>
-                        </li>
-
-                        <li className="py-2 text-white border-b hover:border-gray-200 transition-all hover:bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] hover:rounded   border-gray-500">
-                          <Link href="#">Share</Link>
+                          <span> Remove from list</span>
                         </li>
                       </ul>
                     </div>

@@ -785,11 +785,11 @@ button {
 
 @media only screen and (max-width: 570px) {
   .btnTransparent {
-    padding: 12px 7px;
+    padding: 12px;
     font-size: 1em;
   }
   .mainBtn span {
-    padding: 12px 7px;
+    padding: 12px;
     font-size: 1em;
   }
   .lg_d_none {

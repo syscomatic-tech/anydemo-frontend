@@ -16,11 +16,11 @@ const LoadingProgressModal = (props) => {
       if (percent < 80) {
         interval = setInterval(() => {
           setPercent((prevPercent) => prevPercent + 1);
-        }, 50);
+        }, 200);
       } else if (percent >= 80 && convertedMusic) {
         interval = setInterval(() => {
           setPercent((prevPercent) => prevPercent + 1);
-        }, 50);
+        }, 200);
       }
 
       if (percent >= 100) {
@@ -42,6 +42,9 @@ const LoadingProgressModal = (props) => {
             <h1>
               {title} : {percent}%{" "}
             </h1>
+          </div>
+          <div className="mx-auto my-4 flex  items-center justify-center">
+            <span className="loading loading-infinity loading-lg mx-auto bg-white scale-150"></span>
           </div>
           <div className="progress ">
             <div className="track">

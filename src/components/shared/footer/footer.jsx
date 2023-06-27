@@ -1,5 +1,20 @@
+import { useNewsletterMutation } from "@/src/redux/features/contact/contactApi";
 import Image from "next/image";
+import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+
 const Footer = () => {
+  const { register, handleSubmit, reset } = useForm();
+  const [newsletter, { isLoading }] = useNewsletterMutation();
+  const onSubmit = async (values) => {
+    try {
+      await newsletter(values).unwrap();
+      toast.success("Your Request Sent Successfully!");
+      reset();
+    } catch (err) {
+      toast.error(err?.data?.message ?? err?.message);
+    }
+  };
   return (
     <div class="w-full h-fit-content">
       <div className="container">
@@ -128,14 +143,26 @@ const Footer = () => {
               </h4>
               <ul>
                 <li className="mt-4">
-                  <form action="#" className="subscribeForm">
+                  <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    className="subscribeForm"
+                  >
                     <input
-                      type="text"
-                      placeholder="Enter your email"
+                      type="email"
+                      id="email"
+                      placeholder="Enter Your Email"
+                      {...register("email", {
+                        required: "Email is required",
+                        pattern: {
+                          value:
+                            /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                          message: "Invalid email",
+                        },
+                      })}
                       required
                     />
                     <button type="submit" className="mainBtn">
-                      <span>Subscribe</span>
+                      <span>{isLoading ? "Subscribing..." : "Subscribe"}</span>
                     </button>
                     <div className="gradientBorder"></div>
                   </form>

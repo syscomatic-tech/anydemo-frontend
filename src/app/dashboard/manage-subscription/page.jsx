@@ -37,7 +37,7 @@ const ManageSubscription = () => {
   }, [plans, subscription]);
 
   return (
-    <div className="max-h-[670px] overflow-y-scroll pb-5">
+    <div className="lg:max-h-[670px] lg:overflow-y-scroll pb-5">
       <div className="dashboard_children_title">
         <h4 className="title">Your Subscription Plan</h4>
         <SubscriptionPlanCard selected={true} data={selectedPlan} />
