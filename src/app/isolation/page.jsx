@@ -118,7 +118,7 @@ const MakeDemo = () => {
         <div className="py-[80px]">
           <div className="pageTitle">
             <h1 data-aos="fade-up" data-aos-delay={200}>
-              Make a demo
+              Voice Isolation
             </h1>
             <p data-aos="fade-up" data-aos-delay={300}>
               Choose Your Favorite Artist Voice to make your song

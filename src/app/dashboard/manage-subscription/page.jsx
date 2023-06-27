@@ -49,9 +49,7 @@ const ManageSubscription = () => {
             <span className="font-medium text-xl leading-[23px]">
               Recurring Purchases
             </span>
-            <span className="font-bold text-lg leading-[21px]">
-              1 year 2month
-            </span>
+            <span className="font-bold text-lg leading-[21px]"></span>
           </div>
           <button className="mainBtn" onClick={handleCancelSubscription}>
             <span> Cancel Subscription</span>
@@ -65,7 +63,7 @@ const ManageSubscription = () => {
             <span className={"font-medium text-xl leading-[23px]"}>
               No of Device
             </span>
-            <span className="text-2xl">3</span>
+            <span className="text-2xl"></span>
           </div>
           <span className="font-medium text-xl leading-[23px] text-[#1FC2C7] cursor-pointer">
             Manage

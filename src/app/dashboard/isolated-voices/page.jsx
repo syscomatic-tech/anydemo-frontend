@@ -6,13 +6,14 @@ import { useEffect, useState } from "react";
 import { downloadMusic, fetchUserMusic, streamMusic } from "@/src/axios/axios";
 import { NoDataFound } from "@/src/components/helper";
 
-const Downloads = () => {
+const Isolated = () => {
   const dispatch = useDispatch();
   const { music } = useSelector((state) => state.userMusic);
   const { streamingMusic, loading } = useSelector((state) => state.musicStream);
   const { downloadedMusic, error } = useSelector(
     (state) => state.musicDownload
   );
+  const [voiceMusic, setVoiceMusic] = useState([]);
   const [isLoading, setIsLoading] = useState(null);
 
   function downloadAudioChunks(audioData) {
@@ -26,6 +27,12 @@ const Downloads = () => {
     link.click();
     document.body.removeChild(link);
   }
+  useEffect(() => {
+    // Filter the music data based on the "voice" key
+    const voiceData = music.filter((item) => item.hasOwnProperty("voice"));
+    setVoiceMusic(voiceData);
+  }, [music]);
+  console.log(voiceMusic);
   const handleDownloadClick = () => {
     downloadAudioChunks(downloadedMusic);
   };
@@ -56,6 +63,7 @@ const Downloads = () => {
   useEffect(() => {
     dispatch(fetchUserMusic());
   }, []);
+  console.log(music);
   return (
     <div className="dashboard_children relative">
       <div className="dashboard_children_title">
@@ -65,7 +73,7 @@ const Downloads = () => {
       </div>
       <div className="mt-10">
         <div className="flex flex-col gap-y-12 lg:max-h-[670px] lg:overflow-y-scroll">
-          {music?.map((item, index) => (
+          {voiceMusic?.map((item, index) => (
             <div
               className="w-full "
               data-aos="fade-up"
@@ -84,7 +92,7 @@ const Downloads = () => {
 
                 <div className="flex flex-row gap-3 lg:gap-20 items-center">
                   <span>{item.genre}</span>
-                  <span>5:21</span>
+                  <span>{item.duration}</span>
                   <div className="flex flex-row gap-3 lg:gap-8 items-center ">
                     <div
                       className="w-8 h-8"
@@ -99,24 +107,15 @@ const Downloads = () => {
                         className="cursor-pointer object-contain  w-full h-full"
                       />
                     </div>
-                    <div className="w-5 h-5 relative dropdown dropdown-end ">
-                      <label tabIndex={0}>
-                        <Image
-                          width={20}
-                          height={20}
-                          src="/svg/threeDots.svg"
-                          alt=""
-                          className="cursor-pointer object-contain  w-full h-full "
-                        />
-                      </label>
-                      <ul
-                        className="   w-fit  cursor-pointer  capitalize dropdown-content absolute right-0 z-[100] menu p-2 shadow bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] rounded  "
-                        tabIndex={0}
-                      >
-                        <li className="py-2 text-white border-b hover:border-gray-200 transition-all hover:bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] hover:rounded   border-gray-500">
-                          <span> Remove from list</span>
-                        </li>
-                      </ul>
+                    <div className="w-5 h-5  ">
+                      <Image
+                        width={20}
+                        height={20}
+                        src="/svg/DownloadOutline.svg"
+                        alt=""
+                        className="cursor-pointer object-contain  w-full h-full "
+                        onClick={() => handleDownload(item)}
+                      />
                     </div>
                   </div>
                 </div>
@@ -211,4 +210,4 @@ const Downloads = () => {
   );
 };
 
-export default Downloads;
+export default Isolated;
