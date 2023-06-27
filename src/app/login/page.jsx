@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 
 import { useLoginMutation } from "@/src/redux/features/auth/authApi";
 import { authenticateWithGoogle } from "../../axios/axios";
+import Loading from "@/src/components/shared/Loading";
 
 export default function LogIn() {
   const searchParams = useSearchParams();
@@ -37,7 +38,9 @@ export default function LogIn() {
   const onSubmit = async (values) => {
     try {
       await loginUser(values).unwrap();
-
+      toast.success(
+        "User logged in successfully. Redirecting to the previous page..."
+      );
       if (callback) {
         return router.push(callback);
       }
@@ -56,13 +59,17 @@ export default function LogIn() {
       </div>
       <div className="w-full min-h-[711px] h-full bg-[#0F0E19] flex items-center justify-center">
         <div className="authContainer">
-          <div className="loginImgArea">
+          <div
+            className="loginImgArea"
+            data-aos="fade-right"
+            data-aos-delay={300}
+          >
             <div className="imgBox">
               <div className="bg"></div>
               <Image src="/img/login.png" width={445} height={485} alt="" />
             </div>
           </div>
-          <d className="formArea">
+          <div className="formArea" data-aos="fade-left" data-aos-delay={300}>
             <h4>Login your Account</h4>
             <form className="form" onSubmit={handleSubmit(onSubmit)}>
               <div className="formControl">
@@ -108,21 +115,19 @@ export default function LogIn() {
                   </label>
                 </div>
                 <Link
-                  href="/forgotPassword"
+                  href="/forgot-password"
                   className="forgotPassword hover:underline transition-all font-semibold"
                 >
                   Forgot Password?
                 </Link>
               </div>
+              {isLoading && <Loading></Loading>}
               <button
                 type="submit"
-                className="mainBtn mt-10 btn w-full"
+                className="mainBtn mt-10  w-full"
                 disabled={isLoading}
               >
-                <span className="">
-                  {" "}
-                  {isLoading ? "Logging in..." : "Login"}
-                </span>
+                <span className="">Login</span>
               </button>
               <div className="alternativeLigInOptions">
                 <p>Or login with</p>
@@ -137,13 +142,13 @@ export default function LogIn() {
                 </div>
                 <div className="haveAccount">
                   <p>Don’t have an account?</p>
-                  <Link href="/signUp" className="signUp">
+                  <Link href="/signup" className="signUp">
                     Sign up
                   </Link>
                 </div>
               </div>
             </form>
-          </d>
+          </div>
         </div>
       </div>
       {/* <Verify /> */}

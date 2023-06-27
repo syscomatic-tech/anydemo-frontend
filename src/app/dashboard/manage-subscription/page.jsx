@@ -37,7 +37,7 @@ const ManageSubscription = () => {
   }, [plans, subscription]);
 
   return (
-    <div className="max-h-[670px] overflow-y-scroll pb-5">
+    <div className="lg:max-h-[670px] lg:overflow-y-scroll pb-5">
       <div className="dashboard_children_title">
         <h4 className="title">Your Subscription Plan</h4>
         <SubscriptionPlanCard selected={true} data={selectedPlan} />
@@ -53,8 +53,8 @@ const ManageSubscription = () => {
               1 year 2month
             </span>
           </div>
-          <button className="s_btn" onClick={handleCancelSubscription}>
-            Cancel Subscription
+          <button className="mainBtn" onClick={handleCancelSubscription}>
+            <span> Cancel Subscription</span>
           </button>
         </div>
       </div>

@@ -74,11 +74,8 @@ const ChangePasswordModal = ({ show, setShow }) => {
             />
 
             <div className="form-actions flex justify-end">
-              <button
-                type="submit"
-                className="btn btn-md bg-secondary text-white px-4 py-3 rounded-md"
-              >
-                Change password
+              <button type="submit" className="mainBtn">
+                <span>Change password</span>
               </button>
             </div>
           </form>
@@ -120,7 +117,7 @@ const UserAccount = () => {
 
   return (
     <>
-      <div className="max-h-[670px] overflow-y-scroll pb-5">
+      <div className="lg:max-h-[670px] lg:overflow-y-scroll pb-5">
         <div className="dashboard_children_title">
           <h4 className="title">Profile</h4>
           <form
@@ -174,14 +171,17 @@ const UserAccount = () => {
             <div className="flex justify-end items-center gap-8 mt-8">
               <button
                 type="submit"
-                className="s_btn"
+                className="mainBtn "
                 disabled={!isDirty | isLoading}
               >
-                {isLoading ? " Updating Profile" : " Update Profile"}
+                <span>
+                  {" "}
+                  {isLoading ? " Updating Profile..." : " Update Profile"}
+                </span>
               </button>
               <button
                 type="reset"
-                className="s_btn s_btn_t"
+                className="btnTransparent"
                 disabled={isLoading}
               >
                 Reset
@@ -196,12 +196,11 @@ const UserAccount = () => {
               Once I have this information, I can guide you through the process
               of changing your password
             </p>
-
             <button
-              className="s_btn"
+              className="mainBtn"
               onClick={() => setShowChangePasswordModal(true)}
             >
-              Change password
+              <span>Change password</span>
             </button>
           </div>
         </div>
@@ -212,7 +211,9 @@ const UserAccount = () => {
               Once I have this information, I can guide you through the process
               of changing your password
             </p>
-            <button className="s_btn">Delete Account</button>
+            <button className="mainBtn">
+              <span>Delete Account</span>
+            </button>
           </div>
         </div>
       </div>

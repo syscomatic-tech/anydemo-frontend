@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 
-import { getAllVoices } from "@/src/axios/axios";
 import MainLayout from "@/src/components/layouts/MainLayout";
 import LoadingProgressModal from "@/src/components/LoadingProgressModal";
 
@@ -17,9 +16,9 @@ import {
   setArtist,
   setVoice,
 } from "@/src/redux/features/music/musicConversionSlice";
-import useLocalStorage from "@/src/hooks/useLocalStorage";
 import { selectToken } from "@/src/redux/features/auth/authSlice";
 import { useGetAllVoiceQuery } from "@/src/redux/features/voice/voice.api";
+import useAos from "@/src/hooks/useAos";
 
 const MakeDemo = () => {
   const router = useRouter();
@@ -27,7 +26,7 @@ const MakeDemo = () => {
 
   const [convertMusic] = useConvertMusicMutation();
   const { data: voices } = useGetAllVoiceQuery();
-
+  console.log("Voices", voices);
   const token = useSelector(selectToken);
   const musicData = useSelector(selectConversionData);
 
@@ -118,16 +117,25 @@ const MakeDemo = () => {
       setStep3(true);
     }
   }, [musicData]);
+  useAos();
 
   return (
     <div className="container">
       <MainLayout>
-        <div className="py-[150px]">
+        <div className="py-[80px]">
           <div className="pageTitle">
-            <h1>Make a demo</h1>
-            <p>Choose Your Favorite Artist Voice to make your song</p>
+            <h1 data-aos="fade-up" data-aos-delay={200}>
+              Make a demo
+            </h1>
+            <p data-aos="fade-up" data-aos-delay={300}>
+              Choose Your Favorite Artist Voice to make your song
+            </p>
           </div>
-          <div className="relative flex items-center justify-between px-20 mt-44">
+          <div
+            className="relative flex items-center justify-between px-20 mt-36"
+            data-aos="fade-up"
+            data-aos-delay={400}
+          >
             <div
               className={`w-fit flex flex-col z-[2] `}
               onClick={() => {
@@ -139,10 +147,10 @@ const MakeDemo = () => {
                 01
               </span>
               <div
-                className={`w-[31px] h-[31px] rounded-[50%]  ${
+                className={`w-[31px] h-[31px] rounded-[50%] cursor-pointer ${
                   !step2 && !step3
-                    ? "cursor-pointer bg-[linear-gradient(90deg,#19a7ad_11.69%,#1d8093_79.78%)]"
-                    : "bg-[#2f4668]"
+                    ? " cursor-pointer bg-[linear-gradient(90deg,#19a7ad_11.69%,#1d8093_79.78%)]"
+                    : "bg-[#2f4668] cursor-pointer"
                 }`}
               ></div>
             </div>
@@ -201,34 +209,36 @@ const MakeDemo = () => {
                 {voices?.map((v, i) => (
                   <div
                     key={i}
-                    className="w-[380px] h-[451px] overflow-hidden rounded-md relative bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)]"
+                    className="relative w-[380px] h-[auto] overflow-hidden group rounded-md bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)]"
                   >
                     <div
-                      className="w-full h-[296px] cursor-pointer relative"
+                      className="w-full h-[280px] cursor-pointer relative"
                       onClick={() => {
                         selectArtist(v?._id);
                         setStep3(true);
                       }}
                     >
-                      <Image
-                        className="object-cover object-center"
-                        src={v?.artistImage}
-                        width={380}
-                        height={296}
-                        alt=""
-                      />
-                      <Image
-                        className="absolute -translate-x-2/4 -translate-y-2/4 opacity-0 transition-all duration-[0.3s] ease-[ease-in-out] left-2/4 top-2/4"
-                        src="/img/check.png"
-                        width={80}
-                        height={80}
-                        alt=""
-                      />
-                      <div className="absolute font-medium text-2xl leading-[130%] flex items-center justify-center text-white min-w-[102px] h-[42px] rounded-[0px_12px_12px_0px] left-0 top-[22.5px] bg-[#232229]">
-                        <p>{v?.genre}</p>
+                      <div className="aspect-w-10 aspect-h-7">
+                        <Image
+                          className="object-cover group-hover:scale-105 transition-all"
+                          src={`https://fd1d-103-144-49-87.ngrok-free.app/files/voice/${v?.artistImage}`}
+                          layout="fill"
+                          alt=""
+                        />
                       </div>
                     </div>
+                    {/* <Image
+                      className="absolute  -translate-x-2/4 -translate-y-2/4 opacity-0 transition-all duration-[0.3s] ease-[ease-in-out] left-2/4 top-2/4"
+                      src="/img/check.png"
+                      width={80}
+                      height={80}
+                      alt=""
+                    /> */}
+                    <div className="absolute font-medium text-2xl leading-[130%] flex items-center justify-center text-white min-w-[102px] h-[42px] rounded-[0px_12px_12px_0px] left-0 top-[22.5px] bg-[#232229]">
+                      <p>{v?.genre}</p>
+                    </div>
                     <div className="p-3.5">
+                      {/* rest of the content */}
                       <div className="flex items-center justify-between">
                         <h3 className="not-italic font-bold text-[32px] leading-[130%] text-[#fffffd]">
                           {v?.name}
@@ -254,8 +264,7 @@ const MakeDemo = () => {
                             selectArtist(v?._id);
                             setStep3(true);
                           }}
-                          className="w-[124px] h-10 not-italic font-semibold text-base text-[#fffffd] rounded-md
-                          bg-[linear-gradient(47.36deg,#2df1e6_12.24%,#3694b0_37.45%,#468db3_39.38%,#6f79ba_44.93%,#8d6bbf_49.97%,#9f63c2_54.29%,#a660c3_57.37%)]"
+                          className="w-[124px] h-10 not-italic font-semibold text-base text-[#fffffd] rounded-md bg-[linear-gradient(47.36deg,#2df1e6_12.24%,#3694b0_37.45%,#468db3_39.38%,#6f79ba_44.93%,#8d6bbf_49.97%,#9f63c2_54.29%,#a660c3_57.37%)] hover:opacity-90 transition-all"
                         >
                           Try now
                         </button>
@@ -279,13 +288,17 @@ const MakeDemo = () => {
             </div>
           ) : (
             !step3 && (
-              <div className="flex flex-col items-start gap-6 lg:w-[912px] mt-[65px] mb-[255px] mx-auto p-0">
+              <div
+                className="flex flex-col items-start gap-6 lg:w-[912px] mt-[65px] mb-[255px] mx-auto p-0"
+                data-aos="fade-up"
+                data-aos-delay={500}
+              >
                 <h4 className=" font-medium text-[32px] leading-[37px] text-[#32e5eb]">
                   Upload Your Recording
                 </h4>
                 <label htmlFor="uploadAudio" onClick={handleLabelClick}>
                   <button
-                    className="lg:w-full w-[90vw] h-40 flex items-center justify-center bg-clip-padding  lg:px-[416px] py-[98px] rounded-lg border-2 border-solid bg-transparent   bg-clip-padding-box"
+                    className="lg:w-full w-[90vw] h-40 flex items-center justify-center bg-clip-padding  lg:px-[416px] py-[98px] rounded-lg border-2 border-solid bg-transparent  transition-all hover:bg-[#ffffff0c] bg-clip-padding-box"
                     style={{
                       borderImage:
                         "linear-gradient(47.36deg, #2df1e6 12.24%, #3694b0 37.45%, #468db3 39.38%, #6f79ba 44.93%, #8d6bbf 49.97%, #9f63c2 54.29%, #a660c3 57.37%)",
@@ -316,22 +329,30 @@ const MakeDemo = () => {
             <div className="mt-[104px] mb-[333px] mx-0 text-center">
               <button
                 onClick={handleConvertMusic}
-                className="max-w-[565px] w-full h-[76px] font-medium text-2xl text-center text-[#fff8f8] px-0 py-6 rounded-lg bg-[linear-gradient(212.36deg,#b843b7_27.16%,#a548b2_29.91%,#7d51a9_36.6%,#6058a2_42.71%,#4e5c9e_47.98%,#485e9c_51.81%,#4393bb_66.42%,#39eef2_89.85%)]"
+                className="max-w-[565px] w-full h-[76px] font-medium text-2xl text-center text-[#fff8f8] px-0 py-6 rounded-lg bg-[linear-gradient(212.36deg,#b843b7_27.16%,#a548b2_29.91%,#7d51a9_36.6%,#6058a2_42.71%,#4e5c9e_47.98%,#485e9c_51.81%,#4393bb_66.42%,#39eef2_89.85%)] hover:opacity-90 transition-all "
               >
                 Get your demo
               </button>
             </div>
           )}
           <div>
-            <h4 className="font-bold text-[40px] leading-[46px] text-start text-white mb-12">
+            <h4
+              className="font-bold text-[40px] leading-[46px] text-start text-white mb-12"
+              data-aos="fade-right"
+              data-aos-delay={600}
+            >
               Latest Demo
             </h4>
             <div>
               <Splide options={options}>
                 {["1", "2", "3", "4"].map((demo, index) => {
                   return (
-                    <SplideSlide key={index}>
-                      <div className="w-[295px] h-[363px] cursor-pointer relative m-auto hover:opacity-70">
+                    <SplideSlide
+                      key={index}
+                      data-aos="fade-up"
+                      data-aos-delay={300 * (index + 1)}
+                    >
+                      <div className="w-[295px] h-[363px] cursor-pointer relative m-auto hover:opacity-70 group">
                         <div>
                           <Image
                             src="/img/demo01.png"
@@ -342,7 +363,7 @@ const MakeDemo = () => {
                           />
                         </div>
                         <Image
-                          className="opacity-0 transition-all duration-[0.3s] ease-[ease-in-out] absolute -translate-x-2/4 -translate-y-2/4 left-2/4 top-2/4;"
+                          className="opacity-0 group-hover:opacity-100 transition-all duration-[0.3s] ease-[ease-in-out] absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2"
                           src="/svg/play.svg"
                           width={64}
                           height={64}

@@ -2,16 +2,18 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { getAllPlans, subscribeToPlan } from "@/src/axios/axios";
+
 import Loading from "@/src/components/shared/Loading";
 import MainLayout from "@/src/components/layouts/MainLayout";
+import useAos from "@/src/hooks/useAos";
+import { useGetAllPlanQuery } from "@/src/redux/features/plan/planApi";
 
 const SubscriptionPlan = () => {
   const dispatch = useDispatch();
-
-  const { plans, loading, planLoading } = useSelector((state) => state.plan);
+  const { data: plans, isLoading: loading } = useGetAllPlanQuery();
 
   const [active, setActive] = useState("month");
 
@@ -27,15 +29,22 @@ const SubscriptionPlan = () => {
   useEffect(() => {
     dispatch(getAllPlans());
   }, []);
+  useAos();
   return (
     <div>
       <MainLayout>
         <div>
           <div className="pageTitle">
-            <h1>Subscription Plan</h1>
+            <h1 data-aos="fade-up" data-aos-delay={200}>
+              Subscription Plan
+            </h1>
           </div>
           <div className="mt-12 mb-16 mx-0">
-            <div className="w-[296px] h-[38px] flex items-center m-auto">
+            <div
+              className="w-[296px] h-[38px] flex items-center m-auto "
+              data-aos="fade-up"
+              data-aos-delay={300}
+            >
               <div
                 onClick={() => setActive("month")}
                 className={
@@ -70,6 +79,8 @@ const SubscriptionPlan = () => {
                     : "bg-[#22627f]")
                 }
                 key={item._id}
+                data-aos="fade-up"
+                data-aos-delay={300 * (i + 1)}
               >
                 <div>
                   <h3 className="capitalize font-medium text-[28px] leading-8 pb-3 border-b-[0.3px] border-b-[#FFFFFD] border-solid">
@@ -93,7 +104,7 @@ const SubscriptionPlan = () => {
                       {item?.features?.map((feature) => (
                         <li
                           key={feature._id}
-                          className="mb-10 flex items-center gap-x-4 mt-[24.5px] "
+                          className="mb-6 flex items-center gap-x-4 mt-6 "
                         >
                           {feature?.isAvailable ? <Check /> : <Cross />}
                           <span className="font-normal text-xl leading-[23px] text-[#FFFFFD]">
@@ -105,14 +116,14 @@ const SubscriptionPlan = () => {
                   </div>
                   <div
                     className={
-                      "font-medium text-lg text-center text-[#FFFFFD] bg-transparent w-full h-12 mt-[42px] px-8 py-[13.5px] rounded-lg   " +
+                      "font-medium text-lg  cursor-pointer text-center text-[#FFFFFD] bg-transparent w-full  mt-4 lg:mt-[42px] py-3 rounded-lg   transition-all" +
                       (i === 1
-                        ? "border-[none] bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)]"
-                        : "border-solid border-[#2f9ccd] border-[1.5px]")
+                        ? "border-[none] bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] hover:opacity-80"
+                        : "border-solid border-[#2f9ccd] border-[1.5px]  hover:bg-[#ffffff10]")
                     }
                   >
                     <button
-                      disabled={planLoading}
+                      disabled={loading}
                       onClick={() =>
                         handleSubscribe(
                           active === "month"
@@ -139,55 +150,67 @@ const SubscriptionPlan = () => {
         </div>
         <div className="container !mt-12">
           <div className="pageTitle">
-            <h1>Compare Subscription Plan</h1>
+            <h1 data-aos="fade-up" data-aos-delay={300}>
+              Compare Subscription Plan
+            </h1>
           </div>
           <div
             className={
               " lg:grid grid-cols-4 px-10 lg:px-0 lg:gap-x-[22px] gap-y-10 mb-[150px] mt-16"
             }
           >
-            <div className="text-white hidden lg:block bg-transparent">
-              <div className="mt-8">
+            <div
+              className="text-white hidden lg:block bg-transparent"
+              data-aos="fade-right"
+              data-aos-delay={300}
+              data-aos-offset="200"
+            >
+              <div className="mt-56">
                 <div className="lg:block hidden">
-                  <h3 className="font-bold text-[28px] leading-8 text-[#1FC2C7]    ">
+                  <h3 className="font-bold text-[22px] lg:text-[28px] leading-8 text-[#1FC2C7]   mb-6 ">
                     Key features
                   </h3>
                 </div>
                 <div>
                   <ul>
-                    <li className="font-normal text-2xl leading-7 mb-10">
+                    <li className="font-normal text-2xl whitespace-nowrap leading-7 mb-6">
                       Create and send invoices
                     </li>
-                    <li className="font-normal text-2xl leading-7 mb-10">
+                    <li className="font-normal text-2xl whitespace-nowrap leading-7 mb-6">
                       Track expenses
                     </li>
-                    <li className="font-normal text-2xl leading-7 mb-10">
+                    <li className="font-normal text-2xl whitespace-nowrap leading-7 mb-6">
                       Unlimited contact
                     </li>
-                    <li className="font-normal text-2xl leading-7 ">
+                    <li className="font-normal text-2xl whitespace-nowrap leading-7 ">
                       Multi - currency
                     </li>
                   </ul>
                 </div>
               </div>
-              <div className="mt-20">
+              <div
+                className="mt-16"
+                data-aos="fade-right"
+                data-aos-delay={400}
+                data-aos-offset="200"
+              >
                 <div className="lg:block hidden">
-                  <h3 className="font-bold text-[28px] leading-8 text-[#1FC2C7]     ">
+                  <h3 className="font-bold text-[22px] lg:text-[28px] leading-8 text-[#1FC2C7]   mb-6 ">
                     Advanced features
                   </h3>
                 </div>
                 <div>
                   <ul>
-                    <li className="font-normal text-2xl leading-7 mb-10">
+                    <li className="font-normal text-2xl whitespace-nowrap leading-7 mb-6">
                       Create and send invoices
                     </li>
-                    <li className="font-normal text-2xl leading-7 mb-10">
+                    <li className="font-normal text-2xl whitespace-nowrap leading-7 mb-6">
                       Track expenses
                     </li>
-                    <li className="font-normal text-2xl leading-7 mb-10">
+                    <li className="font-normal text-2xl whitespace-nowrap leading-7 mb-6">
                       Unlimited contact
                     </li>
-                    <li className="font-normal text-2xl leading-7 ">
+                    <li className="font-normal text-2xl whitespace-nowrap leading-7 ">
                       Multi - currency
                     </li>
                   </ul>
@@ -202,6 +225,9 @@ const SubscriptionPlan = () => {
                     ? "bg-[linear-gradient(212.36deg,#b843b7_27.16%,#a548b2_29.91%,#7d51a9_36.6%,#6058a2_42.71%,#4e5c9e_47.98%,#485e9c_51.81%,#4393bb_66.42%,#39eef2_89.85%)]"
                     : "bg-[#22627f]")
                 }
+                data-aos="fade-up"
+                data-aos-delay={400 * (i + 1)}
+                data-aos-offset="200"
               >
                 <div>
                   <h3 className="capitalize font-medium text-[28px] leading-8 pb-3 border-b-[0.3px] border-b-[#FFFFFD] border-solid">
@@ -217,63 +243,63 @@ const SubscriptionPlan = () => {
                   </div>
                   <div
                     className={
-                      "font-medium text-lg text-center text-[#FFFFFD] bg-transparent w-full h-12 mt-4 lg:mt-[42px] px-8 py-[13.5px] rounded-lg   " +
+                      "font-medium text-lg  cursor-pointer text-center text-[#FFFFFD] bg-transparent w-full  mt-4 lg:mt-[42px] py-3 rounded-lg   transition-all" +
                       (i === 1
-                        ? "border-[none] bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)]"
-                        : "border-solid border-[#2f9ccd] border-[1.5px]")
+                        ? "border-[none] bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] hover:opacity-80"
+                        : "border-solid border-[#2f9ccd] border-[1.5px]  hover:bg-[#ffffff10]")
                     }
                   >
                     <button>Choose Plan</button>
                   </div>
                   <div className="">
                     <div>
-                      <h3 className="font-bold text-[28px] leading-8 text-[#1FC2C7] mt-5 mb-2 lg:hidden  ">
+                      <h3 className="font-bold text-[22px] lg:text-[28px] leading-8 text-[#1FC2C7] mt-5 mb-2 lg:hidden  ">
                         Key features
                       </h3>
                     </div>
                     <ul>
-                      <li className="justify-center flex items-center gap-x-4 mt-[24.5px]">
+                      <li className="justify-center flex items-center gap-x-4 mt-6">
                         <span className="lg:hidden ">
                           Create and send invoices
                         </span>
                         <Check />
                       </li>
-                      <li className="justify-center flex items-center gap-x-4 mt-[24.5px]">
+                      <li className="justify-center flex items-center gap-x-4 mt-6">
                         <span className="lg:hidden ">Track expenses</span>
                         <Cross />
                       </li>
-                      <li className="justify-center flex items-center gap-x-4 mt-[24.5px]">
+                      <li className="justify-center flex items-center gap-x-4 mt-6">
                         <span className="lg:hidden ">Unlimited contact</span>
                         <Check />
                       </li>
-                      <li className="justify-center flex items-center gap-x-4 mt-[24.5px]">
+                      <li className="justify-center flex items-center gap-x-4 mt-6">
                         <span className="lg:hidden ">Multi - currency</span>
                         <Check />
                       </li>
                     </ul>
                   </div>
-                  <div className="">
+                  <div className="lg:mt-32">
                     <div>
-                      <h3 className="font-bold text-[28px] leading-8 text-[#1FC2C7] mt-5 mb-2 lg:hidden  ">
+                      <h3 className="font-bold text-[22px] lg:text-[28px] leading-8 text-[#1FC2C7] mt-6 mb-2 lg:hidden  ">
                         Advanced features
                       </h3>
                     </div>
                     <ul>
-                      <li className="justify-center flex items-center gap-x-4 mt-[24.5px]">
+                      <li className="justify-center flex items-center gap-x-4 mt-6">
                         <span className="lg:hidden ">
                           Create and send invoices
                         </span>
                         <Check />
                       </li>
-                      <li className="justify-center flex items-center gap-x-4 mt-[24.5px]">
+                      <li className="justify-center flex items-center gap-x-4 mt-6">
                         <span className="lg:hidden ">Track expenses</span>
                         <Cross />
                       </li>
-                      <li className="justify-center flex items-center gap-x-4 mt-[24.5px]">
+                      <li className="justify-center flex items-center gap-x-4 mt-6">
                         <span className="lg:hidden ">Unlimited contact</span>
                         <Check />
                       </li>
-                      <li className="justify-center flex items-center gap-x-4 mt-[24.5px]">
+                      <li className="justify-center flex items-center gap-x-4 mt-6">
                         <span className="lg:hidden ">Multi - currency</span>
                         <Check />
                       </li>

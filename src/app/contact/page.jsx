@@ -1,11 +1,17 @@
+"use client";
 import MainLayout from "@/src/components/layouts/MainLayout";
+import useAos from "@/src/hooks/useAos";
 import Image from "next/image";
-
+import { useContactMutation } from "@/src/redux/features/contact/contactApi";
+import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 export const metadata = {
   title: "Anydemo.ai - Contact Us",
   description: "",
 };
 const contact = () => {
+  const { register, handleSubmit, reset } = useForm();
+  const [contact, { isLoading }] = useContactMutation();
   const contactInfos = [
     { title: "phone", value: "+1012 3456 789", icon: "/svg/phone.svg" },
     { title: "email", value: "demo@gmail.com", icon: "/svg/mail.svg" },
@@ -15,13 +21,25 @@ const contact = () => {
       icon: "/svg/location.svg",
     },
   ];
+  const onSubmit = async (values) => {
+    try {
+      await contact(values).unwrap();
+      toast.success("Your message delivered successfully!");
+      reset();
+    } catch (err) {
+      toast.error(err?.data?.message ?? err?.message);
+    }
+  };
+  useAos();
   return (
     <MainLayout>
       <div className="container">
         <div>
           <div className={"mt-[30px] pageTitle"}>
-            <h1>Get In Touch</h1>
-            <p>
+            <h1 data-aos="fade-up" data-aos-delay={200}>
+              Get In Touch
+            </h1>
+            <p data-aos="fade-up" data-aos-delay={300}>
               lputate Class aptent taciti sociosqu ad litora torquent per
               conubia nostra, per inceptos himenaeos.
             </p>
@@ -29,12 +47,20 @@ const contact = () => {
 
           {/* for small devices */}
 
-          <div className="lg:hidden">
+          <div className="lg:hidden" data-aos="fade-up" data-aos-delay={500}>
             <div className="mt-9">
-              <h3 className="font-bold text-[28px]  text-[#fffffd]">
+              <h3
+                className="font-bold text-[28px]  text-[#fffffd]"
+                data-aos="fade-up"
+                data-aos-delay={200}
+              >
                 Contact Information
               </h3>
-              <p className="font-normal text-lg  my-4 text-[#C9C9C9]">
+              <p
+                className="font-normal text-lg  my-4 text-[#C9C9C9]"
+                data-aos="fade-up"
+                data-aos-delay={400}
+              >
                 Say something to start a live chat!
               </p>
             </div>
@@ -64,7 +90,7 @@ const contact = () => {
               </a>
             </div>
             <div className=" py-6">
-              <div className={"form"}>
+              <form className={"form"} onSubmit={handleSubmit(onSubmit)}>
                 <h3 className={" mb-6 text-white font-semibold text-2xl"}>
                   Send Us a Message
                 </h3>
@@ -72,22 +98,59 @@ const contact = () => {
                 <div className="">
                   <div className="formControl ">
                     <label htmlFor="firstName">First Name</label>
-                    <input type="text" id="firstName" />
+                    <input
+                      type="text"
+                      id="firstName"
+                      placeholder="Your First Name"
+                      required
+                      {...register("firstName", {
+                        required: "First Name is required",
+                      })}
+                    />
                   </div>
-                </div>
-                <div className="formControl">
-                  <label htmlFor="lastName">Last Name</label>
-                  <input type="text" id="lastName" />
+                  <div className="formControl">
+                    <label htmlFor="lastName">Last Name</label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      placeholder="Your Last Name"
+                      required
+                      {...register("lastName", {
+                        required: "Last Name is required",
+                      })}
+                    />
+                  </div>
                 </div>
                 <div className="">
                   <div className="formControl ">
                     <label htmlFor="email">Email</label>
-                    <input type="email" id="email" />
+                    <input
+                      type="email"
+                      id="email"
+                      placeholder="Your Email Address"
+                      required
+                      {...register("email", {
+                        required: "Email is required",
+                        pattern: {
+                          value:
+                            /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                          message: "Invalid email",
+                        },
+                      })}
+                    />
                   </div>
-                </div>
-                <div className="formControl">
-                  <label htmlFor="phone">Phone Number</label>
-                  <input type="text" id="phone" />
+                  <div className="formControl">
+                    <label htmlFor="phone">Phone Number</label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      placeholder="Your Phone Number"
+                      required
+                      {...register("phoneNumber", {
+                        required: "Phone number is required",
+                      })}
+                    />
+                  </div>
                 </div>
                 <div className="formControl">
                   <label htmlFor="message">Message</label>
@@ -96,19 +159,29 @@ const contact = () => {
                     type="text"
                     id="message"
                     placeholder="Write your message..."
+                    required
+                    {...register("message", {
+                      required: "Your message is required",
+                    })}
                   />
                 </div>
                 <div className=" ml-auto">
-                  <button className="mainBtn w-full">
-                    <span>Send Message</span>
+                  <button className="mainBtn w-full" type="submit">
+                    <span>
+                      {isLoading ? "Sending Message..." : "Send Message"}
+                    </span>
                   </button>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
 
           {/* For Large screens */}
-          <div className="hidden  w-full h-full lg:flex items-stretch justify-center text-[#fffffd] mt-[100px] mb-[150px] mx-0 p-3.5 bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)]">
+          <div
+            className="hidden  w-full h-full lg:flex items-stretch justify-center text-[#fffffd] mt-[100px] mb-[150px] mx-0 p-3.5 bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)]"
+            data-aos="fade-up"
+            data-aos-delay={500}
+          >
             <div className="relative z-[1] overflow-hidden w-2/5 min-h-full flex flex-col justify-between p-10 rounded-[10px] bg-[linear-gradient(90deg,#206983_24.29%,#2f5377_79.78%)]">
               <div>
                 <h3 className="font-bold text-[28px]  text-[#fffffd]">
@@ -143,8 +216,8 @@ const contact = () => {
               <div className="absolute w-[138px] h-[138px] opacity-40 rounded-[50%] right-[11%] bottom-[6%] bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)]"></div>
               <div className="absolute right-[-20%] bottom-[-20%] w-[269px] h-[269px] z-[-1] rounded-[50%] bg-[linear-gradient(47.36deg,#2df1e6_12.24%,#3694b0_37.45%,#468db3_39.38%,#6f79ba_44.93%,#8d6bbf_49.97%,#9f63c2_54.29%,#a660c3_57.37%)]"></div>
             </div>
-            <div className="w-[3/5 min-h-full pl-[45px] pr-[31px] py-10">
-              <div className={"form"}>
+            <div className="w-3/5 min-h-full pl-[45px] pr-[31px] py-10">
+              <form className={"form"} onSubmit={handleSubmit(onSubmit)}>
                 <h3 className={" mb-16 font-semibold text-2xl"}>
                   Send Us a Message
                 </h3>
@@ -152,21 +225,58 @@ const contact = () => {
                 <div className="flex gap-x-11">
                   <div className="formControl w-1/2">
                     <label htmlFor="firstName">First Name</label>
-                    <input type="text" id="firstName" />
+                    <input
+                      type="text"
+                      id="firstName"
+                      placeholder="Your First Name"
+                      required
+                      {...register("firstName", {
+                        required: "First Name is required",
+                      })}
+                    />
                   </div>
                   <div className="formControl">
                     <label htmlFor="lastName">Last Name</label>
-                    <input type="text" id="lastName" />
+                    <input
+                      type="text"
+                      id="lastName"
+                      placeholder="Your Last Name"
+                      required
+                      {...register("lastName", {
+                        required: "Last Name is required",
+                      })}
+                    />
                   </div>
                 </div>
                 <div className="flex gap-x-11">
                   <div className="formControl w-1/2">
                     <label htmlFor="email">Email</label>
-                    <input type="email" id="email" />
+                    <input
+                      type="email"
+                      id="email"
+                      placeholder="Your Email Address"
+                      required
+                      {...register("email", {
+                        required: "Email is required",
+                        pattern: {
+                          value:
+                            /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                          message: "Invalid email",
+                        },
+                      })}
+                    />
                   </div>
                   <div className="formControl">
                     <label htmlFor="phone">Phone Number</label>
-                    <input type="text" id="phone" />
+                    <input
+                      type="tel"
+                      id="phone"
+                      placeholder="Your Phone Number"
+                      required
+                      {...register("phoneNumber", {
+                        required: "Phone number is required",
+                      })}
+                    />
                   </div>
                 </div>
                 <div className="formControl">
@@ -176,14 +286,20 @@ const contact = () => {
                     type="text"
                     id="message"
                     placeholder="Write your message..."
+                    required
+                    {...register("message", {
+                      required: "Your message is required",
+                    })}
                   />
                 </div>
                 <div className="w-[220px] ml-auto">
-                  <button className="mainBtn">
-                    <span>Send Message</span>
+                  <button type="submit" className="mainBtn">
+                    <span>
+                      {isLoading ? "Sending Message..." : "Send Message"}
+                    </span>
                   </button>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>

@@ -29,6 +29,23 @@ a {
   color: inherit;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: #a4a4a4;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(139, 139, 139);
+}
+
 ul {
   list-style: none;
 }
@@ -246,6 +263,7 @@ button {
   font-weight: 700;
   z-index: 20;
   transition: all 0.3s ease-in-out;
+  white-space: nowrap;
 }
 
 .mainBtn:hover span {
@@ -266,6 +284,7 @@ button {
     transform: scale(1);
   }
 }
+
 .btnTransparent {
   --full: linear-gradient(
     47.36deg,
@@ -280,7 +299,7 @@ button {
   border: solid 1px transparent;
   border-radius: 10px;
   background: linear-gradient(to right bottom, #2df1e6, #a660c3) border-box;
-  padding: 10px;
+  padding: 8px 20px;
   font-size: 1.125em;
   font-weight: 700;
   color: #fff;
@@ -290,6 +309,7 @@ button {
     -webkit-mask-composite: xor;
     transition: all 0.5s ease-in-out;
   }
+  white-space: nowrap;
 }
 
 .btnTransparent:hover {
@@ -299,7 +319,40 @@ button {
 .lg_d_none {
   display: none;
 }
+.loader {
+  display: flex;
+  align-items: center;
+}
 
+.barr {
+  display: inline-block;
+  width: 3px;
+  height: 20px;
+  background-color: rgb(0, 0, 0);
+  border-radius: 10px;
+  animation: scale-up4 1s linear infinite;
+}
+
+.barr:nth-child(2) {
+  height: 35px;
+  margin: 0 5px;
+  animation-delay: 0.25s;
+}
+
+.barr:nth-child(3) {
+  animation-delay: 0.5s;
+}
+
+@keyframes scale-up4 {
+  20% {
+    background-color: #ffff;
+    transform: scaleY(1.5);
+  }
+
+  40% {
+    transform: scaleY(1);
+  }
+}
 .pageTitle {
   text-align: center;
   font-family: "Ubuntu";
@@ -732,11 +785,11 @@ button {
 
 @media only screen and (max-width: 570px) {
   .btnTransparent {
-    padding: 12px 7px;
+    padding: 12px;
     font-size: 1em;
   }
   .mainBtn span {
-    padding: 12px 7px;
+    padding: 12px;
     font-size: 1em;
   }
   .lg_d_none {

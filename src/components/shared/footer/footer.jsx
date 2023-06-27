@@ -1,12 +1,26 @@
+import { useNewsletterMutation } from "@/src/redux/features/contact/contactApi";
 import Image from "next/image";
-import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+
 const Footer = () => {
+  const { register, handleSubmit, reset } = useForm();
+  const [newsletter, { isLoading }] = useNewsletterMutation();
+  const onSubmit = async (values) => {
+    try {
+      await newsletter(values).unwrap();
+      toast.success("Your Request Sent Successfully!");
+      reset();
+    } catch (err) {
+      toast.error(err?.data?.message ?? err?.message);
+    }
+  };
   return (
     <div class="w-full h-fit-content">
       <div className="container">
         <div class="py-[72px] px-0 w-full min-h-[365px]">
           <div class="flex justify-between flex-wrap gap-[64px]">
-            <div class="w-fit-content">
+            <div class="w-fit-content" data-aos="fade-up" data-aos-delay={700}>
               <h4 className="font-ubuntu font-normal  text-[28px] leading-[32px] text-white mb-[24px]">
                 Product
               </h4>
@@ -14,7 +28,7 @@ const Footer = () => {
                 <li className="mt-4">
                   <a
                     href="#"
-                    className="font-ubuntu font-normal  text-[18px] leading-[21px] text-white"
+                    className="font-ubuntu font-normal  text-[18px] leading-[21px] text-white transition-all hover:text-[#32e5eb]"
                   >
                     Features
                   </a>
@@ -22,7 +36,7 @@ const Footer = () => {
                 <li className="mt-4">
                   <a
                     href="#"
-                    className="font-ubuntu font-normal  text-[18px] leading-[21px] text-white"
+                    className="font-ubuntu font-normal  text-[18px] leading-[21px] text-white transition-all hover:text-[#32e5eb]"
                   >
                     Integrations
                   </a>
@@ -30,7 +44,7 @@ const Footer = () => {
                 <li className="mt-4">
                   <a
                     href="#"
-                    className="font-ubuntu font-normal  text-[18px] leading-[21px] text-white"
+                    className="font-ubuntu font-normal  text-[18px] leading-[21px] text-white transition-all hover:text-[#32e5eb]"
                   >
                     Pricing plans
                   </a>
@@ -38,14 +52,14 @@ const Footer = () => {
                 <li className="mt-4">
                   <a
                     href="#"
-                    className="font-ubuntu font-normal  text-[18px] leading-[21px] text-white"
+                    className="font-ubuntu font-normal  text-[18px] leading-[21px] text-white transition-all hover:text-[#32e5eb]"
                   >
                     Product updates
                   </a>
                 </li>
               </ul>
             </div>
-            <div class="w-fit-content">
+            <div class="w-fit-content" data-aos="fade-up" data-aos-delay={700}>
               <h4 className="font-ubuntu font-normal  text-[28px] leading-[32px] text-white mb-[24px]">
                 Resources
               </h4>
@@ -53,7 +67,7 @@ const Footer = () => {
                 <li className="mt-4">
                   <a
                     href="#"
-                    className="font-ubuntu font-normal  text-[18px] leading-[21px] text-white"
+                    className="font-ubuntu font-normal  text-[18px] leading-[21px] text-white transition-all hover:text-[#32e5eb]"
                   >
                     Blog
                   </a>
@@ -61,7 +75,7 @@ const Footer = () => {
                 <li className="mt-4">
                   <a
                     href="#"
-                    className="font-ubuntu font-normal  text-[18px] leading-[21px] text-white"
+                    className="font-ubuntu font-normal  text-[18px] leading-[21px] text-white transition-all hover:text-[#32e5eb]"
                   >
                     User guides
                   </a>
@@ -69,7 +83,7 @@ const Footer = () => {
                 <li className="mt-4">
                   <a
                     href="#"
-                    className="font-ubuntu font-normal  text-[18px] leading-[21px] text-white"
+                    className="font-ubuntu font-normal  text-[18px] leading-[21px] text-white transition-all hover:text-[#32e5eb]"
                   >
                     Community
                   </a>
@@ -77,7 +91,7 @@ const Footer = () => {
                 <li className="mt-4">
                   <a
                     href="#"
-                    className="font-ubuntu font-normal  text-[18px] leading-[21px] text-white"
+                    className="font-ubuntu font-normal  text-[18px] leading-[21px] text-white transition-all hover:text-[#32e5eb]"
                   >
                     Developers
                   </a>
@@ -85,7 +99,7 @@ const Footer = () => {
                 <li className="mt-4">
                   <a
                     href="#"
-                    className="font-ubuntu font-normal  text-[18px] leading-[21px] text-white"
+                    className="font-ubuntu font-normal  text-[18px] leading-[21px] text-white transition-all hover:text-[#32e5eb]"
                   >
                     Legal
                   </a>
@@ -93,14 +107,14 @@ const Footer = () => {
                 <li className="mt-4">
                   <a
                     href="#"
-                    className="font-ubuntu font-normal  text-[18px] leading-[21px] text-white"
+                    className="font-ubuntu font-normal  text-[18px] leading-[21px] text-white transition-all hover:text-[#32e5eb]"
                   >
                     Privacy
                   </a>
                 </li>
               </ul>
             </div>
-            <div class="w-fit-content">
+            <div class="w-fit-content" data-aos="fade-up" data-aos-delay={700}>
               <h4 className="font-ubuntu font-normal  text-[28px] leading-[32px] text-white mb-[24px]">
                 Company
               </h4>
@@ -108,7 +122,7 @@ const Footer = () => {
                 <li className="mt-4">
                   <a
                     href="#"
-                    className="font-ubuntu font-normal  text-[18px] leading-[21px] text-white"
+                    className="font-ubuntu font-normal  text-[18px] leading-[21px] text-white transition-all hover:text-[#32e5eb]"
                   >
                     About us
                   </a>
@@ -116,26 +130,40 @@ const Footer = () => {
                 <li className="mt-4">
                   <a
                     href="#"
-                    className="font-ubuntu font-normal  text-[18px] leading-[21px] text-white"
+                    className="font-ubuntu font-normal  text-[18px] leading-[21px] text-white transition-all hover:text-[#32e5eb]"
                   >
                     Careers
                   </a>
                 </li>
               </ul>
             </div>
-            <div class="w-fit-content">
+            <div class="w-fit-content" data-aos="fade-up" data-aos-delay={700}>
               <h4 className="font-ubuntu font-normal  text-[28px] leading-[32px] text-white mb-[24px]">
                 Subscribe to our newsletter
               </h4>
               <ul>
                 <li className="mt-4">
-                  <form action="#" className="subscribeForm">
+                  <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    className="subscribeForm"
+                  >
                     <input
-                      type="text"
-                      placeholder="Enter your email"
+                      type="email"
+                      id="email"
+                      placeholder="Enter Your Email"
+                      {...register("email", {
+                        required: "Email is required",
+                        pattern: {
+                          value:
+                            /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                          message: "Invalid email",
+                        },
+                      })}
                       required
                     />
-                    <button type="submit">Subscribe now</button>
+                    <button type="submit" className="mainBtn">
+                      <span>{isLoading ? "Subscribing..." : "Subscribe"}</span>
+                    </button>
                     <div className="gradientBorder"></div>
                   </form>
                 </li>

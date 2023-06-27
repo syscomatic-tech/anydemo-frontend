@@ -10,22 +10,22 @@ import "@splidejs/react-splide/css";
 import MainLayout from "@/src/components/layouts/MainLayout";
 import LoadingProgressModal from "@/src/components/LoadingProgressModal";
 
-import { useIsolateMusicMutation } from "@/src/redux/features/music/musicApi";
+import { useConvertMusicMutation } from "@/src/redux/features/music/musicApi";
 import {
   selectConversionData,
   setArtist,
   setVoice,
 } from "@/src/redux/features/music/musicConversionSlice";
 import { selectToken } from "@/src/redux/features/auth/authSlice";
-import useAos from "@/src/hooks/useAos";
 import { useGetAllVoiceQuery } from "@/src/redux/features/voice/voice.api";
 
 const MakeDemo = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const [isolateMusic] = useIsolateMusicMutation();
+  const [convertMusic] = useConvertMusicMutation();
   const { data: voices } = useGetAllVoiceQuery();
+
   const token = useSelector(selectToken);
   const musicData = useSelector(selectConversionData);
 
@@ -76,6 +76,10 @@ const MakeDemo = () => {
     fileInputRef.current.click();
   };
   const handleConvertMusic = async () => {
+    if (!musicData.artist) {
+      return toast.error("Please select artist");
+    }
+
     if (!token) {
       toast.error("Login to get demo");
       return router.push(`/login?from=${location.href}`);
@@ -86,14 +90,15 @@ const MakeDemo = () => {
     Object.entries(musicData).map(([key, value]) => {
       audioFormData.append(key, value);
     });
+
     try {
       setOpenProgress(true);
-      await isolateMusic(audioFormData).unwrap();
+      await convertMusic(audioFormData).unwrap();
 
       toast.success("Music has been successfully converted");
       setOpenProgress(false);
 
-      router.push("/dashboard/isolated-voices");
+      router.push("/dashboard/mymusic");
     } catch (err) {
       if (token) {
         setOpenProgress(false);
@@ -111,24 +116,15 @@ const MakeDemo = () => {
       setStep3(true);
     }
   }, [musicData]);
-  useAos();
   return (
     <div className="container">
       <MainLayout>
         <div className="py-[80px]">
           <div className="pageTitle">
-            <h1 data-aos="fade-up" data-aos-delay={200}>
-              Make a demo
-            </h1>
-            <p data-aos="fade-up" data-aos-delay={300}>
-              Choose Your Favorite Artist Voice to make your song
-            </p>
+            <h1>Custom Model</h1>
+            <p>Choose Your Favorite Artist Voice to make your song</p>
           </div>
-          <div
-            className="relative flex items-center justify-between px-20 mt-36"
-            data-aos="fade-up"
-            data-aos-delay={400}
-          >
+          <div className="relative flex items-center justify-between px-20 mt-44">
             <div
               className={`w-fit flex flex-col z-[2] `}
               onClick={() => {
@@ -143,7 +139,7 @@ const MakeDemo = () => {
                 className={`w-[31px] h-[31px] rounded-[50%] cursor-pointer ${
                   !step2 && !step3
                     ? " cursor-pointer bg-[linear-gradient(90deg,#19a7ad_11.69%,#1d8093_79.78%)]"
-                    : "bg-[#2f4668] cursor-pointer"
+                    : "bg-[#2f4668]"
                 }`}
               ></div>
             </div>
@@ -195,103 +191,95 @@ const MakeDemo = () => {
           </div>
           {step2 && !step3 ? (
             <div className="pt-[65px] pb-[150px] px-0">
-              <h4 className="font-bold text-[40px] leading-[46px] text-[#32e5eb] mb-[34px]">
-                Pick a voice
-              </h4>
-              <div className="flex flex-wrap justify-between gap-y-10">
-                {voices?.map((v, i) => (
-                  <div
-                    key={i}
-                    className="relative w-[380px] h-[auto] overflow-hidden group rounded-md bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)]"
-                  >
-                    <div
-                      className="w-full h-[280px] cursor-pointer relative"
-                      onClick={() => {
-                        selectArtist(v?._id);
-                        setStep3(true);
-                      }}
-                    >
-                      <div className="aspect-w-10 aspect-h-7">
-                        <Image
-                          className="object-cover group-hover:scale-105 transition-all"
-                          src={`https://fd1d-103-144-49-87.ngrok-free.app/files/voice/${v?.artistImage}`}
-                          layout="fill"
-                          alt=""
-                        />
-                      </div>
-                    </div>
-                    {/* <Image
-                      className="absolute  -translate-x-2/4 -translate-y-2/4 opacity-0 transition-all duration-[0.3s] ease-[ease-in-out] left-2/4 top-2/4"
-                      src="/img/check.png"
-                      width={80}
-                      height={80}
+              <div className="mb-12 mt-3 flex flex-col lg:flex-row justify-between gap-y-8 lg:gap-y-0 lg:items-center">
+                <div>
+                  <h4 className="font-bold text-2xl lg:text-3xl text-white mb-[24px]">
+                    Select Training Category
+                  </h4>
+                  <select className="select text-white text-opacity-40 border-none rounded bg-[#1D1B2D] pl-3 pr-6 w-full max-w-xs">
+                    <option disabled selected>
+                      Select Category
+                    </option>
+                    <option>Rock</option>
+                    <option>Lofi</option>
+                  </select>
+                </div>
+                <div>
+                  <h4 className="font-bold text-2xl lg:text-3xl text-white mb-[24px]">
+                    Select Your Pitch
+                  </h4>
+
+                  <div></div>
+                </div>
+              </div>
+              <div>
+                <h4 className="font-bold text-2xl lg:text-3xl text-white mb-[24px]">
+                  Pre Processing Effects
+                </h4>
+                <div className="grid md:grid-cols-3 grid-cols-2 lg:grid-cols-5   gap-6">
+                  <div className="flex items-center cursor-pointer hover:opacity-90 transition-all justify-center flex-col gap-y-2 px-2 py-3 shadow bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] rounded">
+                    <Image
+                      src={"/svg/noise_gate.svg"}
                       alt=""
-                    /> */}
-                    <div className="absolute font-medium text-2xl leading-[130%] flex items-center justify-center text-white min-w-[102px] h-[42px] rounded-[0px_12px_12px_0px] left-0 top-[22.5px] bg-[#232229]">
-                      <p>{v?.genre}</p>
-                    </div>
-                    <div className="p-3.5">
-                      {/* rest of the content */}
-                      <div className="flex items-center justify-between">
-                        <h3 className="not-italic font-bold text-[32px] leading-[130%] text-[#fffffd]">
-                          {v?.name}
-                        </h3>
-                        <div className="flex items-center">
-                          <Image
-                            src="/img/rating.png"
-                            width={18}
-                            height={18}
-                            alt="star"
-                          />
-                          <span className="not-italic font-light text-xs leading-[4px] text-[#fffffd] ml-[2.5px]">
-                            {v?.ratings}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="not-italic font-light text-lg leading-[27px] text-[#8f8f8f] mt-2.5">
-                        {v?.code}
-                      </div>
-                      <div className="text-end">
-                        <button
-                          onClick={() => {
-                            selectArtist(v?._id);
-                            setStep3(true);
-                          }}
-                          className="w-[124px] h-10 not-italic font-semibold text-base text-[#fffffd] rounded-md bg-[linear-gradient(47.36deg,#2df1e6_12.24%,#3694b0_37.45%,#468db3_39.38%,#6f79ba_44.93%,#8d6bbf_49.97%,#9f63c2_54.29%,#a660c3_57.37%)] hover:opacity-90 transition-all"
-                        >
-                          Try now
-                        </button>
-                      </div>
-                    </div>
-                    {/* conditional if premium */}
-                    {i >= 4 && (
-                      <div
-                        className="absolute w-full h-full opacity-80 left-0 top-0 bg-white"
-                        // redirect to subscribe page
-                        onClick={() => router.push("/subscriptionPlan")}
-                      >
-                        <span className="absolute -translate-x-2/4 not-italic font-medium text-[32px] text-white whitespace-nowrap left-2/4 top-[148px]">
-                          Get Premium
-                        </span>
-                      </div>
-                    )}
+                      width={32}
+                      height={32}
+                    ></Image>
+                    <p className="text-lg  text-white">Noise Gate</p>
                   </div>
-                ))}
+                  <div className="flex items-center cursor-pointer hover:opacity-90 transition-all justify-center flex-col gap-y-2 px-2 py-3 shadow bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] rounded">
+                    <Image
+                      src={"/svg/noise_gate.svg"}
+                      alt=""
+                      width={32}
+                      height={32}
+                    ></Image>
+                    <p className="text-lg  text-white">Noise Gate</p>
+                  </div>
+                  <div className="flex items-center cursor-pointer hover:opacity-90 transition-all justify-center flex-col gap-y-2 px-2 py-3 shadow bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] rounded">
+                    <Image
+                      src={"/svg/noise_gate.svg"}
+                      alt=""
+                      width={32}
+                      height={32}
+                    ></Image>
+                    <p className="text-lg  text-white">Noise Gate</p>
+                  </div>
+                  <div className="flex items-center cursor-pointer hover:opacity-90 transition-all justify-center flex-col gap-y-2 px-2 py-3 shadow bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] rounded">
+                    <Image
+                      src={"/svg/noise_gate.svg"}
+                      alt=""
+                      width={32}
+                      height={32}
+                    ></Image>
+                    <p className="text-lg  text-white">Noise Gate</p>
+                  </div>
+                  <div className="flex items-center cursor-pointer hover:opacity-90 transition-all justify-center flex-col gap-y-2 px-2 py-3 shadow bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] rounded">
+                    <Image
+                      src={"/svg/noise_gate.svg"}
+                      alt=""
+                      width={32}
+                      height={32}
+                    ></Image>
+                    <p className="text-lg  text-white">Noise Gate</p>
+                  </div>
+                </div>
+                <button className="mainBtn mt-12 mx-auto">
+                  <span>Proceed</span>
+                </button>
               </div>
             </div>
           ) : (
             !step3 && (
-              <div
-                className="flex flex-col items-start gap-6 lg:w-[912px] mt-[65px] mb-[255px] mx-auto p-0"
-                data-aos="fade-up"
-                data-aos-delay={500}
-              >
-                <h4 className=" font-medium text-[32px] leading-[37px] text-[#32e5eb]">
-                  Upload Your Recording
+              <div className="flex flex-col items-start gap-6 lg:w-[912px] mt-[65px] mb-[255px] mx-auto p-0">
+                <h4 className=" font-medium text-[32px] text-[#32e5eb]">
+                  Upload Your Voice
                 </h4>
+                <p className="text-gray-400 text-lg -mt-6">
+                  A vocals over 10 minutes in length!
+                </p>
                 <label htmlFor="uploadAudio" onClick={handleLabelClick}>
                   <button
-                    className="lg:w-full w-[90vw] h-40 flex items-center justify-center bg-clip-padding  lg:px-[416px] py-[98px] rounded-lg border-2 border-solid bg-transparent  transition-all hover:bg-[#ffffff0c] bg-clip-padding-box"
+                    className="lg:w-full w-[90vw] h-40 flex items-center justify-center bg-clip-padding  lg:px-[416px] py-[98px] rounded-lg border-2 border-solid bg-transparent   bg-clip-padding-box"
                     style={{
                       borderImage:
                         "linear-gradient(47.36deg, #2df1e6 12.24%, #3694b0 37.45%, #468db3 39.38%, #6f79ba 44.93%, #8d6bbf 49.97%, #9f63c2 54.29%, #a660c3 57.37%)",
@@ -322,29 +310,21 @@ const MakeDemo = () => {
             <div className="mt-[104px] mb-[333px] mx-0 text-center">
               <button
                 onClick={handleConvertMusic}
-                className="max-w-[565px] w-full h-[76px] font-medium text-2xl text-center text-[#fff8f8] px-0 py-6 rounded-lg bg-[linear-gradient(212.36deg,#b843b7_27.16%,#a548b2_29.91%,#7d51a9_36.6%,#6058a2_42.71%,#4e5c9e_47.98%,#485e9c_51.81%,#4393bb_66.42%,#39eef2_89.85%)] hover:opacity-90 transition-all "
+                className="max-w-[565px] w-full h-[76px] font-medium text-2xl text-center text-[#fff8f8] px-0 py-6 rounded-lg bg-[linear-gradient(212.36deg,#b843b7_27.16%,#a548b2_29.91%,#7d51a9_36.6%,#6058a2_42.71%,#4e5c9e_47.98%,#485e9c_51.81%,#4393bb_66.42%,#39eef2_89.85%)]"
               >
                 Get your demo
               </button>
             </div>
           )}
           <div>
-            <h4
-              className="font-bold text-[40px] leading-[46px] text-start text-white mb-12"
-              data-aos="fade-right"
-              data-aos-delay={600}
-            >
+            <h4 className="font-bold text-[40px] leading-[46px] text-start text-white mb-12">
               Latest Demo
             </h4>
             <div>
               <Splide options={options}>
                 {["1", "2", "3", "4"].map((demo, index) => {
                   return (
-                    <SplideSlide
-                      key={index}
-                      data-aos="fade-up"
-                      data-aos-delay={300 * (index + 1)}
-                    >
+                    <SplideSlide key={index}>
                       <div className="w-[295px] h-[363px] cursor-pointer relative m-auto hover:opacity-70 group">
                         <div>
                           <Image
