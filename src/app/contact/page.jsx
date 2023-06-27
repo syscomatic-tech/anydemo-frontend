@@ -5,10 +5,7 @@ import Image from "next/image";
 import { useContactMutation } from "@/src/redux/features/contact/contactApi";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-export const metadata = {
-  title: "Anydemo.ai - Contact Us",
-  description: "",
-};
+
 const contact = () => {
   const { register, handleSubmit, reset } = useForm();
   const [contact, { isLoading }] = useContactMutation();

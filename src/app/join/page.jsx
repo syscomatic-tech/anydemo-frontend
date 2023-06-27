@@ -7,10 +7,6 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import Input from "@/src/components/form/Input";
 
-export const metadata = {
-  title: "Join Us",
-  description: "Develop with Next.js, Developed by My Yasin & Ruhul Amin",
-};
 const joinPage = () => {
   useAos();
   const { register, handleSubmit, reset } = useForm();
