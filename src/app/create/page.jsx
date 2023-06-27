@@ -221,7 +221,7 @@ const MakeDemo = () => {
                       <div className="aspect-w-10 aspect-h-7">
                         <Image
                           className="object-cover group-hover:scale-105 transition-all"
-                          src={`https://fd1d-103-144-49-87.ngrok-free.app/files/voice/${v?.artistImage}`}
+                          src={`${process.env.NEXT_PUBLIC_BASE_STORAGE_URL}/voice/${v?.artistImage}`}
                           layout="fill"
                           alt=""
                         />
