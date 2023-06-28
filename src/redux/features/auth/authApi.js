@@ -3,6 +3,13 @@ import { apiSlice } from '@/src/redux/api/api.slice';
 export const authApiSlice = apiSlice.injectEndpoints({
   overrideExisting: true,
   endpoints: (builder) => ({
+    OauthSuccess: builder.mutation({
+      query: () => ({
+        url: '/auth/success',
+        method: 'POST',
+        body: {},
+      }),
+    }),
     register: builder.mutation({
       query: (credentials) => ({
         url: '/auth/register',
@@ -47,4 +54,5 @@ export const {
   useChangePasswordMutation,
   useVerifyEmailAddressMutation,
   useResetPasswordMutation,
+  useOauthSuccessMutation,
 } = authApiSlice;

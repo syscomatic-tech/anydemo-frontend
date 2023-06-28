@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { createSlice } from "@reduxjs/toolkit";
 import {
-  registerUser,
-  loginUser,
-  forgetPassword,
   authenticateWithGoogle,
+  forgetPassword,
+  loginUser,
+  registerUser,
   resetPassword,
-} from "@/src/axios/axios";
-import { authApiSlice } from "./authApi";
+} from '@/src/axios/axios';
+import { createSlice } from '@reduxjs/toolkit';
+import { authApiSlice } from './authApi';
 
 // Auth slice
 
@@ -22,12 +22,12 @@ const authInitialState = {
 };
 
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState: authInitialState,
   reducers: {
     logout: (state, action) => {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("user");
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('user');
       state.user = null;
       state.token = null;
     },
@@ -58,7 +58,7 @@ const authSlice = createSlice({
     builder.addCase(loginUser.fulfilled, (state, action) => {
       state.loading = false;
       state.user = action.payload.user;
-      console.log("action.payload", action.payload);
+      console.log('action.payload', action.payload);
     });
 
     builder.addCase(loginUser.rejected, (state, action) => {
@@ -67,11 +67,11 @@ const authSlice = createSlice({
     });
 
     // Handling the logout request
-    builder.addCase("auth/logout", (state) => {
+    builder.addCase('auth/logout', (state) => {
       state.user = null;
       state.token = null;
-      localStorage.removeItem("user");
-      localStorage.removeItem("accessToken");
+      localStorage.removeItem('user');
+      localStorage.removeItem('accessToken');
     });
 
     // Handling the forget password request
@@ -126,7 +126,7 @@ const authSlice = createSlice({
       (state, action) => {
         const { user } = action.payload;
         console.log({ user });
-        localStorage.setItem("email", user.email);
+        localStorage.setItem('email', user.email);
       }
     );
     builder.addMatcher(
@@ -135,7 +135,16 @@ const authSlice = createSlice({
         const { user, accessToken } = action.payload;
         state.user = user;
         state.token = accessToken;
-        localStorage.setItem("anydemo-accessToken", accessToken);
+        localStorage.setItem('anydemo-accessToken', accessToken);
+      }
+    );
+    builder.addMatcher(
+      authApiSlice.endpoints.OauthSuccess.matchFulfilled,
+      (state, action) => {
+        const { user, accessToken } = action.payload;
+        state.user = user;
+        state.token = accessToken;
+        localStorage.setItem('anydemo-accessToken', accessToken);
       }
     );
   },

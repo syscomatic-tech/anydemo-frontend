@@ -5,12 +5,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { useRegisterMutation } from '@/src/redux/features/auth/authApi';
-import { authenticateWithGoogle } from '../../axios/axios';
 
 import Loading from '@/src/components/shared/Loading';
+import { baseURL } from '@/src/utils/url';
 import { toast } from 'react-hot-toast';
 
 const SignUpPage = () => {
@@ -21,10 +21,9 @@ const SignUpPage = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
-  const dispatch = useDispatch();
 
   const handleGoogleLogin = async () => {
-    dispatch(authenticateWithGoogle());
+    router.push(`${baseURL}/auth/google`);
     if (token) {
       router.push('/login');
     }
@@ -135,12 +134,6 @@ const SignUpPage = () => {
                     height={32}
                     alt='google'
                     onClick={handleGoogleLogin}
-                  />
-                  <Image
-                    src='/img/facebook.png'
-                    width={32}
-                    height={32}
-                    alt='facebook'
                   />
                 </div>
                 <div className='haveAccount'>
