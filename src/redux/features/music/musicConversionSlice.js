@@ -10,17 +10,13 @@ const musicConversionSlice = createSlice({
     error: null,
     artist: null,
     voice: null,
-    form: null,
   },
   reducers: {
-    // setArtist: (state, action) => {
-    //   state.artist = action.payload;
-    // },
+    setArtist: (state, action) => {
+      state.artist = action.payload;
+    },
     setVoice: (state, action) => {
       state.voice = action.payload;
-    },
-    setForm: (state, action) => {
-      state.form = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -53,9 +49,8 @@ export const selectConversionLoading = (state) => state.musicConversion.loading;
 export const selectConversionError = (state) => state.musicConversion.error;
 export const selectConversionData = (state) => {
   return {
-    // artist: state.musicConversion.artist,
+    artist: state.musicConversion.artist,
     voice: state.musicConversion.voice,
-    form: state.musicConversion.form,
   };
 };
 

@@ -19,7 +19,6 @@ const Header = () => {
   const { data } = useGetProfileQuery({
     skip: accessToken === "",
   });
-  console.log(data);
   const handleLogout = async () => {
     try {
       dispatch(logout());
