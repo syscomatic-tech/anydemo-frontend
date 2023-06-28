@@ -1,12 +1,15 @@
 'use client';
 
 import { useOauthSuccessMutation } from '@/src/redux/features/auth/authApi';
+import { selectToken } from '@/src/redux/features/auth/authSlice';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 
 function GoogleLogin() {
   const router = useRouter();
+  const token = useSelector(selectToken);
 
   const [OAuthSuccess] = useOauthSuccessMutation();
 
@@ -22,6 +25,9 @@ function GoogleLogin() {
   };
 
   useEffect(() => {
+    if (token) {
+      router.push('/dashboard/overview');
+    }
     OAuthLogin();
   }, []);
 
