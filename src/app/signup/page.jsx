@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { useRegisterMutation } from "@/src/redux/features/auth/authApi";
-import { authenticateWithGoogle } from "../../axios/axios";
+import { useRegisterMutation } from '@/src/redux/features/auth/authApi';
+import { authenticateWithGoogle } from '../../axios/axios';
 
-import { toast } from "react-hot-toast";
-import Loading from "@/src/components/shared/Loading";
+import Loading from '@/src/components/shared/Loading';
+import { toast } from 'react-hot-toast';
 
 const SignUpPage = () => {
   const { register, handleSubmit } = useForm();
@@ -26,7 +26,7 @@ const SignUpPage = () => {
   const handleGoogleLogin = async () => {
     dispatch(authenticateWithGoogle());
     if (token) {
-      router.push("/login");
+      router.push('/login');
     }
   };
 
@@ -34,9 +34,9 @@ const SignUpPage = () => {
     try {
       await registerUser(values).unwrap();
 
-      toast.success("User registered successfully");
+      toast.success('User registered successfully');
 
-      router.push("/verify");
+      router.push('/login');
     } catch (err) {
       console.log({ err });
       toast.error(err?.data?.message ?? err?.message);
@@ -44,75 +44,75 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="container">
-      <div className="h-[116px] flex items-center justify-start">
-        <Link href="/">
-          <Image src="/img/header/logo.png" width={40} height={40} alt="logo" />
+    <div className='container'>
+      <div className='h-[116px] flex items-center justify-start'>
+        <Link href='/'>
+          <Image src='/img/header/logo.png' width={40} height={40} alt='logo' />
         </Link>
       </div>
-      <div className="w-full min-h-[711px] h-full bg-[#0F0E19] flex items-center justify-center">
-        <div className="authContainer">
+      <div className='w-full min-h-[711px] h-full bg-[#0F0E19] flex items-center justify-center'>
+        <div className='authContainer'>
           <div
-            className="loginImgArea"
-            data-aos="fade-right"
+            className='loginImgArea'
+            data-aos='fade-right'
             data-aos-delay={300}
           >
-            <div className="imgBox">
-              <div className="bg"></div>
-              <Image src="/img/signup.png" width={445} height={485} alt="" />
+            <div className='imgBox'>
+              <div className='bg'></div>
+              <Image src='/img/signup.png' width={445} height={485} alt='' />
             </div>
           </div>
-          <div className="formArea" data-aos="fade-left" data-aos-delay={300}>
+          <div className='formArea' data-aos='fade-left' data-aos-delay={300}>
             <h4>Create Account</h4>
-            <form className="form" onSubmit={handleSubmit(onSubmit)}>
-              <div className="formControl">
-                <label htmlFor="text">Full Name</label>
+            <form className='form' onSubmit={handleSubmit(onSubmit)}>
+              <div className='formControl'>
+                <label htmlFor='text'>Full Name</label>
                 <input
-                  type="text"
-                  id="name"
-                  placeholder="Enter your full name"
-                  {...register("fullName", {
-                    required: "Full name is required",
+                  type='text'
+                  id='name'
+                  placeholder='Enter your full name'
+                  {...register('fullName', {
+                    required: 'Full name is required',
                   })}
                 />
               </div>
-              <div className="formControl">
-                <label htmlFor="email">Email</label>
+              <div className='formControl'>
+                <label htmlFor='email'>Email</label>
                 <input
-                  type="email"
-                  id="email"
-                  {...register("email", {
-                    required: "Emaill is required",
+                  type='email'
+                  id='email'
+                  {...register('email', {
+                    required: 'Emaill is required',
                     pattern: {
                       value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                      message: "Invalid email",
+                      message: 'Invalid email',
                     },
                   })}
-                  placeholder="Enter your email"
+                  placeholder='Enter your email'
                 />
               </div>
-              <div className="formControl">
-                <label htmlFor="password">Password</label>
+              <div className='formControl'>
+                <label htmlFor='password'>Password</label>
                 <input
-                  type={showPassword ? "text" : "password"}
-                  id="password"
-                  {...register("password", {
-                    required: "Password is required",
+                  type={showPassword ? 'text' : 'password'}
+                  id='password'
+                  {...register('password', {
+                    required: 'Password is required',
                   })}
-                  placeholder="Type your Password"
+                  placeholder='Type your Password'
                 />
               </div>
-              <div className="controlPassword">
-                <div className="showPassword cursor-pointer">
+              <div className='controlPassword'>
+                <div className='showPassword cursor-pointer'>
                   <input
                     onClick={() => setShowPassword(!showPassword)}
-                    type="checkbox"
-                    id="showPassword"
-                    className="cursor-pointer accent-primary"
+                    type='checkbox'
+                    id='showPassword'
+                    className='cursor-pointer accent-primary'
                   />
                   <label
-                    htmlFor="showPassword"
-                    className="cursor-pointer font-semibold"
+                    htmlFor='showPassword'
+                    className='cursor-pointer font-semibold'
                   >
                     Show Password
                   </label>
@@ -120,32 +120,32 @@ const SignUpPage = () => {
               </div>
               {isLoading && <Loading></Loading>}
               <button
-                type="submit"
-                className="mainBtn mt-10  w-full"
+                type='submit'
+                className='mainBtn mt-10  w-full'
                 disabled={isLoading}
               >
-                <span className="">Signup</span>
+                <span className=''>Signup</span>
               </button>
-              <div className="alternativeLigInOptions">
+              <div className='alternativeLigInOptions'>
                 <p>Or Sign up with</p>
-                <div className="authIcon">
+                <div className='authIcon'>
                   <Image
-                    src="/img/google.png"
+                    src='/img/google.png'
                     width={32}
                     height={32}
-                    alt="google"
+                    alt='google'
                     onClick={handleGoogleLogin}
                   />
                   <Image
-                    src="/img/facebook.png"
+                    src='/img/facebook.png'
                     width={32}
                     height={32}
-                    alt="facebook"
+                    alt='facebook'
                   />
                 </div>
-                <div className="haveAccount">
+                <div className='haveAccount'>
                   <p>Already have an account?</p>
-                  <Link href="/login" className="login">
+                  <Link href='/login' className='login'>
                     Login
                   </Link>
                 </div>
