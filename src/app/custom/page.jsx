@@ -1,37 +1,36 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 
 import MainLayout from "@/src/components/layouts/MainLayout";
 import LoadingProgressModal from "@/src/components/LoadingProgressModal";
-
-import { useConvertMusicMutation } from "@/src/redux/features/music/musicApi";
-import {
-  selectConversionData,
-  setArtist,
-  setVoice,
-} from "@/src/redux/features/music/musicConversionSlice";
 import { selectToken } from "@/src/redux/features/auth/authSlice";
-import { useGetAllVoiceQuery } from "@/src/redux/features/voice/voice.api";
+import useAos from "@/src/hooks/useAos";
+import { useForm } from "react-hook-form";
+import { customModel } from "@/src/axios/axios";
 
 const MakeDemo = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-
-  const [convertMusic] = useConvertMusicMutation();
-  const { data: voices } = useGetAllVoiceQuery();
-
+  const { register, handleSubmit, reset } = useForm();
   const token = useSelector(selectToken);
-  const musicData = useSelector(selectConversionData);
-
   const [step2, setStep2] = useState(false);
-  const [step3, setStep3] = useState(false);
   const [openProgress, setOpenProgress] = useState(false);
+
+  const [formDatas, setFormDatas] = useState(null);
+
+  const onSubmit = (values) => {
+    setFormDatas(values);
+    setStep2(true);
+    console.log("submitted successfully", values);
+  };
+
+  console.log(formDatas);
 
   const options = {
     perPage: 3,
@@ -58,47 +57,22 @@ const MakeDemo = () => {
       },
     },
   };
-
-  const fileInputRef = useRef(null);
-  const handleAudioUpload = (event) => {
-    const file = event.target.files[0];
-    if (file && file.type === "audio/mpeg") {
-      dispatch(setVoice(file));
-    } else {
-      toast.error("Please upload audio file");
-    }
-  };
-  const selectArtist = (artistId) => {
-    dispatch(setArtist(artistId));
-  };
-
-  const handleLabelClick = () => {
-    fileInputRef.current.click();
-  };
   const handleConvertMusic = async () => {
-    if (!musicData.artist) {
-      return toast.error("Please select artist");
+    if (formDatas === null) {
+      toast.error("Submit the form first");
+      setStep2(false);
+      return;
     }
-
     if (!token) {
       toast.error("Login to get demo");
       return router.push(`/login?from=${location.href}`);
     }
 
-    const audioFormData = new FormData();
-
-    Object.entries(musicData).map(([key, value]) => {
-      audioFormData.append(key, value);
-    });
-
     try {
       setOpenProgress(true);
-      await convertMusic(audioFormData).unwrap();
+      await dispatch(customModel(formDatas));
 
-      toast.success("Music has been successfully converted");
       setOpenProgress(false);
-
-      router.push("/dashboard/mymusic");
     } catch (err) {
       if (token) {
         setOpenProgress(false);
@@ -107,15 +81,8 @@ const MakeDemo = () => {
     }
   };
 
-  useEffect(() => {
-    if (musicData.voice) {
-      setStep2(true);
-    }
+  useAos();
 
-    if (musicData.artist) {
-      setStep3(true);
-    }
-  }, [musicData]);
   return (
     <div className="container">
       <MainLayout>
@@ -127,25 +94,23 @@ const MakeDemo = () => {
           <div className="relative flex items-center justify-between px-20 mt-44">
             <div
               className={`w-fit flex flex-col z-[2] `}
-              onClick={() => {
-                setStep2(false);
-                setStep3(false);
-              }}
+              onClick={() => setStep2(false)}
             >
               <span className="font-medium text-2xl leading-7 text-center text-white  transition-all duration-[0.3s] ease-[ease-in-out]">
                 01
               </span>
               <div
-                className={`w-[31px] h-[31px] rounded-[50%] cursor-pointer ${
-                  !step2 && !step3
-                    ? " cursor-pointer bg-[linear-gradient(90deg,#19a7ad_11.69%,#1d8093_79.78%)]"
+                className={`w-[31px] h-[31px] rounded-[50%]  ${
+                  !step2
+                    ? "cursor-pointer bg-[linear-gradient(90deg,#19a7ad_11.69%,#1d8093_79.78%)]"
                     : "bg-[#2f4668]"
                 }`}
               ></div>
             </div>
             <div
-              className={`w-fit flex flex-col z-[2] `}
-              onClick={() => setStep3(false)}
+              className={`w-fit flex flex-col z-[2] ${
+                step2 ? "cursor-pointer " : ""
+              }`}
             >
               <span className="font-medium text-2xl leading-7 text-center text-white  transition-all duration-[0.3s] ease-[ease-in-out]">
                 02
@@ -158,155 +123,125 @@ const MakeDemo = () => {
                 }`}
               ></div>
             </div>
-            <div
-              className={`w-fit flex flex-col z-[2] ${
-                step3 ? "cursor-pointer " : ""
-              }`}
-            >
-              <span className="font-medium text-2xl leading-7 text-center text-white  transition-all duration-[0.3s] ease-[ease-in-out]">
-                03
-              </span>
-              <div
-                className={`w-[31px] h-[31px] rounded-[50%]  ${
-                  step3
-                    ? "cursor-pointer bg-[linear-gradient(90deg,#19a7ad_11.69%,#1d8093_79.78%)]"
-                    : "bg-[#2f4668]"
-                }`}
-              ></div>
-            </div>
             <div className="absolute z-[1] w-full flex items-center p-[inherit] left-0 top-[70%]">
               <div
                 className={
-                  "w-6/12 h-0 text-transparent border-[#4e4a88] border-b-[3px]  " +
+                  "w-full h-0 text-transparent border-[#4e4a88] border-b-[3px]  " +
                   (step2 ? "border-solid" : "border-dashed")
-                }
-              ></div>
-              <div
-                className={
-                  "w-6/12 h-0 text-transparent border-[#4e4a88] border-b-[3px]  " +
-                  (step3 ? "border-solid" : "border-dashed")
                 }
               ></div>
             </div>
           </div>
-          {step2 && !step3 ? (
+          {!step2 && (
             <div className="pt-[65px] pb-[150px] px-0">
-              <div className="mb-12 mt-3 flex flex-col lg:flex-row justify-between gap-y-8 lg:gap-y-0 lg:items-center">
-                <div>
-                  <h4 className="font-bold text-2xl lg:text-3xl text-white mb-[24px]">
-                    Select Training Category
-                  </h4>
-                  <select className="select text-white text-opacity-40 border-none rounded bg-[#1D1B2D] pl-3 pr-6 w-full max-w-xs">
-                    <option disabled selected>
-                      Select Category
-                    </option>
-                    <option>Rock</option>
-                    <option>Lofi</option>
-                  </select>
-                </div>
-                <div>
-                  <h4 className="font-bold text-2xl lg:text-3xl text-white mb-[24px]">
-                    Select Your Pitch
-                  </h4>
-
-                  <div></div>
-                </div>
-              </div>
-              <div>
-                <h4 className="font-bold text-2xl lg:text-3xl text-white mb-[24px]">
-                  Pre Processing Effects
-                </h4>
-                <div className="grid md:grid-cols-3 grid-cols-2 lg:grid-cols-5   gap-6">
-                  <div className="flex items-center cursor-pointer hover:opacity-90 transition-all justify-center flex-col gap-y-2 px-2 py-3 shadow bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] rounded">
-                    <Image
-                      src={"/svg/noise_gate.svg"}
-                      alt=""
-                      width={32}
-                      height={32}
-                    ></Image>
-                    <p className="text-lg  text-white">Noise Gate</p>
-                  </div>
-                  <div className="flex items-center cursor-pointer hover:opacity-90 transition-all justify-center flex-col gap-y-2 px-2 py-3 shadow bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] rounded">
-                    <Image
-                      src={"/svg/noise_gate.svg"}
-                      alt=""
-                      width={32}
-                      height={32}
-                    ></Image>
-                    <p className="text-lg  text-white">Noise Gate</p>
-                  </div>
-                  <div className="flex items-center cursor-pointer hover:opacity-90 transition-all justify-center flex-col gap-y-2 px-2 py-3 shadow bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] rounded">
-                    <Image
-                      src={"/svg/noise_gate.svg"}
-                      alt=""
-                      width={32}
-                      height={32}
-                    ></Image>
-                    <p className="text-lg  text-white">Noise Gate</p>
-                  </div>
-                  <div className="flex items-center cursor-pointer hover:opacity-90 transition-all justify-center flex-col gap-y-2 px-2 py-3 shadow bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] rounded">
-                    <Image
-                      src={"/svg/noise_gate.svg"}
-                      alt=""
-                      width={32}
-                      height={32}
-                    ></Image>
-                    <p className="text-lg  text-white">Noise Gate</p>
-                  </div>
-                  <div className="flex items-center cursor-pointer hover:opacity-90 transition-all justify-center flex-col gap-y-2 px-2 py-3 shadow bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] rounded">
-                    <Image
-                      src={"/svg/noise_gate.svg"}
-                      alt=""
-                      width={32}
-                      height={32}
-                    ></Image>
-                    <p className="text-lg  text-white">Noise Gate</p>
-                  </div>
-                </div>
-                <button className="mainBtn mt-12 mx-auto">
-                  <span>Proceed</span>
-                </button>
-              </div>
-            </div>
-          ) : (
-            !step3 && (
-              <div className="flex flex-col items-start gap-6 lg:w-[912px] mt-[65px] mb-[255px] mx-auto p-0">
-                <h4 className=" font-medium text-[32px] text-[#32e5eb]">
-                  Upload Your Voice
-                </h4>
-                <p className="text-gray-400 text-lg -mt-6">
-                  A vocals over 10 minutes in length!
-                </p>
-                <label htmlFor="uploadAudio" onClick={handleLabelClick}>
-                  <button
-                    className="lg:w-full w-[90vw] h-40 flex items-center justify-center bg-clip-padding  lg:px-[416px] py-[98px] rounded-lg border-2 border-solid bg-transparent   bg-clip-padding-box"
-                    style={{
-                      borderImage:
-                        "linear-gradient(47.36deg, #2df1e6 12.24%, #3694b0 37.45%, #468db3 39.38%, #6f79ba 44.93%, #8d6bbf 49.97%, #9f63c2 54.29%, #a660c3 57.37%)",
-                      borderImageSlice: 1,
-                    }}
-                  >
-                    <Image
-                      src="/img/plus.png"
-                      width={50}
-                      height={50}
-                      alt="plus"
+              <form className="form" onSubmit={handleSubmit(onSubmit)}>
+                <div className="lg:flex items-center justify-between lg:gap-x-6">
+                  <div className="formControl lg:w-1/2">
+                    <label htmlFor="name">Name</label>
+                    <input
+                      type="text"
+                      id="name"
+                      placeholder="Enter  Name"
+                      {...register("name", {
+                        required: " Name is required",
+                      })}
+                      required
                     />
+                  </div>
+                  <div className="formControl lg:w-1/2">
+                    <label htmlFor="genre">Genre</label>
+                    <input
+                      type="text"
+                      id="genre"
+                      placeholder="Enter Genre"
+                      {...register("genre", {
+                        required: " Genre is required",
+                      })}
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="lg:flex items-center justify-between lg:gap-x-6">
+                  <div className="formControl lg:w-1/2">
+                    <label htmlFor="code">Code</label>
+                    <input
+                      type="text"
+                      id="code"
+                      placeholder="Enter Genre"
+                      {...register("code", {
+                        required: " Rating is required",
+                      })}
+                      required
+                    />
+                  </div>
+                  <div className="formControl lg:w-1/2">
+                    <label htmlFor="modelFile">Model File</label>
+                    <input
+                      type="link"
+                      id="modelFile"
+                      placeholder="Enter Genre"
+                      {...register("modelFile", {
+                        required: " modelFile is required",
+                      })}
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="lg:flex items-center justify-between lg:gap-x-6">
+                  <div className="formControl lg:w-1/2">
+                    <label htmlFor="modelType">Model Type</label>
+                    <select
+                      id="modelType"
+                      className="select text-white text-opacity-40 border-none rounded bg-[#1D1B2D] pl-3 pr-6 w-full max-w-xs"
+                      {...register("modelType", {
+                        required: " modelType is required",
+                      })}
+                      required
+                    >
+                      <option disabled selected>
+                        Select Model Type
+                      </option>
+                      <option value={"svc"}>SVC</option>
+                      <option value={"rvc"}>RVC</option>
+                    </select>
+                  </div>
+
+                  <div className="formControl lg:w-1/2">
+                    <label htmlFor="artistImage">Artist Image</label>
+                    <input
+                      type="file"
+                      id="artistImage"
+                      placeholder="Enter Genre"
+                      {...register("artistImage", {
+                        required: " artistImage is required",
+                      })}
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="formControl">
+                  <label htmlFor="ratings">Rating</label>
+                  <input
+                    type="range"
+                    min={1}
+                    max={5}
+                    id="ratings"
+                    placeholder="Enter Rating"
+                    {...register("ratings", {
+                      required: " Rating is required",
+                    })}
+                    required
+                  />
+                </div>
+                <div className="flex gap-[15px]  items-center justify-center">
+                  <button className="mainBtn w-1/2" type="submit">
+                    <span>Proceed</span>
                   </button>
-                </label>
-                <input
-                  encType="multipart/form-data"
-                  type="file"
-                  id="uploadAudio"
-                  style={{ display: "none" }}
-                  ref={fileInputRef}
-                  onChange={handleAudioUpload}
-                  accept="audio/mpeg"
-                />
-              </div>
-            )
+                </div>
+              </form>
+            </div>
           )}
-          {step2 && step3 && (
+          {step2 && (
             <div className="mt-[104px] mb-[333px] mx-0 text-center">
               <button
                 onClick={handleConvertMusic}

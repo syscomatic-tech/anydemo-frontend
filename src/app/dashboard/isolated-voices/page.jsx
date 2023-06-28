@@ -30,17 +30,17 @@ const Isolated = () => {
   useEffect(() => {
     // Filter the music data based on the "voice" key
     const voiceData = music.filter((item) => item.hasOwnProperty("voice"));
-    setVoiceMusic(voiceData);
+    setVoiceMusic(voiceData.reverse());
   }, [music]);
   console.log(voiceMusic);
   const handleDownloadClick = () => {
     downloadAudioChunks(downloadedMusic);
   };
 
-  const handleDownload = (music, index) => {
+  const handleDownload = (file, index) => {
     setIsLoading(index); // Set the loading state to true
 
-    dispatch(downloadMusic(music))
+    dispatch(downloadMusic(file))
       .then(() => {
         setIsLoading(null); // Set the loading state to null if the dispatch succeeds
       })
@@ -49,21 +49,12 @@ const Isolated = () => {
       });
   };
 
-  const onStreamMusic = (music, index) => {
-    setIsLoading(index); // Set the loading state to true
-
-    dispatch(streamMusic(music))
-      .then(() => {
-        setIsLoading(null); // Set the loading state to null if the dispatch succeeds
-      })
-      .catch(() => {
-        setIsLoading(null); // Set the loading state to null if the dispatch fails
-      });
+  const onStreamMusic = (music, file) => {
+    dispatch(streamMusic({ ...music, file }));
   };
   useEffect(() => {
     dispatch(fetchUserMusic());
   }, []);
-  console.log(music);
   return (
     <div className="dashboard_children relative">
       <div className="dashboard_children_title">
@@ -92,12 +83,12 @@ const Isolated = () => {
 
                 <div className="flex flex-row gap-3 lg:gap-20 items-center">
                   <span>{item.genre}</span>
-                  <span>{item.duration}</span>
+                  <span>{item?.duration}m</span>
                   <div className="flex flex-row gap-3 lg:gap-8 items-center ">
                     <div
                       className="w-8 h-8"
                       role="button"
-                      onClick={() => onStreamMusic(item)}
+                      onClick={() => onStreamMusic(item, item?.song)}
                     >
                       <Image
                         width={32}
@@ -114,7 +105,7 @@ const Isolated = () => {
                         src="/svg/DownloadOutline.svg"
                         alt=""
                         className="cursor-pointer object-contain  w-full h-full "
-                        onClick={() => handleDownload(item)}
+                        onClick={() => handleDownload(item?.song)}
                       />
                     </div>
                   </div>
@@ -140,7 +131,7 @@ const Isolated = () => {
                     <div
                       className="w-8 h-8"
                       role="button"
-                      onClick={() => onStreamMusic(item)}
+                      onClick={() => onStreamMusic(item, item?.voice)}
                     >
                       <Image
                         width={32}
@@ -157,6 +148,7 @@ const Isolated = () => {
                         src="/svg/DownloadOutline.svg"
                         alt=""
                         className="cursor-pointer object-contain  w-full h-full "
+                        onClick={() => handleDownload(item?.voice)}
                       />
                     </div>
                   </div>
@@ -180,7 +172,7 @@ const Isolated = () => {
                     <div
                       className="w-8 h-8"
                       role="button"
-                      onClick={() => onStreamMusic(item)}
+                      onClick={() => onStreamMusic(item, item?.tone)}
                     >
                       <Image
                         width={32}
@@ -197,6 +189,7 @@ const Isolated = () => {
                         src="/svg/DownloadOutline.svg"
                         alt=""
                         className="cursor-pointer object-contain  w-full h-full "
+                        onClick={() => handleDownload(item?.tone)}
                       />
                     </div>
                   </div>
