@@ -62,7 +62,7 @@ const Downloads = () => {
 
               <div className="flex flex-row gap-3 lg:gap-20 items-center">
                 <span>{item.genre}</span>
-                <span>{item?.duration}</span>
+                <span>{item?.duration}m</span>
                 <div className="flex flex-row gap-3 lg:gap-8 items-center ">
                   <div
                     className="w-8 h-8"

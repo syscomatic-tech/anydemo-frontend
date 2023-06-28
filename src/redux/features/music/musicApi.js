@@ -17,6 +17,13 @@ export const musicApiSlice = apiSlice.injectEndpoints({
         body: music,
       }),
     }),
+    addVoice: builder.mutation({
+      query: (music) => ({
+        url: "/voice",
+        method: "POST",
+        body: music,
+      }),
+    }),
     streamMusic: builder.query({
       query: (songFile) => ({
         url: `/music/${songFile}/stream`,
@@ -44,6 +51,7 @@ export const musicApiSlice = apiSlice.injectEndpoints({
 export const {
   useConvertMusicMutation,
   useStreamMusicQuery,
+  useAddVoiceMutation,
   useGetDownloadedMusicQuery,
   useIsolateMusicMutation,
   useDeleteDownloadedMusicMutation,

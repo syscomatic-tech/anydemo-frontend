@@ -1,8 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { fetchUserMusic } from '@/src/axios/axios';
+import { createSlice } from "@reduxjs/toolkit";
+import { fetchUserMusic } from "@/src/axios/axios";
 
 const userMusicSlice = createSlice({
-  name: 'userMusic',
+  name: "userMusic",
   initialState: {
     music: [],
     loading: false,

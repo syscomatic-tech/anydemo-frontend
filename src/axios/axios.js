@@ -119,6 +119,22 @@ export const forgetPassword = createAsyncThunk(
     }
   }
 );
+// Async thunk action to handle Custom Model
+export const customModel = createAsyncThunk(
+  "voice",
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${baseURL}/voice`, formData, configCT);
+      toast.success(
+        response?.data?.message || "Custom Model Created Successfully!"
+      );
+      return response.data;
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Something went wrong!");
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 // Async thunk action to handle get user details
 export const getProfile = createAsyncThunk(
@@ -253,19 +269,16 @@ export const convertMusic = createAsyncThunk(
 // downloadMusic
 export const downloadMusic = createAsyncThunk(
   "musicDownload/downloadMusic",
-  async (music) => {
+  async (file) => {
     try {
-      const response = await axios.get(
-        `${baseURL}/music/${music._id}/download`,
-        {
-          ...configOT,
-          responseType: "blob",
-        }
-      );
+      const response = await axios.get(`${baseURL}/music/${file}/download`, {
+        ...configOT,
+        responseType: "blob",
+      });
 
       const blob = new Blob([response.data]);
 
-      saveAs(blob, music.song);
+      saveAs(blob, file);
 
       return response.data;
     } catch (error) {
@@ -299,8 +312,9 @@ export const streamMusic = createAsyncThunk(
   "musicStream/streamMusic",
   async (music) => {
     try {
+      console.log(music?.file);
       const response = await axios.get(
-        `${baseURL}/music/${music?.song}/stream`,
+        `${baseURL}/music/${music?.file}/stream`,
         {
           ...configMT,
           responseType: "blob",

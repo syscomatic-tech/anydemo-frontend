@@ -1,22 +1,26 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { convertMusic } from '@/src/axios/axios';
-import { musicApiSlice } from './musicApi';
+import { createSlice } from "@reduxjs/toolkit";
+import { convertMusic } from "@/src/axios/axios";
+import { musicApiSlice } from "./musicApi";
 
 const musicConversionSlice = createSlice({
-  name: 'musicConversion',
+  name: "musicConversion",
   initialState: {
     convertedMusic: null,
     loading: false,
     error: null,
     artist: null,
     voice: null,
+    form: null,
   },
   reducers: {
-    setArtist: (state, action) => {
-      state.artist = action.payload;
-    },
+    // setArtist: (state, action) => {
+    //   state.artist = action.payload;
+    // },
     setVoice: (state, action) => {
       state.voice = action.payload;
+    },
+    setForm: (state, action) => {
+      state.form = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -42,15 +46,16 @@ const musicConversionSlice = createSlice({
   },
 });
 
-export const { setArtist, setVoice } = musicConversionSlice.actions;
+export const { setArtist, setVoice, setForm } = musicConversionSlice.actions;
 export const selectConvertedMusic = (state) =>
   state.musicConversion.convertedMusic;
 export const selectConversionLoading = (state) => state.musicConversion.loading;
 export const selectConversionError = (state) => state.musicConversion.error;
 export const selectConversionData = (state) => {
   return {
-    artist: state.musicConversion.artist,
+    // artist: state.musicConversion.artist,
     voice: state.musicConversion.voice,
+    form: state.musicConversion.form,
   };
 };
 

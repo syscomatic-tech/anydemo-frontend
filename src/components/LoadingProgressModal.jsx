@@ -13,11 +13,11 @@ const LoadingProgressModal = (props) => {
   useEffect(() => {
     if (open) {
       let interval;
-      if (percent < 80) {
+      if (percent < 99) {
         interval = setInterval(() => {
           setPercent((prevPercent) => prevPercent + 1);
         }, 200);
-      } else if (percent >= 80 && convertedMusic) {
+      } else if (percent >= 99 && convertedMusic) {
         interval = setInterval(() => {
           setPercent((prevPercent) => prevPercent + 1);
         }, 200);
