@@ -21,17 +21,7 @@ const MakeDemo = () => {
   const token = useSelector(selectToken);
   const [step2, setStep2] = useState(false);
   const [openProgress, setOpenProgress] = useState(false);
-
   const [formDatas, setFormDatas] = useState(null);
-
-  const onSubmit = (values) => {
-    setFormDatas(values);
-    setStep2(true);
-    console.log("submitted successfully", values);
-  };
-
-  console.log(formDatas);
-
   const options = {
     perPage: 3,
     gap: "16px",
@@ -57,7 +47,32 @@ const MakeDemo = () => {
       },
     },
   };
-  const handleConvertMusic = async () => {
+  const onSubmit = async (values) => {
+    try {
+      let formData = new FormData();
+
+      // Append each form field to the formData
+      Object.keys(values).forEach((key) => {
+        formData.append(key, values[key]);
+      });
+
+      // Check if the artistImage field exists and has a file
+      // if (values.artistImage && values.artistImage[0]) {
+      //   formData.append("artistImage", values.artistImage[0]);
+      // }
+      console.log("65", formData);
+      setFormDatas(formData);
+      setStep2(true);
+      reset();
+    } catch (error) {
+      // Handle the error here
+      toast.error("Error submitting the form:", error);
+      // Optionally, you can show an error message to the user
+      // setError("An error occurred while submitting the form. Please try again.");
+    }
+  };
+
+  const handleSendData = async () => {
     if (formDatas === null) {
       toast.error("Submit the form first");
       setStep2(false);
@@ -69,8 +84,9 @@ const MakeDemo = () => {
     }
 
     try {
+      console.log("formDatas", formDatas);
       setOpenProgress(true);
-      await dispatch(customModel(formDatas));
+      dispatch(customModel(formDatas));
 
       setOpenProgress(false);
     } catch (err) {
@@ -167,9 +183,9 @@ const MakeDemo = () => {
                     <input
                       type="text"
                       id="code"
-                      placeholder="Enter Genre"
+                      placeholder="Enter Code"
                       {...register("code", {
-                        required: " Rating is required",
+                        required: " Code is required",
                       })}
                       required
                     />
@@ -179,7 +195,7 @@ const MakeDemo = () => {
                     <input
                       type="link"
                       id="modelFile"
-                      placeholder="Enter Genre"
+                      placeholder="Enter Model File Link"
                       {...register("modelFile", {
                         required: " modelFile is required",
                       })}
@@ -206,32 +222,35 @@ const MakeDemo = () => {
                     </select>
                   </div>
 
-                  <div className="formControl lg:w-1/2">
+                  {/* <div className="formControl  lg:w-1/2">
                     <label htmlFor="artistImage">Artist Image</label>
                     <input
                       type="file"
                       id="artistImage"
-                      placeholder="Enter Genre"
+                      accept="image/*"
+                      className="file-input file-input-bordered file-input-sm w-full max-w-xs"
+                      placeholder="Enter Image"
                       {...register("artistImage", {
-                        required: " artistImage is required",
+                        required: "Artist Image is required",
+                      })}
+                      required
+                    />
+                  </div> */}
+                  <div className="formControl lg:w-1/2">
+                    <label htmlFor="ratings">Rating</label>
+                    <input
+                      type="range"
+                      min={1}
+                      max={5}
+                      id="ratings"
+                      className="accent-white cursor-pointer"
+                      placeholder="Enter Rating"
+                      {...register("ratings", {
+                        required: " Rating is required",
                       })}
                       required
                     />
                   </div>
-                </div>
-                <div className="formControl">
-                  <label htmlFor="ratings">Rating</label>
-                  <input
-                    type="range"
-                    min={1}
-                    max={5}
-                    id="ratings"
-                    placeholder="Enter Rating"
-                    {...register("ratings", {
-                      required: " Rating is required",
-                    })}
-                    required
-                  />
                 </div>
                 <div className="flex gap-[15px]  items-center justify-center">
                   <button className="mainBtn w-1/2" type="submit">
@@ -244,7 +263,7 @@ const MakeDemo = () => {
           {step2 && (
             <div className="mt-[104px] mb-[333px] mx-0 text-center">
               <button
-                onClick={handleConvertMusic}
+                onClick={handleSendData}
                 className="max-w-[565px] w-full h-[76px] font-medium text-2xl text-center text-[#fff8f8] px-0 py-6 rounded-lg bg-[linear-gradient(212.36deg,#b843b7_27.16%,#a548b2_29.91%,#7d51a9_36.6%,#6058a2_42.71%,#4e5c9e_47.98%,#485e9c_51.81%,#4393bb_66.42%,#39eef2_89.85%)]"
               >
                 Get your demo
