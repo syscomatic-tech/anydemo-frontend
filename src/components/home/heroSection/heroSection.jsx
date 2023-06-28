@@ -30,7 +30,7 @@ export default function HeroSection() {
             Upload your song idea, pick a voice and let our AI turn it into a
             hit
           </p>
-          <Link href="/create" data-aos="fade-up" data-aos-delay="900">
+          <Link href="/isolation" data-aos="fade-up" data-aos-delay="900">
             <button className={" mt-8 btnTransparent"}>
               <span>Try for free</span>
             </button>
@@ -74,7 +74,7 @@ export default function HeroSection() {
             Upload your song idea, pick a voice and let our AI turn it into a
             hit.
           </p>
-          <Link href="/create">
+          <Link href="/isolation">
             <button className={" mt-4 btnTransparent"}>
               <span>Try for free</span>
             </button>

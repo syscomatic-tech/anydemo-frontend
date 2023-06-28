@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function GetStarted() {
   return (
     <div
@@ -25,7 +27,10 @@ export default function GetStarted() {
             data-aos="fade-right"
             data-aos-delay={700}
           >
-            <span>Explore now</span>
+            <span>
+              {" "}
+              <Link href="/create">Explore Now</Link>
+            </span>
           </button>
         </div>
       </div>

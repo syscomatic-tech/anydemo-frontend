@@ -23,12 +23,12 @@ const MusicIsolation = () => {
           </span>{" "}
         </h1>
 
-        <Link href="/create" data-aos="fade-right" data-aos-delay="600">
+        <Link href="/isolation" data-aos="fade-right" data-aos-delay="600">
           <button className={" mt-8 mainBtn"}>
             <span>Try for free</span>
           </button>
         </Link>
-        <div className="mt-12 flex items-center justify-start gap-x-4 lg:gap-x-12">
+        {/* <div className="mt-12 flex items-center justify-start gap-x-4 lg:gap-x-12">
           {isolationList.map((item, index) => (
             <div
               key={index}
@@ -45,7 +45,7 @@ const MusicIsolation = () => {
               <p className="text-white my-2 font-semibold">{item.title}</p>
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
       <div className="hidden lg:block">
         <Image

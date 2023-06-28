@@ -18,9 +18,9 @@ export default function Home() {
           <HeroSection />
           <CreateMusic />
           <MusicIsolation />
-          <Stream />
+          {/* <Stream /> */}
           <CustomVoice />
-          <Shop />
+          {/* <Shop /> */}
         </div>
         <GetStarted />
       </MainLayout>
