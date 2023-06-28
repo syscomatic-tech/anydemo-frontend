@@ -26,7 +26,7 @@ function GoogleLogin() {
 
   useEffect(() => {
     if (token) {
-      router.push('/dashboard/overview');
+      return router.push('/dashboard/overview');
     }
     OAuthLogin();
   }, []);
