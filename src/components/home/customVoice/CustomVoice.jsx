@@ -25,7 +25,7 @@ const MusicIsolation = () => {
         >
           <span>
             {" "}
-            <Link href="/create">Let’s create custom model</Link>
+            <Link href="/custom">Let’s create custom model</Link>
           </span>
         </button>
       </div>
