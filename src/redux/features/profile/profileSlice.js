@@ -1,11 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { getProfile, updateProfile } from "@/src/axios/axios";
-import { authApiSlice } from "../auth/authApi";
-import { profileaApiSlice } from "./profile.api";
+import { createSlice } from '@reduxjs/toolkit';
+import { authApiSlice } from '../auth/authApi';
+import { profileaApiSlice } from './profile.api';
 
 // Profile slice
 const profileSlice = createSlice({
-  name: "profile",
+  name: 'profile',
   initialState: {
     profile: null,
     loading: false,
@@ -15,6 +14,14 @@ const profileSlice = createSlice({
   extraReducers: (builder) => {
     builder.addMatcher(
       authApiSlice.endpoints.login.matchFulfilled,
+      (state, action) => {
+        const { user } = action.payload;
+
+        state.profile = user;
+      }
+    );
+    builder.addMatcher(
+      authApiSlice.endpoints.OauthSuccess.matchFulfilled,
       (state, action) => {
         const { user } = action.payload;
 
