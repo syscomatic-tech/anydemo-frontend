@@ -47,7 +47,10 @@ export default function ResetPassword() {
             </span>
           </p>
           <button className="mainBtn">
-            {isLoading ? " confirming your email..." : " confirm your email"}
+            <span>
+              {" "}
+              {isLoading ? " confirming your email..." : " confirm your email"}
+            </span>
           </button>
           <p className="mt-[18px] mb-9 mx-0">
             <span className="bg-clip-text bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] text-transparent font-normal text-xs leading-[14px]">
