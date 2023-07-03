@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useOauthSuccessMutation } from '@/src/redux/features/auth/authApi';
-import { selectToken } from '@/src/redux/features/auth/authSlice';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-import { toast } from 'react-hot-toast';
-import { useSelector } from 'react-redux';
+import { useOauthSuccessMutation } from "@/src/redux/features/auth/authApi";
+import { selectToken } from "@/src/redux/features/auth/authSlice";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 function GoogleLogin() {
   const router = useRouter();
@@ -16,17 +16,17 @@ function GoogleLogin() {
   const OAuthLogin = async () => {
     try {
       await OAuthSuccess().unwrap();
-      toast.success('Login successful');
-      router.push('/dashboard/overview');
+      toast.success("Login successful");
+      router.push("/dashboard/overview");
     } catch (error) {
-      toast.error('Google login failed');
-      router.push('/login');
+      toast.error("Google login failed");
+      router.push("/login");
     }
   };
 
   useEffect(() => {
     if (token) {
-      return router.push('/dashboard/overview');
+      return router.push("/dashboard/overview");
     }
     OAuthLogin();
   }, []);

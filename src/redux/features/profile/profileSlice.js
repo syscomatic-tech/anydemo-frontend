@@ -1,10 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { authApiSlice } from '../auth/authApi';
-import { profileaApiSlice } from './profile.api';
+import { createSlice } from "@reduxjs/toolkit";
+import { authApiSlice } from "../auth/authApi";
+import { profileaApiSlice } from "./profile.api";
 
 // Profile slice
 const profileSlice = createSlice({
-  name: 'profile',
+  name: "profile",
   initialState: {
     profile: null,
     loading: false,
@@ -36,7 +36,7 @@ const profileSlice = createSlice({
     );
   },
 });
-
+export const { actions } = profileSlice;
+export const { resetProfile } = actions;
 export default profileSlice.reducer;
-
 export const selectProfile = (state) => state.profile.profile;

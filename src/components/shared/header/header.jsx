@@ -6,7 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { logout, selectToken } from "@/src/redux/features/auth/authSlice";
 import { baseStorageURL } from "@/src/utils/url";
-
 import { useGetProfileQuery } from "@/src/redux/features/profile/profile.api";
 import { toast } from "react-hot-toast";
 
@@ -23,8 +22,6 @@ const Header = () => {
     try {
       dispatch(logout());
       toast("Logging you out...");
-      await new Promise((resolve) => setTimeout(resolve, 3000)); // Simulating a delay of 2 seconds
-
       router.push("/login");
       toast.success("Logged you out successfully!");
     } catch (error) {

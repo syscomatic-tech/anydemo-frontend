@@ -19,14 +19,12 @@ import {
 import { selectToken } from "@/src/redux/features/auth/authSlice";
 import { useGetAllVoiceQuery } from "@/src/redux/features/voice/voice.api";
 import useAos from "@/src/hooks/useAos";
-
 const MakeDemo = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
   const [convertMusic] = useConvertMusicMutation();
   const { data: voices } = useGetAllVoiceQuery();
-  console.log("Voices", voices);
   const token = useSelector(selectToken);
   const musicData = useSelector(selectConversionData);
 

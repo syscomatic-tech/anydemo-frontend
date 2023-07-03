@@ -5,8 +5,9 @@ const nextConfig = {
     domains: [
       "th.bing.com",
       "localhost",
-      "api.syscomatic.com",
-      "fd1d-103-144-49-87.ngrok-free.app",
+      "anydemo.syscomatic.com",
+      "anydemo.syscomatic.com",
+      "lh3.googleusercontent.com",
     ],
   },
   // plugins: [require('daisyui')],

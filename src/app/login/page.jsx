@@ -39,7 +39,7 @@ export default function LogIn() {
     try {
       await loginUser(values).unwrap();
       toast.success(
-        "User logged in successfully. Redirecting to your dashboard page..."
+        "User logged in successfully. Redirecting to the previous page..."
       );
       if (callback) {
         return router.push(callback);

@@ -13,15 +13,17 @@ import { selectToken } from "@/src/redux/features/auth/authSlice";
 import useAos from "@/src/hooks/useAos";
 import { useForm } from "react-hook-form";
 import { customModel } from "@/src/axios/axios";
-
+import { useAuthState } from "react-firebase-hooks/auth";
 const MakeDemo = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+
   const { register, handleSubmit, reset } = useForm();
   const token = useSelector(selectToken);
   const [step2, setStep2] = useState(false);
   const [openProgress, setOpenProgress] = useState(false);
   const [formDatas, setFormDatas] = useState(null);
+  let formData = new FormData();
   const options = {
     perPage: 3,
     gap: "16px",
@@ -47,21 +49,32 @@ const MakeDemo = () => {
       },
     },
   };
+
+  function formDataToObject(formData) {
+    const object = {};
+    for (const [key, value] of formData.entries()) {
+      object[key] = value;
+    }
+    return object;
+  }
+
   const onSubmit = async (values) => {
     try {
-      let formData = new FormData();
-
       // Append each form field to the formData
-      Object.keys(values).forEach((key) => {
-        formData.append(key, values[key]);
-      });
 
+      Object.keys(values).forEach((key) => {
+        if (key !== "artistImage") {
+          formData.append(key, values[key]);
+        }
+      });
       // Check if the artistImage field exists and has a file
-      // if (values.artistImage && values.artistImage[0]) {
-      //   formData.append("artistImage", values.artistImage[0]);
-      // }
-      console.log("65", formData);
-      setFormDatas(formData);
+      if (values.artistImage && values.artistImage[0]) {
+        formData.append("artistImage", values.artistImage[0]);
+      }
+      console.log("65", formData.get("artistImage"));
+      const objectData = formDataToObject(formData);
+
+      setFormDatas(objectData);
       setStep2(true);
       reset();
     } catch (error) {
@@ -71,7 +84,6 @@ const MakeDemo = () => {
       // setError("An error occurred while submitting the form. Please try again.");
     }
   };
-
   const handleSendData = async () => {
     if (formDatas === null) {
       toast.error("Submit the form first");
@@ -84,8 +96,9 @@ const MakeDemo = () => {
     }
 
     try {
-      console.log("formDatas", formDatas);
+      console.log("formDatas");
       setOpenProgress(true);
+      console.log(formDatas);
       dispatch(customModel(formDatas));
 
       setOpenProgress(false);
@@ -222,7 +235,7 @@ const MakeDemo = () => {
                     </select>
                   </div>
 
-                  {/* <div className="formControl  lg:w-1/2">
+                  <div className="formControl  lg:w-1/2">
                     <label htmlFor="artistImage">Artist Image</label>
                     <input
                       type="file"
@@ -235,7 +248,7 @@ const MakeDemo = () => {
                       })}
                       required
                     />
-                  </div> */}
+                  </div>
                   <div className="formControl lg:w-1/2">
                     <label htmlFor="ratings">Rating</label>
                     <input
