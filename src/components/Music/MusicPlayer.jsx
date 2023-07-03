@@ -21,7 +21,6 @@ export default function MusicPlayer() {
   const onClose = () => {
     dispatch(closePlayer());
   };
-  console.log(streamingMusic);
   return (
     <div
       className={`music-player-box w-[100vw] fixed bottom-0 p-4  z-[1000] bg-gradient-to-b from-[#3B343F] from-[0.07%] to-[#1D1F27] to-[82.76%] ${

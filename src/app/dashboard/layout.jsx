@@ -10,14 +10,12 @@ import { toast } from "react-hot-toast";
 import { useUpdateProfilePictureMutation } from "@/src/redux/features/profile/profile.api";
 import { baseStorageURL } from "@/src/utils/url";
 import { logout, selectToken } from "@/src/redux/features/auth/authSlice";
-
 import Header from "@/src/components/shared/header/header";
 import useAos from "@/src/hooks/useAos";
 
 const DashboardLayout = ({ children }) => {
   const dispatch = useDispatch();
   const pathname = usePathname();
-
   const router = useRouter();
   const user = useSelector((state) => state.profile.profile);
   const token = useSelector(selectToken);
@@ -67,8 +65,9 @@ const DashboardLayout = ({ children }) => {
       action: async () => {
         try {
           dispatch(logout());
+
           toast("Logging you out...");
-          await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulating a delay of 2 seconds
+          await new Promise((resolve) => setTimeout(resolve, 3000)); // Simulating a delay of 2 seconds
 
           router.push("/login");
           toast.success("Logged you out successfully!");
@@ -81,10 +80,9 @@ const DashboardLayout = ({ children }) => {
     },
   ];
 
-  const profilePicture =
-    user && user.profilePicture
-      ? `${baseStorageURL}/user/${user?.profilePicture}`
-      : "/img/user.png";
+  const profilePicture = user
+    ? `${baseStorageURL}/user/${user?.profilePicture}`
+    : "/img/user.png";
 
   const handleProfilePicChange = async (e) => {
     if (e.target.files.length > 1) {
@@ -101,7 +99,6 @@ const DashboardLayout = ({ children }) => {
       console.log({ err });
     }
   };
-
   useEffect(() => {
     if (!token) {
       router.push("/login");

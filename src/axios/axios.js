@@ -17,7 +17,7 @@ const axios = Axios.create({
 axios.interceptors.request.use(
   (config) => {
     if (!config.headers.Authorization) {
-      const token = localStorage.getItem("anydemo-accessToken");
+      const token = localStorage.getItem("accessToken");
       config.headers.Authorization = `Bearer ${token}`;
     }
 
