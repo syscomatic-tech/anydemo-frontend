@@ -1,29 +1,28 @@
 "use client";
-import { useEffect, useState } from "react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { toast } from "react-hot-toast";
-import { useSelector, useDispatch } from "react-redux";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 
-import MainLayout from "@/src/components/layouts/MainLayout";
-import LoadingProgressModal from "@/src/components/LoadingProgressModal";
-import { selectToken } from "@/src/redux/features/auth/authSlice";
-import useAos from "@/src/hooks/useAos";
-import { useForm } from "react-hook-form";
 import { customModel } from "@/src/axios/axios";
-import { useAuthState } from "react-firebase-hooks/auth";
+import LoadingProgressModal from "@/src/components/LoadingProgressModal";
+import MainLayout from "@/src/components/layouts/MainLayout";
+import useAos from "@/src/hooks/useAos";
+import { selectToken } from "@/src/redux/features/auth/authSlice";
+import { useForm } from "react-hook-form";
+
 const MakeDemo = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
   const { register, handleSubmit, reset } = useForm();
+
   const token = useSelector(selectToken);
-  const [step2, setStep2] = useState(false);
   const [openProgress, setOpenProgress] = useState(false);
-  const [formDatas, setFormDatas] = useState(null);
-  let formData = new FormData();
+  const [step2, setStep2] = useState(false);
   const options = {
     perPage: 3,
     gap: "16px",
@@ -50,63 +49,31 @@ const MakeDemo = () => {
     },
   };
 
-  function formDataToObject(formData) {
-    const object = {};
-    for (const [key, value] of formData.entries()) {
-      object[key] = value;
-    }
-    return object;
-  }
-
   const onSubmit = async (values) => {
-    try {
-      // Append each form field to the formData
-
-      Object.keys(values).forEach((key) => {
-        if (key !== "artistImage") {
-          formData.append(key, values[key]);
-        }
-      });
-      // Check if the artistImage field exists and has a file
-      if (values.artistImage && values.artistImage[0]) {
-        formData.append("artistImage", values.artistImage[0]);
-      }
-      console.log("65", formData.get("artistImage"));
-      const objectData = formDataToObject(formData);
-
-      setFormDatas(objectData);
-      setStep2(true);
-      reset();
-    } catch (error) {
-      // Handle the error here
-      toast.error("Error submitting the form:", error);
-      // Optionally, you can show an error message to the user
-      // setError("An error occurred while submitting the form. Please try again.");
-    }
-  };
-  const handleSendData = async () => {
-    if (formDatas === null) {
-      toast.error("Submit the form first");
-      setStep2(false);
-      return;
-    }
     if (!token) {
       toast.error("Log in to get demo");
       return router.push(`/login?from=${location.href}`);
     }
 
     try {
-      console.log("formDatas");
-      setOpenProgress(true);
-      console.log(formDatas);
-      dispatch(customModel(formDatas));
+      const formData = new FormData();
 
+      Object.entries(values).forEach(([key, value]) => {
+        if (key === "artistImage") {
+          formData.append(key, value[0]);
+        } else {
+          formData.append(key, value);
+        }
+      });
+
+      setOpenProgress(true);
+      dispatch(customModel(formData));
+
+      // reset();
+    } catch (error) {
+      toast.error(err?.data?.message ?? err?.message);
+    } finally {
       setOpenProgress(false);
-    } catch (err) {
-      if (token) {
-        setOpenProgress(false);
-        toast.error(err?.data?.message ?? err?.message);
-      }
     }
   };
 
@@ -161,9 +128,9 @@ const MakeDemo = () => {
               ></div>
             </div>
           </div>
-          {!step2 && (
-            <div className="pt-[65px] pb-[150px] px-0">
-              <form className="form" onSubmit={handleSubmit(onSubmit)}>
+          <div className="pt-[65px] pb-[150px] px-0">
+            <form className="form" onSubmit={handleSubmit(onSubmit)}>
+              <div>
                 <div className="lg:flex items-center justify-between lg:gap-x-6">
                   <div className="formControl lg:w-1/2">
                     <label htmlFor="name">Name</label>
@@ -238,14 +205,13 @@ const MakeDemo = () => {
                   <div className="formControl  lg:w-1/2">
                     <label htmlFor="artistImage">Artist Image</label>
                     <input
-                      type="file"
                       id="artistImage"
                       accept="image/*"
                       className="file-input file-input-bordered file-input-sm w-full max-w-xs"
                       placeholder="Enter Image"
-                      {...register("artistImage", {
-                        required: "Artist Image is required",
-                      })}
+                      {...register("artistImage")}
+                      type="file"
+                      name="artistImage"
                       required
                     />
                   </div>
@@ -270,20 +236,22 @@ const MakeDemo = () => {
                     <span>Proceed</span>
                   </button>
                 </div>
-              </form>
-            </div>
-          )}
-          {step2 && (
-            <div className="mt-[104px] mb-[333px] mx-0 text-center">
-              <button
-                onClick={handleSendData}
-                className="max-w-[565px] w-full h-[76px] font-medium text-2xl text-center text-[#fff8f8] px-0 py-6 rounded-lg bg-[linear-gradient(212.36deg,#b843b7_27.16%,#a548b2_29.91%,#7d51a9_36.6%,#6058a2_42.71%,#4e5c9e_47.98%,#485e9c_51.81%,#4393bb_66.42%,#39eef2_89.85%)]"
-              >
-                Get your demo
-              </button>
-            </div>
-          )}
+              </div>
 
+              {/* <div
+                className={`mt-[104px] mb-[333px] mx-0 text-center ${
+                  step2 ? 'visible' : 'hidden'
+                }`}
+              >
+                <button
+                  type='submit'
+                  className='max-w-[565px] w-full h-[76px] font-medium text-2xl text-center text-[#fff8f8] px-0 py-6 rounded-lg bg-[linear-gradient(212.36deg,#b843b7_27.16%,#a548b2_29.91%,#7d51a9_36.6%,#6058a2_42.71%,#4e5c9e_47.98%,#485e9c_51.81%,#4393bb_66.42%,#39eef2_89.85%)]'
+                >
+                  Get your demo
+                </button>
+              </div> */}
+            </form>
+          </div>
           {openProgress && (
             <LoadingProgressModal
               title="AI preparing your music"

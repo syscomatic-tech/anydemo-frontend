@@ -32,7 +32,8 @@ export default function LogIn() {
   }, [user]);
 
   const handleGoogleLogin = () => {
-    router.push(`${baseURL}/auth/google`);
+    const googleAuthUrl = `${baseURL}/auth/google`;
+    router.push(googleAuthUrl);
   };
 
   const onSubmit = async (values) => {
