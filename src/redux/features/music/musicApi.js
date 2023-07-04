@@ -59,6 +59,7 @@ export const {
   useConvertMusicMutation,
   useStreamMusicQuery,
   useAddVoiceMutation,
+  useCustomVoiceMutation,
   useGetDownloadedMusicQuery,
   useIsolateMusicMutation,
   useDeleteDownloadedMusicMutation,

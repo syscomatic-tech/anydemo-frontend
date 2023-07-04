@@ -32,32 +32,6 @@ const MakeDemo = () => {
   const [step3, setStep3] = useState(false);
   const [openProgress, setOpenProgress] = useState(false);
 
-  const options = {
-    perPage: 3,
-    gap: "16px",
-    type: "loop",
-    perMove: 1,
-    drag: true,
-    pauseOnFocus: true,
-    autoplay: false,
-    pauseOnHover: true,
-    arrows: false,
-    classes: {
-      prev: "",
-      next: "",
-    },
-    pagination: false,
-    autoplaySpeed: 3000,
-    interval: 3000,
-    width: "100%",
-    height: "100%",
-    breakpoints: {
-      1150: {
-        perPage: 2,
-      },
-    },
-  };
-
   const fileInputRef = useRef(null);
   const handleAudioUpload = (event) => {
     const file = event.target.files[0];

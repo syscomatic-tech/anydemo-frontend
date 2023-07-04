@@ -99,7 +99,7 @@ const Header = () => {
       : "/img/user.png";
 
   return (
-    <div className="navbar container py-6 z-50">
+    <div className="navbar container py-6 z-[10000]">
       <div className="navbar-start">
         <div className="cursor-pointer">
           <Link href="/">

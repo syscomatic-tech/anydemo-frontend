@@ -39,9 +39,7 @@ export default function LogIn() {
   const onSubmit = async (values) => {
     try {
       await loginUser(values).unwrap();
-      toast.success(
-        "User logged in successfully. Redirecting to the previous page..."
-      );
+      toast.success("Log in successful");
       if (callback) {
         return router.push(callback);
       }
