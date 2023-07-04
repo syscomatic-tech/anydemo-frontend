@@ -24,6 +24,13 @@ export const musicApiSlice = apiSlice.injectEndpoints({
         body: music,
       }),
     }),
+    customVoice: builder.mutation({
+      query: (music) => ({
+        url: "/voice",
+        method: "POST",
+        body: music,
+      }),
+    }),
     streamMusic: builder.query({
       query: (songFile) => ({
         url: `/music/${songFile}/stream`,

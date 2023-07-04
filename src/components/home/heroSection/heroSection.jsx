@@ -23,7 +23,7 @@ export default function HeroSection() {
             any demo
           </h1>
           <p
-            className="w-[300px] font-medium text-left text-sm  text-[#989898] mt-5"
+            className="w-[300px] font-medium !text-left text-sm  text-[#989898] mt-5"
             data-aos="fade-up"
             data-aos-delay="300"
           >

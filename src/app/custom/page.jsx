@@ -1,18 +1,18 @@
-'use client';
-import { Splide, SplideSlide } from '@splidejs/react-splide';
-import '@splidejs/react-splide/css';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { toast } from 'react-hot-toast';
-import { useDispatch, useSelector } from 'react-redux';
+"use client";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+import "@splidejs/react-splide/css";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 
-import { customModel } from '@/src/axios/axios';
-import LoadingProgressModal from '@/src/components/LoadingProgressModal';
-import MainLayout from '@/src/components/layouts/MainLayout';
-import useAos from '@/src/hooks/useAos';
-import { selectToken } from '@/src/redux/features/auth/authSlice';
-import { useForm } from 'react-hook-form';
+import { customModel } from "@/src/axios/axios";
+import LoadingProgressModal from "@/src/components/LoadingProgressModal";
+import MainLayout from "@/src/components/layouts/MainLayout";
+import useAos from "@/src/hooks/useAos";
+import { selectToken } from "@/src/redux/features/auth/authSlice";
+import { useForm } from "react-hook-form";
 
 const MakeDemo = () => {
   const router = useRouter();
@@ -25,8 +25,8 @@ const MakeDemo = () => {
   const [step2, setStep2] = useState(false);
   const options = {
     perPage: 3,
-    gap: '16px',
-    type: 'loop',
+    gap: "16px",
+    type: "loop",
     perMove: 1,
     drag: true,
     pauseOnFocus: true,
@@ -34,14 +34,14 @@ const MakeDemo = () => {
     pauseOnHover: true,
     arrows: false,
     classes: {
-      prev: '',
-      next: '',
+      prev: "",
+      next: "",
     },
     pagination: false,
     autoplaySpeed: 3000,
     interval: 3000,
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
     breakpoints: {
       1150: {
         perPage: 2,
@@ -51,7 +51,7 @@ const MakeDemo = () => {
 
   const onSubmit = async (values) => {
     if (!token) {
-      toast.error('Login to get demo');
+      toast.error("Log in to get demo");
       return router.push(`/login?from=${location.href}`);
     }
 
@@ -59,7 +59,7 @@ const MakeDemo = () => {
       const formData = new FormData();
 
       Object.entries(values).forEach(([key, value]) => {
-        if (key === 'artistImage') {
+        if (key === "artistImage") {
           formData.append(key, value[0]);
         } else {
           formData.append(key, value);
@@ -80,159 +80,159 @@ const MakeDemo = () => {
   useAos();
 
   return (
-    <div className='container'>
+    <div className="container">
       <MainLayout>
-        <div className='py-[80px]'>
-          <div className='pageTitle'>
+        <div className="py-[80px]">
+          <div className="pageTitle">
             <h1>Custom Model</h1>
             <p>Choose Your Favorite Artist Voice to make your song</p>
           </div>
-          <div className='relative flex items-center justify-between px-20 mt-44'>
+          <div className="relative flex items-center justify-between px-20 mt-44">
             <div
               className={`w-fit flex flex-col z-[2] `}
               onClick={() => setStep2(false)}
             >
-              <span className='font-medium text-2xl leading-7 text-center text-white  transition-all duration-[0.3s] ease-[ease-in-out]'>
+              <span className="font-medium text-2xl leading-7 text-center text-white  transition-all duration-[0.3s] ease-[ease-in-out]">
                 01
               </span>
               <div
                 className={`w-[31px] h-[31px] rounded-[50%]  ${
                   !step2
-                    ? 'cursor-pointer bg-[linear-gradient(90deg,#19a7ad_11.69%,#1d8093_79.78%)]'
-                    : 'bg-[#2f4668]'
+                    ? "cursor-pointer bg-[linear-gradient(90deg,#19a7ad_11.69%,#1d8093_79.78%)]"
+                    : "bg-[#2f4668]"
                 }`}
               ></div>
             </div>
             <div
               className={`w-fit flex flex-col z-[2] ${
-                step2 ? 'cursor-pointer ' : ''
+                step2 ? "cursor-pointer " : ""
               }`}
             >
-              <span className='font-medium text-2xl leading-7 text-center text-white  transition-all duration-[0.3s] ease-[ease-in-out]'>
+              <span className="font-medium text-2xl leading-7 text-center text-white  transition-all duration-[0.3s] ease-[ease-in-out]">
                 02
               </span>
               <div
                 className={`w-[31px] h-[31px] rounded-[50%]  ${
                   step2
-                    ? 'cursor-pointer bg-[linear-gradient(90deg,#19a7ad_11.69%,#1d8093_79.78%)]'
-                    : 'bg-[#2f4668]'
+                    ? "cursor-pointer bg-[linear-gradient(90deg,#19a7ad_11.69%,#1d8093_79.78%)]"
+                    : "bg-[#2f4668]"
                 }`}
               ></div>
             </div>
-            <div className='absolute z-[1] w-full flex items-center p-[inherit] left-0 top-[70%]'>
+            <div className="absolute z-[1] w-full flex items-center p-[inherit] left-0 top-[70%]">
               <div
                 className={
-                  'w-full h-0 text-transparent border-[#4e4a88] border-b-[3px]  ' +
-                  (step2 ? 'border-solid' : 'border-dashed')
+                  "w-full h-0 text-transparent border-[#4e4a88] border-b-[3px]  " +
+                  (step2 ? "border-solid" : "border-dashed")
                 }
               ></div>
             </div>
           </div>
-          <div className='pt-[65px] pb-[150px] px-0'>
-            <form className='form' onSubmit={handleSubmit(onSubmit)}>
+          <div className="pt-[65px] pb-[150px] px-0">
+            <form className="form" onSubmit={handleSubmit(onSubmit)}>
               <div>
-                <div className='lg:flex items-center justify-between lg:gap-x-6'>
-                  <div className='formControl lg:w-1/2'>
-                    <label htmlFor='name'>Name</label>
+                <div className="lg:flex items-center justify-between lg:gap-x-6">
+                  <div className="formControl lg:w-1/2">
+                    <label htmlFor="name">Name</label>
                     <input
-                      type='text'
-                      id='name'
-                      placeholder='Enter  Name'
-                      {...register('name', {
-                        required: ' Name is required',
+                      type="text"
+                      id="name"
+                      placeholder="Enter  Name"
+                      {...register("name", {
+                        required: " Name is required",
                       })}
                       required
                     />
                   </div>
-                  <div className='formControl lg:w-1/2'>
-                    <label htmlFor='genre'>Genre</label>
+                  <div className="formControl lg:w-1/2">
+                    <label htmlFor="genre">Genre</label>
                     <input
-                      type='text'
-                      id='genre'
-                      placeholder='Enter Genre'
-                      {...register('genre', {
-                        required: ' Genre is required',
-                      })}
-                      required
-                    />
-                  </div>
-                </div>
-                <div className='lg:flex items-center justify-between lg:gap-x-6'>
-                  <div className='formControl lg:w-1/2'>
-                    <label htmlFor='code'>Code</label>
-                    <input
-                      type='text'
-                      id='code'
-                      placeholder='Enter Code'
-                      {...register('code', {
-                        required: ' Code is required',
-                      })}
-                      required
-                    />
-                  </div>
-                  <div className='formControl lg:w-1/2'>
-                    <label htmlFor='modelFile'>Model File</label>
-                    <input
-                      type='link'
-                      id='modelFile'
-                      placeholder='Enter Model File Link'
-                      {...register('modelFile', {
-                        required: ' modelFile is required',
+                      type="text"
+                      id="genre"
+                      placeholder="Enter Genre"
+                      {...register("genre", {
+                        required: " Genre is required",
                       })}
                       required
                     />
                   </div>
                 </div>
-                <div className='lg:flex items-center justify-between lg:gap-x-6'>
-                  <div className='formControl lg:w-1/2'>
-                    <label htmlFor='modelType'>Model Type</label>
+                <div className="lg:flex items-center justify-between lg:gap-x-6">
+                  <div className="formControl lg:w-1/2">
+                    <label htmlFor="code">Code</label>
+                    <input
+                      type="text"
+                      id="code"
+                      placeholder="Enter Code"
+                      {...register("code", {
+                        required: " Code is required",
+                      })}
+                      required
+                    />
+                  </div>
+                  <div className="formControl lg:w-1/2">
+                    <label htmlFor="modelFile">Model File</label>
+                    <input
+                      type="link"
+                      id="modelFile"
+                      placeholder="Enter Model File Link"
+                      {...register("modelFile", {
+                        required: " modelFile is required",
+                      })}
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="lg:flex items-center justify-between lg:gap-x-6">
+                  <div className="formControl lg:w-1/2">
+                    <label htmlFor="modelType">Model Type</label>
                     <select
-                      id='modelType'
-                      className='select text-white text-opacity-40 border-none rounded bg-[#1D1B2D] pl-3 pr-6 w-full max-w-xs'
-                      {...register('modelType', {
-                        required: ' modelType is required',
+                      id="modelType"
+                      className="select text-white text-opacity-40 border-none rounded bg-[#1D1B2D] pl-3 pr-6 w-full max-w-xs"
+                      {...register("modelType", {
+                        required: " modelType is required",
                       })}
                       required
                     >
                       <option disabled selected>
                         Select Model Type
                       </option>
-                      <option value={'svc'}>SVC</option>
-                      <option value={'rvc'}>RVC</option>
+                      <option value={"svc"}>SVC</option>
+                      <option value={"rvc"}>RVC</option>
                     </select>
                   </div>
 
-                  <div className='formControl  lg:w-1/2'>
-                    <label htmlFor='artistImage'>Artist Image</label>
+                  <div className="formControl  lg:w-1/2">
+                    <label htmlFor="artistImage">Artist Image</label>
                     <input
-                      id='artistImage'
-                      accept='image/*'
-                      className='file-input file-input-bordered file-input-sm w-full max-w-xs'
-                      placeholder='Enter Image'
-                      {...register('artistImage')}
-                      type='file'
-                      name='artistImage'
+                      id="artistImage"
+                      accept="image/*"
+                      className="file-input file-input-bordered file-input-sm w-full max-w-xs"
+                      placeholder="Enter Image"
+                      {...register("artistImage")}
+                      type="file"
+                      name="artistImage"
                       required
                     />
                   </div>
-                  <div className='formControl lg:w-1/2'>
-                    <label htmlFor='ratings'>Rating</label>
+                  <div className="formControl lg:w-1/2">
+                    <label htmlFor="ratings">Rating</label>
                     <input
-                      type='range'
+                      type="range"
                       min={1}
                       max={5}
-                      id='ratings'
-                      className='accent-white cursor-pointer'
-                      placeholder='Enter Rating'
-                      {...register('ratings', {
-                        required: ' Rating is required',
+                      id="ratings"
+                      className="accent-white cursor-pointer"
+                      placeholder="Enter Rating"
+                      {...register("ratings", {
+                        required: " Rating is required",
                       })}
                       required
                     />
                   </div>
                 </div>
-                <div className='flex gap-[15px]  items-center justify-center'>
-                  <button className='mainBtn w-1/2' type='submit'>
+                <div className="flex gap-[15px]  items-center justify-center">
+                  <button className="mainBtn w-1/2" type="submit">
                     <span>Proceed</span>
                   </button>
                 </div>
@@ -252,43 +252,9 @@ const MakeDemo = () => {
               </div> */}
             </form>
           </div>
-
-          <div>
-            <h4 className='font-bold text-[40px] leading-[46px] text-start text-white mb-12'>
-              Latest Demo
-            </h4>
-            <div>
-              <Splide options={options}>
-                {['1', '2', '3', '4'].map((demo, index) => {
-                  return (
-                    <SplideSlide key={index}>
-                      <div className='w-[295px] h-[363px] cursor-pointer relative m-auto hover:opacity-70 group'>
-                        <div>
-                          <Image
-                            src='/img/demo01.png'
-                            width={295}
-                            height={363}
-                            alt=''
-                            className='w-full h-full object-cover object-center'
-                          />
-                        </div>
-                        <Image
-                          className='opacity-0 group-hover:opacity-100 transition-all duration-[0.3s] ease-[ease-in-out] absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2'
-                          src='/svg/play.svg'
-                          width={64}
-                          height={64}
-                          alt=''
-                        />
-                      </div>
-                    </SplideSlide>
-                  );
-                })}
-              </Splide>
-            </div>
-          </div>
           {openProgress && (
             <LoadingProgressModal
-              title='AI preparing your music'
+              title="AI preparing your music"
               open={openProgress}
               setOpen={setOpenProgress}
             />
