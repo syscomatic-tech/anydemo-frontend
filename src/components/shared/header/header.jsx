@@ -20,9 +20,9 @@ const Header = () => {
   });
   const handleLogout = async () => {
     try {
-      dispatch(logout());
       toast("Logging you out...");
-      router.push("/login");
+      dispatch(logout());
+      await router.push("/login");
       toast.success("Logged you out successfully!");
     } catch (error) {
       // Handle any errors that occur during the process

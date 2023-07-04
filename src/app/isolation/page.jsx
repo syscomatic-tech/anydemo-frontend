@@ -70,7 +70,7 @@ const MakeDemo = () => {
   };
   const handleConvertMusic = async () => {
     if (!token) {
-      toast.error("Login to get demo");
+      toast.error("Log in to get demo");
       return router.push(`/login?from=${location.href}`);
     }
 
@@ -166,7 +166,7 @@ const MakeDemo = () => {
               data-aos-delay={500}
             >
               <h4 className=" font-medium text-[32px] leading-[37px] text-[#32e5eb]">
-                Upload Your Recording
+                Upload Your Recording or Song
               </h4>
               <label htmlFor="uploadAudio" onClick={handleLabelClick}>
                 <button
@@ -206,47 +206,6 @@ const MakeDemo = () => {
               </button>
             </div>
           )}
-          <div>
-            <h4
-              className="font-bold text-[40px] leading-[46px] text-start text-white mb-12"
-              data-aos="fade-right"
-              data-aos-delay={600}
-            >
-              Latest Demo
-            </h4>
-            <div>
-              <Splide options={options}>
-                {["1", "2", "3", "4"].map((demo, index) => {
-                  return (
-                    <SplideSlide
-                      key={index}
-                      data-aos="fade-up"
-                      data-aos-delay={300 * (index + 1)}
-                    >
-                      <div className="w-[295px] h-[363px] cursor-pointer relative m-auto hover:opacity-70 group">
-                        <div>
-                          <Image
-                            src="/img/demo01.png"
-                            width={295}
-                            height={363}
-                            alt=""
-                            className="w-full h-full object-cover object-center"
-                          />
-                        </div>
-                        <Image
-                          className="opacity-0 group-hover:opacity-100 transition-all duration-[0.3s] ease-[ease-in-out] absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2"
-                          src="/svg/play.svg"
-                          width={64}
-                          height={64}
-                          alt=""
-                        />
-                      </div>
-                    </SplideSlide>
-                  );
-                })}
-              </Splide>
-            </div>
-          </div>
           {openProgress && (
             <LoadingProgressModal
               title="AI preparing your music"

@@ -1,25 +1,30 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { forgetPassword } from "../../axios/axios";
+import { useRouter } from "next/navigation";
 
 const ForgotPassword = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const [showPassword, setShowPassword] = useState(false);
   const [userMail, setUserMail] = useState(null);
   const handleForgotPassword = () => {
     const email = {
       email: userMail,
     };
-    console.log(email);
     dispatch(forgetPassword(email)); // Use dispatch instead of useDispatch
   };
   return (
     <div className="container">
-      <div className="w-full min-h-[711px] h-full bg-[#0F0E19] flex items-center justify-center">
+      <div
+        className="flex items-center my-8 cursor-pointer w-32 transition-all hover:opacity-70 "
+        onClick={() => router.back()}
+      >
+        <Image src="/svg/back.svg" width={32} height={32} alt="" />
+        <p className="text-lg text-white font-semibold ml-2 ">Go Back</p>
+      </div>
+      <div className="w-full my-auto min-h-[711px] h-full bg-[#0F0E19] flex items-center justify-center">
         <div className="authContainer">
           <div className="loginImgArea">
             <div className="imgBox">
@@ -41,9 +46,9 @@ const ForgotPassword = () => {
               </div>
               <button
                 onClick={() => handleForgotPassword()}
-                className="actionBtn"
+                className="mainBtn w-full"
               >
-                Reset password
+                <span>Reset password</span>
               </button>
             </div>
           </div>

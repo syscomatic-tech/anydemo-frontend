@@ -48,7 +48,7 @@ const SubscriptionPlan = () => {
               <div
                 onClick={() => setActive("month")}
                 className={
-                  "flex items-center justify-center font-normal text-base text-[#1E1E1E] transition-[color] duration-[0.2s] ease-[ease-in] w-6/12 h-full cursor-pointer bg-[#e9e9e9] rounded-[8px_0_0_8px]" +
+                  "flex items-center justify-center font-normal text-base text-[#1E1E1E] transition-[color] duration-[0.2s] ease-[ease-in] w-6/12 h-full cursor-pointer bg-[#e9e9e9] rounded-[8px_0px_0px_8px] " +
                   (active === "month" &&
                     "text-[#FFFFFD] bg-[linear-gradient(90deg,#23afb7_1.46%,#169aa4_79.47%)]")
                 }

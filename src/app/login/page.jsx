@@ -70,7 +70,7 @@ export default function LogIn() {
             </div>
           </div>
           <div className="formArea" data-aos="fade-left" data-aos-delay={300}>
-            <h4>Login your Account</h4>
+            <h4>Log in your Account</h4>
             <form className="form" onSubmit={handleSubmit(onSubmit)}>
               <div className="formControl">
                 <label htmlFor="email">Email</label>
@@ -127,7 +127,7 @@ export default function LogIn() {
                 className="mainBtn mt-10  w-full"
                 disabled={isLoading}
               >
-                <span className="">Login</span>
+                <span className="">Log in</span>
               </button>
               <div className="alternativeLigInOptions">
                 <p>Or login with</p>

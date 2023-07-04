@@ -16,7 +16,7 @@ function GoogleLogin() {
   const OAuthLogin = async () => {
     try {
       await OAuthSuccess().unwrap();
-      toast.success("Login successful");
+      toast.success("Log in successful");
       router.push("/dashboard/overview");
     } catch (error) {
       toast.error("Google login failed");
