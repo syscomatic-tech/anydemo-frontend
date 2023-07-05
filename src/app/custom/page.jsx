@@ -10,11 +10,15 @@ import MainLayout from "@/src/components/layouts/MainLayout";
 import useAos from "@/src/hooks/useAos";
 import { selectToken } from "@/src/redux/features/auth/authSlice";
 import { useForm } from "react-hook-form";
-import { useCustomVoiceMutation } from "@/src/redux/features/music/musicApi";
+import {
+  useCustomVoiceMutation,
+  useGetConvertedCustomMusicQuery,
+} from "@/src/redux/features/music/musicApi";
 
 const MakeDemo = () => {
   const router = useRouter();
   const [customVoice] = useCustomVoiceMutation();
+
   const { register, handleSubmit } = useForm();
 
   const token = useSelector(selectToken);
@@ -132,18 +136,6 @@ const MakeDemo = () => {
                 </div>
                 <div className="lg:flex items-center justify-between lg:gap-x-6">
                   <div className="formControl lg:w-1/2">
-                    <label htmlFor="code">Code</label>
-                    <input
-                      type="text"
-                      id="code"
-                      placeholder="Enter Code"
-                      {...register("code", {
-                        required: " Code is required",
-                      })}
-                      required
-                    />
-                  </div>
-                  <div className="formControl lg:w-1/2">
                     <label htmlFor="modelFile">Model File</label>
                     <input
                       type="link"
@@ -155,8 +147,6 @@ const MakeDemo = () => {
                       required
                     />
                   </div>
-                </div>
-                <div className="lg:flex items-center justify-between lg:gap-x-6">
                   <div className="formControl lg:w-1/2">
                     <label htmlFor="modelType">Model Type</label>
                     <select
@@ -174,7 +164,8 @@ const MakeDemo = () => {
                       <option value={"rvc"}>RVC</option>
                     </select>
                   </div>
-
+                </div>
+                <div className="lg:flex items-center justify-between lg:gap-x-6">
                   <div className="formControl  lg:w-1/2">
                     <label htmlFor="artistImage">Artist Image</label>
                     <input

@@ -241,7 +241,7 @@ const SubscriptionPlan = () => {
                       /per month
                     </span>
                   </div>
-                  <div
+                  {/* <div
                     className={
                       "font-medium text-lg  cursor-pointer text-center text-[#FFFFFD] bg-transparent w-full  mt-4 lg:mt-[42px] py-3 rounded-lg   transition-all" +
                       (i === 1
@@ -249,8 +249,8 @@ const SubscriptionPlan = () => {
                         : "border-solid border-[#2f9ccd] border-[1.5px]  hover:bg-[#ffffff10]")
                     }
                   >
-                    {/* <button>Choose Plan</button> */}
-                  </div>
+                    <button>Choose Plan</button>
+                  </div> */}
                   <div className="">
                     <div>
                       <h3 className="font-bold text-[22px] lg:text-[28px] leading-8 text-[#1FC2C7] mt-5 mb-2 lg:hidden  ">

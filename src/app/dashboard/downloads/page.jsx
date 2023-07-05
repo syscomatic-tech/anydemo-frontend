@@ -16,9 +16,9 @@ const Downloads = () => {
   const dispatch = useDispatch();
   const { data: downloadedMusics, refetch } = useGetDownloadedMusicQuery();
   const [deleteMusic, { isLoading }] = useDeleteDownloadedMusicMutation();
-  const onStreamMusic = (music, index) => {
-    dispatch(streamMusic(music));
-    console.log(music);
+  const onStreamMusic = (item, index) => {
+    dispatch(streamMusic({ ...item, file: item?.song }));
+    console.log(item);
   };
   const handleDelete = (musicId) => {
     deleteMusic(musicId)
