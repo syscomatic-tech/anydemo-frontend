@@ -40,7 +40,8 @@ const MakeDemo = () => {
 
       setOpenProgress(true);
       await customVoice(formData).unwrap();
-
+      toast.success("Custom Model Created Successfully");
+      router.push("/dashboard/custom-models");
       // reset();
     } catch (error) {
       toast.error(error?.data?.message ?? err?.message);

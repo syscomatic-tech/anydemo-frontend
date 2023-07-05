@@ -249,7 +249,7 @@ const SubscriptionPlan = () => {
                         : "border-solid border-[#2f9ccd] border-[1.5px]  hover:bg-[#ffffff10]")
                     }
                   >
-                    <button>Choose Plan</button>
+                    {/* <button>Choose Plan</button> */}
                   </div>
                   <div className="">
                     <div>

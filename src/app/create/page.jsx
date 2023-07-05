@@ -247,9 +247,9 @@ const MakeDemo = () => {
                       <div
                         className="absolute w-full h-full opacity-80 left-0 top-0 bg-white"
                         // redirect to subscribe page
-                        onClick={() => router.push("/subscriptionPlan")}
+                        onClick={() => router.push("/pricing")}
                       >
-                        <span className="absolute -translate-x-2/4 not-italic font-medium text-[32px] text-white whitespace-nowrap left-2/4 top-[148px]">
+                        <span className="absolute -translate-x-2/4 not-italic font-medium text-[32px] text-black whitespace-nowrap left-2/4 top-[148px]">
                           Get Premium
                         </span>
                       </div>
