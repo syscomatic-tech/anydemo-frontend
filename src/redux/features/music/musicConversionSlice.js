@@ -42,7 +42,7 @@ const musicConversionSlice = createSlice({
   },
 });
 
-export const { setArtist, setVoice, setForm } = musicConversionSlice.actions;
+export const { setArtist, setVoice } = musicConversionSlice.actions;
 export const selectConvertedMusic = (state) =>
   state.musicConversion.convertedMusic;
 export const selectConversionLoading = (state) => state.musicConversion.loading;

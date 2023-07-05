@@ -52,6 +52,11 @@ export const musicApiSlice = apiSlice.injectEndpoints({
         url: "/music/user/",
       }),
     }),
+    getConvertedCustomMusic: builder.query({
+      query: () => ({
+        url: "/voice/custom/",
+      }),
+    }),
   }),
 });
 
@@ -59,8 +64,10 @@ export const {
   useConvertMusicMutation,
   useStreamMusicQuery,
   useAddVoiceMutation,
+  useCustomVoiceMutation,
   useGetDownloadedMusicQuery,
   useIsolateMusicMutation,
   useDeleteDownloadedMusicMutation,
   useGetConvertedMusicQuery,
+  useGetConvertedCustomMusicQuery,
 } = musicApiSlice;

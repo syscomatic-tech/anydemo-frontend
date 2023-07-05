@@ -35,7 +35,6 @@ const ManageSubscription = () => {
     );
     setSelectedPlan(myPlan);
   }, [plans, subscription]);
-
   return (
     <div className="lg:max-h-[670px] lg:overflow-y-scroll pb-5">
       <div className="dashboard_children_title">
@@ -56,7 +55,7 @@ const ManageSubscription = () => {
           </button>
         </div>
       </div>
-      <div className="dashboard_children_title">
+      {/* <div className="dashboard_children_title">
         <h4 className="title">Device Management</h4>
         <div className="lg:w-9/12 rounded flex items-center justify-between gap-[25px] pl-[21px] pr-[38px] py-[17px] bg-[#1d1b2d] ">
           <div className="flex flex-col gap-4">
@@ -86,7 +85,7 @@ const ManageSubscription = () => {
             <small>{convertDate(subscription?.endDate)}</small>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="dashboard_children_title">
         <h4 className="title">Subscription Plan</h4>
         {plans?.length > 0 ? (

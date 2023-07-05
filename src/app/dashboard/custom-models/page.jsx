@@ -5,9 +5,12 @@ import { useEffect, useState } from "react";
 
 import { downloadMusic, fetchUserMusic, streamMusic } from "@/src/axios/axios";
 import { NoDataFound } from "@/src/components/helper";
+import { useGetConvertedCustomMusicQuery } from "@/src/redux/features/music/musicApi";
 
 const MyMusic = () => {
   const dispatch = useDispatch();
+  const { data } = useGetConvertedCustomMusicQuery();
+  console.log(data);
   const { music } = useSelector((state) => state.userMusic);
   const { streamingMusic, loading } = useSelector((state) => state.musicStream);
   const { downloadedMusic, error } = useSelector(
@@ -64,7 +67,6 @@ const MyMusic = () => {
   useEffect(() => {
     dispatch(fetchUserMusic());
   }, []);
-  console.log(music);
   return (
     <div className="dashboard_children lg:max-h-[670px] lg:overflow-y-scroll">
       <div className="grid  grid-cols-2 lg:grid-cols-[repeat(3,226px)] justify-between gap-y-12">

@@ -193,8 +193,7 @@ const UserAccount = () => {
           <h4 className="title">Password</h4>
           <div className="w-full rounded flex items-center justify-between gap-[25px] pl-[21px] pr-[38px] py-[17px] bg-[#1d1b2d]">
             <p className="w-[70%] font-normal text-base leading-6 text-white">
-              Once I have this information, I can guide you through the process
-              of changing your password
+              Change Your Password
             </p>
             <button
               className="mainBtn"
@@ -208,8 +207,7 @@ const UserAccount = () => {
           <h4 className="title">Delete Account</h4>
           <div className="w-full rounded flex items-center justify-between gap-[25px] pl-[21px] pr-[38px] py-[17px] bg-[#1d1b2d]">
             <p className="w-[70%] font-normal text-base leading-6 text-white">
-              Once I have this information, I can guide you through the process
-              of changing your password
+              Delete Your Account
             </p>
             <button className="mainBtn">
               <span>Delete Account</span>

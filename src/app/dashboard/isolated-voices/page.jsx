@@ -49,8 +49,15 @@ const Isolated = () => {
       });
   };
 
-  const onStreamMusic = (music, file) => {
-    dispatch(streamMusic({ ...music, file }));
+  const onStreamMusic = (music, file, index) => {
+    setIsLoading(index);
+    dispatch(streamMusic({ ...music, file }))
+      .then(() => {
+        setIsLoading(null); // Set the loading state to null if the dispatch succeeds
+      })
+      .catch(() => {
+        setIsLoading(null); // Set the loading state to null if the dispatch fails
+      });
   };
   useEffect(() => {
     dispatch(fetchUserMusic());
@@ -85,19 +92,27 @@ const Isolated = () => {
                   <span>{item.genre}</span>
                   <span>{item?.duration}m</span>
                   <div className="flex flex-row gap-3 lg:gap-8 items-center ">
-                    <div
-                      className="w-8 h-8"
-                      role="button"
-                      onClick={() => onStreamMusic(item, item?.song)}
-                    >
-                      <Image
-                        width={32}
-                        height={32}
-                        src="/svg/play.svg"
-                        alt=""
-                        className="cursor-pointer object-contain  w-full h-full"
-                      />
-                    </div>
+                    {isLoading === index ? (
+                      <div className="bg-[#32E5EB] text-transparent text-black p-4 rounded-full loader  ">
+                        <span className="barr"></span>
+                        <span className="barr"></span>
+                        <span className="barr"></span>
+                      </div>
+                    ) : (
+                      <div
+                        className="w-8 h-8"
+                        role="button"
+                        onClick={() => onStreamMusic(item, item?.song, index)}
+                      >
+                        <Image
+                          width={32}
+                          height={32}
+                          src="/svg/play.svg"
+                          alt=""
+                          className="cursor-pointer object-contain  w-full h-full"
+                        />
+                      </div>
+                    )}
                     <div className="w-5 h-5  ">
                       <Image
                         width={20}
@@ -105,7 +120,7 @@ const Isolated = () => {
                         src="/svg/DownloadOutline.svg"
                         alt=""
                         className="cursor-pointer object-contain  w-full h-full "
-                        onClick={() => handleDownload(item?.song)}
+                        onClick={() => handleDownloadClick(item?.song, index)}
                       />
                     </div>
                   </div>
@@ -131,7 +146,7 @@ const Isolated = () => {
                     <div
                       className="w-8 h-8"
                       role="button"
-                      onClick={() => onStreamMusic(item, item?.voice)}
+                      onClick={() => onStreamMusic(item, item?.voice, index)}
                     >
                       <Image
                         width={32}
@@ -148,7 +163,7 @@ const Isolated = () => {
                         src="/svg/DownloadOutline.svg"
                         alt=""
                         className="cursor-pointer object-contain  w-full h-full "
-                        onClick={() => handleDownload(item?.voice)}
+                        onClick={() => handleDownload(item?.voice, index)}
                       />
                     </div>
                   </div>

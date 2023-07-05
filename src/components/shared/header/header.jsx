@@ -20,7 +20,6 @@ const Header = () => {
   });
   const handleLogout = async () => {
     try {
-      toast("Logging you out...");
       dispatch(logout());
       await router.push("/login");
       toast.success("Logged you out successfully!");
@@ -71,13 +70,13 @@ const Header = () => {
   const mainMenu = [
     {
       title: "stream",
-      path: "#",
-      status: "disabled",
+      path: "/stream",
+      // status: "disabled",
     },
     {
       title: "shop",
-      path: "#",
-      status: "disabled",
+      path: "/shop",
+      // status: "disabled",
     },
     {
       title: "pricing",
@@ -99,7 +98,7 @@ const Header = () => {
       : "/img/user.png";
 
   return (
-    <div className="navbar container py-6 z-50">
+    <div className="navbar container py-6 z-[10000]">
       <div className="navbar-start">
         <div className="cursor-pointer">
           <Link href="/">
@@ -214,7 +213,7 @@ const Header = () => {
 
               {/* Visible for small screens  */}
               <ul
-                className="block lg:hidden  gap-10 w-fit  cursor-pointer  capitalize dropdown-content  z-[20] menu p-2 shadow bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] rounded  "
+                className="block lg:hidden  gap-10 !w-fit  cursor-pointer  capitalize dropdown-content  z-[20] menu p-2 shadow bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)] rounded  "
                 tabIndex={0}
               >
                 {accessToken && (
@@ -234,7 +233,7 @@ const Header = () => {
                         alt="profile"
                         className="rounded-full object-cover h-10 w-10  object-top "
                       />
-                      <p className="font-normal !normal-case whitespace-nowrap text-base leading-[18px] text-white">
+                      <p className="font-normal !normal-case  text-base leading-[18px] text-white">
                         {user?.fullName}
                       </p>
                     </div>
@@ -299,7 +298,7 @@ const Header = () => {
                   <div className=" gap-3 w-fit h-10 p-0">
                     {/* Visible for not logged in users  */}
                     <Link href="/login" className={" btnTransparent"}>
-                      <span>Sign In</span>
+                      <span>Log In</span>
                     </Link>
 
                     <Link href="/signup" className={"mainBtn"}>
@@ -355,7 +354,7 @@ const Header = () => {
             <div className="flex flex-row items-center lg:gap-6 gap-3 w-fit h-10 p-0">
               {/* Visible for not logged in users  */}
               <Link href="/login" className={" btnTransparent"}>
-                <span>Sign In</span>
+                <span>Log In</span>
               </Link>
 
               <Link href="/signup" className={"mainBtn"}>

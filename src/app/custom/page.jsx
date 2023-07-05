@@ -1,7 +1,4 @@
 "use client";
-import { Splide, SplideSlide } from "@splidejs/react-splide";
-import "@splidejs/react-splide/css";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
@@ -13,41 +10,20 @@ import MainLayout from "@/src/components/layouts/MainLayout";
 import useAos from "@/src/hooks/useAos";
 import { selectToken } from "@/src/redux/features/auth/authSlice";
 import { useForm } from "react-hook-form";
+import {
+  useCustomVoiceMutation,
+  useGetConvertedCustomMusicQuery,
+} from "@/src/redux/features/music/musicApi";
 
 const MakeDemo = () => {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const [customVoice] = useCustomVoiceMutation();
 
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const token = useSelector(selectToken);
   const [openProgress, setOpenProgress] = useState(false);
   const [step2, setStep2] = useState(false);
-  const options = {
-    perPage: 3,
-    gap: "16px",
-    type: "loop",
-    perMove: 1,
-    drag: true,
-    pauseOnFocus: true,
-    autoplay: false,
-    pauseOnHover: true,
-    arrows: false,
-    classes: {
-      prev: "",
-      next: "",
-    },
-    pagination: false,
-    autoplaySpeed: 3000,
-    interval: 3000,
-    width: "100%",
-    height: "100%",
-    breakpoints: {
-      1150: {
-        perPage: 2,
-      },
-    },
-  };
 
   const onSubmit = async (values) => {
     if (!token) {
@@ -67,11 +43,12 @@ const MakeDemo = () => {
       });
 
       setOpenProgress(true);
-      dispatch(customModel(formData));
-
+      await customVoice(formData).unwrap();
+      toast.success("Custom Model Created Successfully");
+      router.push("/dashboard/custom-models");
       // reset();
     } catch (error) {
-      toast.error(err?.data?.message ?? err?.message);
+      toast.error(error?.data?.message ?? err?.message);
     } finally {
       setOpenProgress(false);
     }
@@ -87,7 +64,7 @@ const MakeDemo = () => {
             <h1>Custom Model</h1>
             <p>Choose Your Favorite Artist Voice to make your song</p>
           </div>
-          <div className="relative flex items-center justify-between px-20 mt-44">
+          {/* <div className="relative flex items-center justify-between px-20 mt-44">
             <div
               className={`w-fit flex flex-col z-[2] `}
               onClick={() => setStep2(false)}
@@ -127,7 +104,7 @@ const MakeDemo = () => {
                 }
               ></div>
             </div>
-          </div>
+          </div> */}
           <div className="pt-[65px] pb-[150px] px-0">
             <form className="form" onSubmit={handleSubmit(onSubmit)}>
               <div>
@@ -159,18 +136,6 @@ const MakeDemo = () => {
                 </div>
                 <div className="lg:flex items-center justify-between lg:gap-x-6">
                   <div className="formControl lg:w-1/2">
-                    <label htmlFor="code">Code</label>
-                    <input
-                      type="text"
-                      id="code"
-                      placeholder="Enter Code"
-                      {...register("code", {
-                        required: " Code is required",
-                      })}
-                      required
-                    />
-                  </div>
-                  <div className="formControl lg:w-1/2">
                     <label htmlFor="modelFile">Model File</label>
                     <input
                       type="link"
@@ -182,8 +147,6 @@ const MakeDemo = () => {
                       required
                     />
                   </div>
-                </div>
-                <div className="lg:flex items-center justify-between lg:gap-x-6">
                   <div className="formControl lg:w-1/2">
                     <label htmlFor="modelType">Model Type</label>
                     <select
@@ -201,7 +164,8 @@ const MakeDemo = () => {
                       <option value={"rvc"}>RVC</option>
                     </select>
                   </div>
-
+                </div>
+                <div className="lg:flex items-center justify-between lg:gap-x-6">
                   <div className="formControl  lg:w-1/2">
                     <label htmlFor="artistImage">Artist Image</label>
                     <input
@@ -231,9 +195,12 @@ const MakeDemo = () => {
                     />
                   </div>
                 </div>
-                <div className="flex gap-[15px]  items-center justify-center">
-                  <button className="mainBtn w-1/2" type="submit">
-                    <span>Proceed</span>
+                <div className="flex gap-[15px]  items-center justify-center my-8">
+                  <button
+                    type="submit"
+                    className="max-w-[565px] w-full h-[76px] font-medium text-2xl text-center text-[#fff8f8] px-0 py-6 rounded-lg bg-[linear-gradient(212.36deg,#b843b7_27.16%,#a548b2_29.91%,#7d51a9_36.6%,#6058a2_42.71%,#4e5c9e_47.98%,#485e9c_51.81%,#4393bb_66.42%,#39eef2_89.85%)]"
+                  >
+                    Get your demo
                   </button>
                 </div>
               </div>
