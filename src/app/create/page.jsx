@@ -10,7 +10,10 @@ import "@splidejs/react-splide/css";
 import MainLayout from "@/src/components/layouts/MainLayout";
 import LoadingProgressModal from "@/src/components/LoadingProgressModal";
 
-import { useConvertMusicMutation } from "@/src/redux/features/music/musicApi";
+import {
+  useConvertMusicMutation,
+  useGetConvertedCustomMusicQuery,
+} from "@/src/redux/features/music/musicApi";
 import {
   selectConversionData,
   setArtist,
@@ -22,7 +25,7 @@ import useAos from "@/src/hooks/useAos";
 const MakeDemo = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-
+  const { data: customArtists } = useGetConvertedCustomMusicQuery();
   const [convertMusic] = useConvertMusicMutation();
   const { data: voices } = useGetAllVoiceQuery();
   const token = useSelector(selectToken);
@@ -257,6 +260,78 @@ const MakeDemo = () => {
                   </div>
                 ))}
               </div>
+              {customArtists?.length > 0 && (
+                <div>
+                  <h4 className="font-bold text-[40px] mt-12  leading-[46px] text-[#32e5eb] mb-[34px]">
+                    Custom Voices Created By You
+                  </h4>
+                  <div className="flex flex-wrap justify-between gap-y-10">
+                    {customArtists?.map((v, i) => (
+                      <div
+                        key={i}
+                        className="relative w-[380px] h-[auto] overflow-hidden group rounded-md bg-[linear-gradient(179.92deg,#3b343f_0.07%,#1d1f27_82.76%)]"
+                      >
+                        <div
+                          className="w-full h-[280px] cursor-pointer relative"
+                          onClick={() => {
+                            selectArtist(v?._id);
+                            setStep3(true);
+                          }}
+                        >
+                          <div className="aspect-w-10 aspect-h-7">
+                            <Image
+                              className="object-cover group-hover:scale-105 transition-all"
+                              src={`${process.env.NEXT_PUBLIC_BASE_STORAGE_URL}/voice/${v?.artistImage}`}
+                              layout="fill"
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                        {/* <Image
+                      className="absolute  -translate-x-2/4 -translate-y-2/4 opacity-0 transition-all duration-[0.3s] ease-[ease-in-out] left-2/4 top-2/4"
+                      src="/img/check.png"
+                      width={80}
+                      height={80}
+                      alt=""
+                    /> */}
+                        <div className="absolute font-medium text-2xl leading-[130%] flex items-center justify-center text-white min-w-[102px] h-[42px] rounded-[0px_12px_12px_0px] left-0 top-[22.5px] bg-[#232229]">
+                          <p>{v?.genre}</p>
+                        </div>
+                        <div className="p-3.5">
+                          {/* rest of the content */}
+                          <div className="flex items-center justify-between">
+                            <h3 className="not-italic font-bold text-[32px] leading-[130%] text-[#fffffd]">
+                              {v?.name}
+                            </h3>
+                            <div className="flex items-center">
+                              <Image
+                                src="/img/rating.png"
+                                width={18}
+                                height={18}
+                                alt="star"
+                              />
+                              <span className="not-italic font-light text-xs leading-[4px] text-[#fffffd] ml-[2.5px]">
+                                {v?.ratings}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="text-end">
+                            <button
+                              onClick={() => {
+                                selectArtist(v?._id);
+                                setStep3(true);
+                              }}
+                              className="w-[124px] h-10 not-italic font-semibold text-base text-[#fffffd] rounded-md bg-[linear-gradient(47.36deg,#2df1e6_12.24%,#3694b0_37.45%,#468db3_39.38%,#6f79ba_44.93%,#8d6bbf_49.97%,#9f63c2_54.29%,#a660c3_57.37%)] hover:opacity-90 transition-all"
+                            >
+                              Try now
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
             !step3 && (
